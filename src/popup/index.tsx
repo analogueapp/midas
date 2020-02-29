@@ -1,13 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
 
 import App from './App';
 import './App.scss';
 
+import { Store } from 'webext-redux';
+import { Provider } from 'react-redux';
+
+const proxyStore = new Store();
+
 ReactDOM.render(
-    <HashRouter>
-        <App />
-    </HashRouter>,
-    document.getElementById('root')
-);
+  <Provider store={proxyStore}><App /></Provider>,
+  document.getElementById('root')
+)

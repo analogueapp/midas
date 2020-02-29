@@ -1,9 +1,8 @@
-console.log('This is background page what up!');
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 
-// chrome.contextMenus.create({
-//   id: 'Analogue',
-//   title: 'Analogue',
-//   contexts: ['all']
-// });
+import { wrapStore } from 'webext-redux';
 
-export default null;
+const store = createStore(rootReducer, {});
+
+wrapStore(store);
