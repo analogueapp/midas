@@ -47,7 +47,10 @@
         "normalize.css": "^8.0.1",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
-        "react-router-dom": "^5.1.2"
+        "react-redux": "^7.2.0",
+        "react-router-dom": "^5.1.2",
+        "redux": "^4.0.5",
+        "webext-redux": "^2.1.6"
     },
     "devDependencies": {
         "@babel/core": "^7.8.4",
