@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
 import './App.scss';
@@ -6,6 +7,9 @@ import './App.scss';
 const App = () => {
   const [shown, setShown] = useState(true);
   const toggleShown = () => setShown(!shown);
+
+  const count = useSelector(state => state.count);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log('popup mounted');
@@ -16,7 +20,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1 className="title" onClick={toggleShown}>popup page component: {shown ? "shown" : "hidden"}</h1>
+      <h1 className="title" onClick={() => {
+        dispatch({ type: 'ADD_COUNT' })
+        toggleShown()
+      }}>popup page component: {shown ? "shown" : "hidden"} {count}</h1>
     </div>
   )
 }
