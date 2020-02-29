@@ -1,9 +1,9 @@
-const initialState = 0;
+const initialState = true;
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_COUNT':
-      return state + (action.payload || 1);
+    case 'TOGGLE_MODAL':
+      return !state;
     default:
       return state;
   }

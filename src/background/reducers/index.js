@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
-import count from './count';
+import show from './show';
 
 export default combineReducers({
-  count
+  show
 });
