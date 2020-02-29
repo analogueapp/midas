@@ -4,7 +4,7 @@
     "description": "this is a chrome extension boilerplate!",
     "manifest_version": 2,
     "minimum_chrome_version": "79",
-    "permissions": [],
+    "permissions": ["contextMenus", "tabs"],
     "background": {
         "scripts": ["js/background.js"],
         "persistent": true
