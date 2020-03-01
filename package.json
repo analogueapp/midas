@@ -1,14 +1,13 @@
 {
-    "name": "awesome-chrome-extension-boilerplate",
+    "name": "Analogue",
     "version": "1.0.0",
-    "description": "an awesome boilerplate for chrome extension development!",
+    "description": "Share your knowledge",
     "private": true,
-    "author": "YuTengjing",
-    "license": "MIT",
-    "homepage": "https://github.com/tjx666/awesome-chrome-extension-boilerplate#readme",
+    "author": "Analogue",
+    "homepage": "https://www.analogue.app",
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/tjx666/awesome-chrome-extension-boilerplate.git"
+        "url": "git+ssh://git@github.com/joelrojo/midas"
     },
     "bugs": {
         "url": "https://github.com/tjx666/awesome-chrome-extension-boilerplate/issues"

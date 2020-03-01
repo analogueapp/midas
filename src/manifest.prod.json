@@ -1,7 +1,7 @@
 {
-    "name": "awesome chrome extension boilerplate",
-    "version": "1.0",
-    "description": "this is a chrome extension boilerplate!",
+  "name": "Analogue",
+  "version": "1.0",
+  "description": "share your knowledge",
     "manifest_version": 2,
     "minimum_chrome_version": "79",
     "permissions": ["contextMenus", "tabs"],
