@@ -13,25 +13,33 @@ import './App.scss';
 const App = () => {
 
   const show = useSelector(state => state.show);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('Component mounted');
-    chrome.runtime.onMessage.addListener(
-      function(request, sender, sendResponse) {
-        if (request.message === "clicked_browser_action") {
-          console.log("BROWSER CLICKED CONTENT TRIGGER")
-          dispatch({ type: 'TOGGLE_MODAL', show: true })
-        }
+  const browserActionListener = (request, sender) => {
+    // sender.id is id of chrome extension
+    if (request.message === "clicked_browser_action") {
+      if (!user) {
+        window.open("https://localhost:3000/login", "_blank");
+        dispatch({ type: 'SET_USER_TOKEN', token: sender.id })
+        // TODO, get JWT from web app
       }
-    )
-    return () => {
-      console.log('Component will unmount');
+      dispatch({ type: 'TOGGLE_MODAL', show: true })
     }
-  }, []);
+  }
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(browserActionListener)
+    return () => {
+      chrome.runtime.onMessage.removeListener(browserActionListener)
+    }
+  }, [user]);
 
   return (
-    <div className={`analogue-mask ${show ? "shown" : ""}`} onClick={show ? () => dispatch({ type: 'TOGGLE_MODAL' }) : null}>
+    <div
+      className={`analogue-mask ${show ? "shown" : ""}`}
+      onClick={show ? () => dispatch({ type: 'TOGGLE_MODAL' }) : () => {}}
+    >
       <div className="analogue-sidebar">
         <div className="analogue-modal" onClick={(e) => {
           e.preventDefault()
@@ -45,7 +53,7 @@ const App = () => {
               dispatch({ type: 'TOGGLE_MODAL' })
             }}
           />
-          <p className="message">Load URL</p>
+          <p className="message">Load URL: {user ? user.token : "no token"}</p>
         </div>
       </div>
     </div>
