@@ -26,15 +26,25 @@ const App = () => {
       }
     )
     return () => {
-      console.log('Component will be unmount');
+      console.log('Component will unmount');
     }
   }, []);
 
   return (
-    <div className="analogueApp">
-      <div className={`sidebar ${show ? "shown" : ""}`}>
-        <div className="modal">
-          <CloseOutlined className="close" onClick={() => dispatch({ type: 'TOGGLE_MODAL' })} />
+    <div className={`analogue-mask ${show ? "shown" : ""}`} onClick={show ? () => dispatch({ type: 'TOGGLE_MODAL' }) : null}>
+      <div className="analogue-sidebar">
+        <div className="analogue-modal" onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }}>
+          <CloseOutlined
+            className="close"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              dispatch({ type: 'TOGGLE_MODAL' })
+            }}
+          />
           <p className="message">Load URL</p>
         </div>
       </div>

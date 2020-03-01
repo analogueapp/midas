@@ -4,7 +4,7 @@
 // Font Variables
 $montserrat: 'Montserrat', sans-serif;
 
-.analogueApp {
+.analogue-mask {
   position: fixed;
   width: 0;
   height: 0;
@@ -12,7 +12,18 @@ $montserrat: 'Montserrat', sans-serif;
   right: 0;
   z-index: 2147483647;
 
-  .sidebar {
+  &.shown {
+    width: 100vw;
+    height: 100vh;
+    
+    .analogue-sidebar {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(calc(100vw - 331px));
+    }
+  }
+
+  .analogue-sidebar {
     position: fixed;
     top: 0;
     right: 0;
@@ -26,13 +37,7 @@ $montserrat: 'Montserrat', sans-serif;
     width: 300px;
     z-index: 2147483647;
 
-    &.shown {
-      visibility: visible;
-      opacity: 1;
-      transform: translateX(calc(100vw - 331px));
-    }
-
-    .modal {
+    .analogue-modal {
       width: 300px;
       background: #242424;
       box-shadow: rgba(0, 0, 0, 0.2) 0 2px 16px 0;
