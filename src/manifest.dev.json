@@ -17,6 +17,9 @@
             "js": ["js/all.js"]
         }
     ],
+    "externally_connectable": {
+      "matches": ["http://localhost/*"]
+    },
     "browser_action": {
         "default_icon": {
             "16": "icons/extension-icon-x16.png",
