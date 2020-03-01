@@ -5,7 +5,7 @@ import { Store } from 'webext-redux';
 import { Provider } from 'react-redux';
 
 import App from './components/app/App';
-import './style.scss';
+import './index.scss';
 
 const proxyStore = new Store();
 
