@@ -20,7 +20,7 @@ const App = () => {
   const messageListener = (request) => {
     // sender.id is id of chrome extension
     if (request.message === "clicked_browser_action") {
-      if (!user) {
+      if (!user || (user && !user.token)) {
         window.open("http://localhost:3000/login", "_blank");
       } else {
         setShow(true)
