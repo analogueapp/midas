@@ -1,6 +1,6 @@
 /*global chrome*/
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
@@ -12,7 +12,8 @@ import './App.scss';
 
 const App = () => {
 
-  const show = useSelector(state => state.show);
+  const [show, setShow] = useState(false);
+
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const App = () => {
       if (!user) {
         window.open("http://localhost:3000/login", "_blank");
       } else {
-        dispatch({ type: 'TOGGLE_MODAL', show: true })
+        setShow(true)
       }
     }
 
@@ -42,7 +43,7 @@ const App = () => {
   return (
     <div
       className={`analogue-mask ${show ? "shown" : ""}`}
-      onClick={show ? () => dispatch({ type: 'TOGGLE_MODAL' }) : () => {}}
+      onClick={() => setShow(false)}
     >
       <div className="analogue-sidebar">
         <div className="analogue-modal" onClick={(e) => {
@@ -54,7 +55,7 @@ const App = () => {
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
-              dispatch({ type: 'TOGGLE_MODAL' })
+              setShow(false)
             }}
           />
           <p className="message">Load URL: {user ? user.token : "no token"}</p>

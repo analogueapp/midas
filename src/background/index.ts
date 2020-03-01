@@ -18,12 +18,9 @@ chrome.browserAction.onClicked.addListener(function() {
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const authListener = (request) => {
-  alert("AUTH LISTENER CALLED FROM BACKGROUND")
   // Send a message to the active tab to trigger redux store of token
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     var activeTab = tabs[0];
-    alert(activeTab.id)
-    alert(request.token)
     chrome.tabs.sendMessage(activeTab.id, request);
   })
 }
