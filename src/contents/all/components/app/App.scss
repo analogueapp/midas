@@ -1,3 +1,9 @@
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500);
+
+// Font Variables
+$montserrat: 'Montserrat', sans-serif;
+
 .analogueApp {
   position: fixed;
   width: 0;
@@ -28,7 +34,7 @@
 
     .modal {
       width: 300px;
-      background: #1a1a1a;
+      background: #242424;
       box-shadow: rgba(0, 0, 0, 0.2) 0 2px 16px 0;
       margin: 32px auto;
       border-width: 1px;
@@ -36,9 +42,14 @@
       border-color: rgba(0, 0, 0, 0.04);
       border-image: initial;
       border-radius: 8px;
+      padding: 20px;
 
       .title {
         text-align: center;
+        font-family: $montserrat;
+        font-weight: 400;
+        font-size: 21px;
+        color: #e3e3e3;
       }
     }
   }
