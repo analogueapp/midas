@@ -42,7 +42,26 @@ $montserrat: 'Montserrat', sans-serif;
       border-color: rgba(0, 0, 0, 0.04);
       border-image: initial;
       border-radius: 8px;
-      padding: 20px;
+      padding: 10px;
+      position: relative;
+      z-index: 2147483647;
+
+      .anticon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #aaa;
+        font-size: 18px;
+        transition: 0.21s ease all;
+
+        &.anticon-close.close {
+          cursor: pointer;
+
+          &:hover {
+            color: #e3e3e3;
+          }
+        }
+      }
 
       .title {
         text-align: center;
@@ -50,6 +69,15 @@ $montserrat: 'Montserrat', sans-serif;
         font-weight: 400;
         font-size: 21px;
         color: #e3e3e3;
+        margin: 0;
+      }
+      .message {
+        text-align: center;
+        font-family: $montserrat;
+        font-weight: 400;
+        font-size: 14px;
+        color: #e3e3e3;
+        margin: 0;
       }
     }
   }

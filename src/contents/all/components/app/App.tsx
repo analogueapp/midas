@@ -2,6 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
+import {
+  CloseOutlined
+} from '@ant-design/icons';
+
 import './App.scss';
 
 const App = () => {
@@ -19,8 +23,9 @@ const App = () => {
   return (
     <div className="analogueApp">
       <div className={`sidebar ${show ? "shown" : ""}`}>
-        <div className="modal" onClick={() => dispatch({ type: 'TOGGLE_MODAL' })}>
-          <h1 className="title">What up: {show ? "show" : "hide"}</h1>
+        <div className="modal">
+          <CloseOutlined className="close" onClick={() => dispatch({ type: 'TOGGLE_MODAL' })} />
+          <p className="message">Load URL</p>
         </div>
       </div>
     </div>
