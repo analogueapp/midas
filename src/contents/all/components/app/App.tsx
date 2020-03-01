@@ -20,7 +20,7 @@ const App = () => {
     // sender.id is id of chrome extension
     if (request.message === "clicked_browser_action") {
       if (!user) {
-        window.open("https://localhost:3000/login", "_blank");
+        window.open("http://localhost:3000/login", "_blank");
         dispatch({ type: 'SET_USER_TOKEN', token: sender.id })
         // TODO, get JWT from web app
       }

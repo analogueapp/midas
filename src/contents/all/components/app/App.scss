@@ -15,11 +15,11 @@ $montserrat: 'Montserrat', sans-serif;
   &.shown {
     width: 100vw;
     height: 100vh;
-    
+
     .analogue-sidebar {
       visibility: visible;
       opacity: 1;
-      transform: translateX(calc(100vw - 331px));
+      transform: translateX(calc(100vw - 341px));
     }
   }
 
