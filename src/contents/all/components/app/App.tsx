@@ -16,33 +16,26 @@ const App = () => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const browserActionListener = (request, sender) => {
+  const messageListener = (request) => {
     // sender.id is id of chrome extension
-    console.log("BROWSER ACTION LISTENER CALLED", request)
-    console.log("USER", user)
-    console.log('ext id', sender.id)
     if (request.message === "clicked_browser_action") {
-      if (!user && !user.token) {
+      if (!user) {
         window.open("http://localhost:3000/login", "_blank");
+      } else {
+        dispatch({ type: 'TOGGLE_MODAL', show: true })
       }
-      dispatch({ type: 'TOGGLE_MODAL', show: true })
     }
-  }
 
-  const authListener = (request) => {
-    console.log("AUTH LISTENER CALLED", request)
     if (request.message === "auth_user") {
       dispatch({ type: 'SET_USER_TOKEN', token: request.token })
     }
   }
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(browserActionListener)
-    chrome.runtime.onMessage.addListener(authListener)
+    chrome.runtime.onMessage.addListener(messageListener)
 
     return () => {
-      chrome.runtime.onMessage.removeListener(browserActionListener)
-      chrome.runtime.onMessage.removeListener(authListener)
+      chrome.runtime.onMessage.removeListener(messageListener)
     }
   }, [user]);
 
