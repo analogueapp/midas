@@ -51,6 +51,21 @@ const App = () => {
     }
   }, [user])
 
+
+  useEffect(() => {
+    if (user && show) {
+      agent.setToken(user)
+      agent.Contents.parse(window.location.href).then(response => {
+        // if (response.errors) {
+        //   setMessage(response.message ? response.message : "We're having trouble with this URL . . . ")
+        // } else {
+          setMessage("Added")
+        // }
+      })
+    }
+    return
+  }, [show])
+
   return (
     <div
       className={`analogue-mask ${show ? "shown" : ""}`}
