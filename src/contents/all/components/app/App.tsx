@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
+import agent from '../../agent';
+
 import {
   CloseOutlined
 } from '@ant-design/icons';
@@ -13,6 +15,7 @@ import './App.scss';
 const App = () => {
 
   const [show, setShow] = useState(false);
+  const [message, setMessage] = useState("Adding...");
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -66,7 +69,7 @@ const App = () => {
               setShow(false)
             }}
           />
-          <p className="message">Load URL: {user ? user.token : "no token"}</p>
+          <p className="message">{message}</p>
         </div>
       </div>
     </div>
