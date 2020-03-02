@@ -2,7 +2,7 @@ $montserrat: 'Montserrat', sans-serif;
 
 .contentPreviewWrapper {
   display: block;
-  margin: 35px auto 20px;
+  margin: 35px auto 15px;
   color: #aaa;
   &:hover {
     color: #aaa;
@@ -85,16 +85,18 @@ $montserrat: 'Montserrat', sans-serif;
   }
 
   .details, h5 {
+    text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 1.5em;
     font-family: $montserrat;
   }
 
   h5 {
     font-size: 18px;
     font-weight: 400;
-    margin-bottom: 2px;
+    margin: 2px auto -2px;
     transition: 0.21s ease all;
     color: #e3e3e3;
   }
