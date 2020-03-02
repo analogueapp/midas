@@ -95,6 +95,10 @@ const App = () => {
           <img src={logo} className="logo" alt="Analogue Icon" />
           <p className="message">{message}</p>
           <ContentPreview content={content} />
+
+          <div className="addNote">
+            Add Note
+          </div>
         </div>
       </div>
     </div>
