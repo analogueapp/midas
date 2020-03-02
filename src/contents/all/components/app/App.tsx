@@ -20,7 +20,7 @@ const App = () => {
   const messageListener = (request) => {
     // sender.id is id of chrome extension
     if (request.message === "clicked_browser_action") {
-      if (!user || (user && !user.token)) {
+      if (!user) {
         window.open("http://localhost:3000/login", "_blank");
       } else {
         setShow(true)
@@ -29,16 +29,24 @@ const App = () => {
 
     if (request.message === "auth_user") {
       dispatch({ type: 'SET_USER_TOKEN', token: request.token })
+      sessionStorage.setItem("analogue-jwt", request.token)
     }
   }
 
+  // detect icon click and auth
   useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
+    const token = sessionStorage.getItem("analogue-jwt")
+
+    if (token) {
+      dispatch({ type: 'SET_USER_TOKEN', token: token })
+      sessionStorage.setItem("analogue-jwt", token)
+    }
 
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [user]);
+  }, [user])
 
   return (
     <div
