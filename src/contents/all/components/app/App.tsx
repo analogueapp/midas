@@ -10,6 +10,8 @@ import {
   CloseOutlined
 } from '@ant-design/icons';
 
+import logo from './logo.png';
+
 import './App.scss';
 
 const App = () => {
@@ -63,7 +65,7 @@ const App = () => {
 
 
   useEffect(() => {
-    if (user && show) {
+    if (user && show && !content) {
       chrome.runtime.sendMessage({
         message: "parse_content",
         token: user,
@@ -90,8 +92,8 @@ const App = () => {
               setShow(false)
             }}
           />
+          <img src={logo} className="logo" alt="Analogue Icon" />
           <p className="message">{message}</p>
-
           <ContentPreview content={content} />
         </div>
       </div>

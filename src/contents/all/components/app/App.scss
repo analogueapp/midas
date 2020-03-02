@@ -51,10 +51,10 @@ $montserrat: 'Montserrat', sans-serif;
       position: relative;
       z-index: 2147483647;
 
-      .anticon {
+      .anticon.anticon-close {
         position: absolute;
         top: 25px;
-        right: 15px;
+        right: 21px;
         color: #aaa;
         font-size: 18px;
         transition: 0.21s ease all;
@@ -68,15 +68,36 @@ $montserrat: 'Montserrat', sans-serif;
         }
       }
 
+      .logo {
+        position: absolute;
+        width: 31px;
+        height: 31px;
+        object-fit: contain;
+        left: 27px;
+        top: 21px;
+      }
+
       .message {
+        user-select: none;
         text-align: left;
         font-family: $montserrat;
         font-weight: 400;
-        font-size: 21px;
         color: #e3e3e3;
         line-height: 1em;
-        margin: 5px auto 10px 40px;
         padding: 0;
+        margin: 8px auto 10px 60px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #aaa;
+
+        .anticon {
+          margin-left: 5px;
+
+          &.anticon-check-outlined {
+            color: #c7ac75;
+          }
+        }
       }
     }
   }
