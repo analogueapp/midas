@@ -68,21 +68,16 @@ $montserrat: 'Montserrat', sans-serif;
         }
       }
 
-      .title {
-        text-align: center;
-        font-family: $montserrat;
-        font-weight: 400;
-        font-size: 21px;
-        color: #e3e3e3;
-        margin: 0;
-      }
       .message {
-        text-align: center;
+        text-align: left;
         font-family: $montserrat;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         color: #e3e3e3;
+        line-height: 1em;
         margin: 0;
+        padding: 0;
+
       }
     }
   }

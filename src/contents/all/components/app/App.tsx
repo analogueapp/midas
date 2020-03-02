@@ -13,6 +13,7 @@ import './App.scss';
 const App = () => {
 
   const [show, setShow] = useState(false);
+  const [content, setContent] = useState(null)
   const [message, setMessage] = useState("Adding...");
 
   const user = useSelector(state => state.user);
@@ -34,7 +35,12 @@ const App = () => {
     }
 
     if (request.message === "parse_content_response") {
-      console.log("RESPONSE FROM BACKGROUND", request)
+      if (request.body.errors) {
+        setMessage(request.body.message ? request.body.message : "We're having trouble with that URL . . . ")
+      } else {
+        setMessage("Added")
+        setContent(request.body.content)
+      }
     }
   }
 
@@ -57,8 +63,8 @@ const App = () => {
   useEffect(() => {
     if (user && show) {
       chrome.runtime.sendMessage({
-        token: user,
         message: "parse_content",
+        token: user,
         url: window.location.href,
       })
     }
