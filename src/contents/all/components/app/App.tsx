@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
+import ContentPreview from '../content/ContentPreview/ContentPreview';
+
 import {
   CloseOutlined
 } from '@ant-design/icons';
@@ -78,7 +80,6 @@ const App = () => {
     >
       <div className="analogue-sidebar">
         <div className="analogue-modal" onClick={(e) => {
-          e.preventDefault()
           e.stopPropagation()
         }}>
           <CloseOutlined
@@ -90,6 +91,8 @@ const App = () => {
             }}
           />
           <p className="message">{message}</p>
+
+          <ContentPreview content={content} />
         </div>
       </div>
     </div>
