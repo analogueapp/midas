@@ -23,8 +23,10 @@ const requests = {
   put: (url, body) =>
     superagent.put(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
   post: (url, body) => superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then((res) => {
-    console.log("RESPONSE in agent", res)
-    responseBody(res)
+    alert("RESPONSE in agent")
+    alert(res.body)
+    alert(res)
+    return responseBody(res)
   })
 };
 
@@ -35,7 +37,6 @@ const Auth = {
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const limitCount = 9;
-// const omitSlug = content => Object.assign({}, content, { slug: undefined })
 
 const Contents = {
   parse: value =>

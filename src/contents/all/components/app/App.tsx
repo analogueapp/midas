@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
-import agent from '../../agent';
-
 import {
   CloseOutlined
 } from '@ant-design/icons';
@@ -34,6 +32,10 @@ const App = () => {
       dispatch({ type: 'SET_USER_TOKEN', token: request.token })
       sessionStorage.setItem("analogue-jwt", request.token)
     }
+
+    if (request.message === "parse_content_response") {
+      console.log("RESPONSE FROM BACKGROUND", request)
+    }
   }
 
   // detect icon click and auth
@@ -54,13 +56,10 @@ const App = () => {
 
   useEffect(() => {
     if (user && show) {
-      agent.setToken(user)
-      agent.Contents.parse(window.location.href).then(response => {
-        // if (response.errors) {
-        //   setMessage(response.message ? response.message : "We're having trouble with this URL . . . ")
-        // } else {
-          setMessage("Added")
-        // }
+      chrome.runtime.sendMessage({
+        token: user,
+        message: "parse_content",
+        url: window.location.href,
       })
     }
     return
