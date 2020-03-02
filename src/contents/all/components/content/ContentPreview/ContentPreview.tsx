@@ -1,5 +1,4 @@
 import React from 'react';
-import { Skeleton } from 'antd';
 
 import './ContentPreview.scss'
 
@@ -28,8 +27,12 @@ const ContentPreviewHeader = props => {
     )
   }
   return (
-    <div className="contentPreview">
-      <Skeleton avatar active paragraph={{ rows: 0 }} />
+    <div className="contentPreviewWrapper">
+      <div className="contentPreview loading">
+        <div className="imgWrapper" />
+        <h5 className="title" />
+        <div className="details" />
+      </div>
     </div>
   )
 }

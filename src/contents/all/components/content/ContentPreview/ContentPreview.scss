@@ -1,6 +1,6 @@
 $montserrat: 'Montserrat', sans-serif;
 
-a.contentPreviewWrapper {
+.contentPreviewWrapper {
   display: block;
   margin: 35px auto 20px;
   color: #aaa;
@@ -33,6 +33,38 @@ a.contentPreviewWrapper {
 
   &:hover, &:active, &:focus {
     text-decoration: none;
+  }
+
+  &.loading {
+    &:after {
+      clear: both;
+      display: table;
+      content: "";
+    }
+    .imgWrapper, h5, .details {
+      background: -webkit-gradient(linear, left top, right top, color-stop(25%, #313131), color-stop(37%, #3a3a3a), color-stop(63%, #313131));
+      background: linear-gradient(90deg, #313131 25%, #3a3a3a 37%, #313131 63%);
+      background-size: 400% 100%;
+      -webkit-animation: skeleton-loading 1.1s ease infinite;
+      animation: skeleton-loading 1.1s ease infinite;
+
+    }
+
+    h5 {
+      height: 16px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      margin-top: 5px;
+      width: calc(100% - 68px);
+      float: left;
+    }
+
+    .details {
+      float: left;
+      border-radius: 4px;
+      height: 14px;
+      width: 150px;
+    }
   }
 
   .imgWrapper {
@@ -87,4 +119,14 @@ a.contentPreviewWrapper {
     }
   }
 
+}
+
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
