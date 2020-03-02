@@ -27,7 +27,7 @@ const App = () => {
     // sender.id is id of chrome extension
     if (request.message === "clicked_browser_action") {
       if (!user) {
-        window.open("http://localhost:3000/login", "_blank");
+        window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
       } else {
         setShow(true)
       }

@@ -8,12 +8,12 @@ const ContentPreviewHeader = props => {
       <a
         target="_blank"
         className="contentPreviewWrapper"
-        href={`http://localhost:3000/${props.content.formSlug}/${props.content.slug}`}
+        href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}`}
       >
         <div className="contentPreview">
 
           <div className="imgWrapper">
-            <img className="blur" src={`http://localhost:3001/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`} alt={props.content.title} />
+            <img className="blur" src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`} alt={props.content.title} />
           </div>
 
           <h5 className="title">{props.content.title}</h5>
