@@ -32,8 +32,8 @@ chrome.runtime.onMessageExternal.addListener(authListener)
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
   if (request.message === "parse_content") {
+    agent.setToken(request.token)
     agent.Contents.parse(request.url).then(response => {
-      
       // Send a message to the active tab
       chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         var activeTab = tabs[0];
