@@ -1,10 +1,11 @@
 {
-  "name": "Analogue",
-  "version": "1.0",
-  "description": "Save links to Analogue. Share your knowledge.",
+  "name": "Analogue Save Button",
+  "version": "0.1",
+  "description": "Save links, books, podcasts, films and more to Analogue. Share your knowledge.",
   "manifest_version": 2,
   "minimum_chrome_version": "79",
-  "permissions": ["contextMenus", "tabs", "activeTab", "<all_urls>"],
+  "homepage_url": "https://www.analogue.app",
+  "permissions": ["contextMenus", "tabs", "activeTab"],
   "background": {
       "scripts": ["js/background.js"],
       "persistent": true
@@ -25,7 +26,8 @@
           "32": "icons/extension-icon-x32.png",
           "48": "icons/extension-icon-x48.png",
           "128": "icons/extension-icon-x128.png"
-      }
+      },
+      "default_title": "Add to Analogue"
   },
   "options_ui": {
       "page": "options.html",

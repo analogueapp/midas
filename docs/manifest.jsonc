@@ -2,12 +2,12 @@
 {
     // Required
     "manifest_version": 2,
-    "name": "My Extension",
-    "version": "versionString",
+    "name": "Analogue Add Button",
+    "version": "0.1",
 
     // Recommended
     "default_locale": "en",
-    "description": "A plain text description",
+    "description": "Save links, books, podcasts, films and more to Analogue. Share your knowledge.",
     "icons": {},
 
     // Pick one (or none)
