@@ -1,5 +1,6 @@
 {
     "name": "Analogue Save Button",
+    "short_name": "Analogue",
     "version": "0.1",
     "description": "Save links, books, podcasts, films and more to Analogue. Share your knowledge.",
     "manifest_version": 2,
