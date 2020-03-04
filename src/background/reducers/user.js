@@ -1,4 +1,4 @@
-const initialState = sessionStorage.getItem("analogue-jwt");
+const initialState = sessionStorage.getItem("analogue-jwt")
 
 export default (state = initialState, action) => {
   switch (action.type) {

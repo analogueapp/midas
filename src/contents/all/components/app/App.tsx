@@ -64,11 +64,7 @@ const App = () => {
 
   useEffect(() => {
     if (user && show && !content) {
-      chrome.runtime.sendMessage({
-        message: "parse_content",
-        token: user,
-        url: window.location.href,
-      })
+      chrome.runtime.sendMessage({ message: "parse_content" })
     }
     return
   }, [show])
