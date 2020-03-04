@@ -9,21 +9,59 @@ import agent from './agent';
 
 const store = createStore(rootReducer, {});
 
-chrome.browserAction.onClicked.addListener(function() {
-  // Send a message to the active tab
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    var activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, {message: "clicked_browser_action"});
+const injectContentScript = (message) => {
+  // first, query to see if content script already exists in active tab
+  // https://stackoverflow.com/a/42377997
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+
+    chrome.tabs.sendMessage(activeTab.id, { message: "content_script_loaded?" }, (msg) => {
+
+      if (chrome.runtime.lastError) {
+        // programatically inject content script to active tab
+        // this gets triggered when content_script doesn't exist on page
+        // https://stackoverflow.com/questions/51732125/using-activetab-permissions-vs-all-urls
+        // https://developer.chrome.com/extensions/content_scripts#programmatic
+        chrome.tabs.insertCSS(activeTab.id, { file: "css/all.css" })
+        chrome.tabs.executeScript(activeTab.id, { file: "js/all.js", runAt: "document_end" }, () => {
+          if (message) {
+            chrome.tabs.sendMessage(activeTab.id, message)
+          }
+        })
+        return
+      } else {
+        // trigger message to the active tab since already injected
+        // msg.status === true
+        if (message) {
+          chrome.tabs.sendMessage(activeTab.id, message)
+        }
+      }
+    })
   })
+}
+
+chrome.browserAction.onClicked.addListener(function() {
+  injectContentScript({ message: "clicked_browser_action" })
+});
+
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+  injectContentScript()
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+  if (changeInfo.status === "complete") {
+    injectContentScript()
+  }
 });
 
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const authListener = (request) => {
   // Send a message to the active tab to trigger redux store of token
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    var activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, request);
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0]
+    // must use openerTabId to get original tab that opened analogue login
+    chrome.tabs.sendMessage(activeTab.openerTabId, request);
   })
 }
 chrome.runtime.onMessageExternal.addListener(authListener)
@@ -35,8 +73,8 @@ const messageListener = (request) => {
     agent.setToken(request.token)
     agent.Contents.parse(request.url).then(response => {
       // Send a message to the active tab
-      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        var activeTab = tabs[0];
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
         chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
       })
 

@@ -23,19 +23,23 @@ const App = () => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const messageListener = (request) => {
+  const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
+
+    if (request.message === "content_script_loaded?") {
+      sendResponse({ status: true }) // respond to background page
+    }
+
     if (request.message === "clicked_browser_action") {
-      if (!user) {
-        window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
-      } else {
+      if (user) {
         setShow(true)
+      } else {
+        window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
       }
     }
 
     if (request.message === "auth_user") {
       dispatch({ type: 'SET_USER_TOKEN', token: request.token })
-      sessionStorage.setItem("analogue-jwt", request.token)
     }
 
     if (request.message === "parse_content_response") {
@@ -48,15 +52,9 @@ const App = () => {
     }
   }
 
-  // detect icon click and auth
+  // set message listener when component mounts
   useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
-    const token = sessionStorage.getItem("analogue-jwt")
-
-    if (token) {
-      dispatch({ type: 'SET_USER_TOKEN', token: token })
-      sessionStorage.setItem("analogue-jwt", token)
-    }
 
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
