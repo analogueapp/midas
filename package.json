@@ -1,7 +1,7 @@
 {
     "name": "Analogue",
     "version": "1.0.0",
-    "description": "Share your knowledge",
+    "description": "Track and organize the content you love.",
     "private": true,
     "author": "Analogue",
     "homepage": "https://www.analogue.app",
@@ -10,7 +10,7 @@
         "url": "git+ssh://git@github.com/joelrojo/midas"
     },
     "bugs": {
-        "url": "https://github.com/tjx666/awesome-chrome-extension-boilerplate/issues"
+      "url": "https://www.analogue.app/"
     },
     "scripts": {
         "start": "cross-env-shell NODE_ENV=development ts-node --files -P ./server/tsconfig.json ./server",
