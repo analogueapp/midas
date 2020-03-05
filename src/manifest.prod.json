@@ -6,18 +6,11 @@
   "manifest_version": 2,
   "minimum_chrome_version": "79",
   "homepage_url": "https://www.analogue.app",
-  "permissions": [],
+  "permissions": ["activeTab", "*://*.analogue.app/*"],
   "background": {
     "scripts": ["js/background.js"],
     "persistent": true
   },
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "css": ["css/all.css"],
-      "js": ["js/all.js"]
-    }
-  ],
   "externally_connectable": {
     "matches": ["*://*.analogue.app/*"]
   },
