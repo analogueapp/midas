@@ -40,6 +40,15 @@ const injectContentScript = (message) => {
   })
 }
 
+chrome.contextMenus.create({
+  title: 'Add to Analogue',
+  contexts: ["all"],
+  onclick: function(info, tab) {
+    // info.selectionText get's selection
+    injectContentScript({ message: "clicked_browser_action" })
+  }
+})
+
 chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action" })
 })

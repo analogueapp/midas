@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "minimum_chrome_version": "79",
   "homepage_url": "https://www.analogue.app",
-  "permissions": ["activeTab", "*://*.analogue.app/*"],
+  "permissions": ["activeTab", "contextMenus", "*://*.analogue.app/*"],
   "background": {
     "scripts": ["js/background.js"],
     "persistent": true
