@@ -29,5 +29,8 @@
     "32": "icons/extension-icon-x32.png",
     "48": "icons/extension-icon-x48.png",
     "128": "icons/extension-icon-x128.png"
-  }
+  },
+  "web_accessible_resources": [
+    "css/all.css"
+  ]
 }

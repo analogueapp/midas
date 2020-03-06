@@ -5,12 +5,12 @@ import { Store } from 'webext-redux';
 import { Provider } from 'react-redux';
 
 import App from './components/app/App';
-import './index.scss';
 
 const proxyStore = new Store();
 
 const anchor = document.createElement('div');
 anchor.id = 'analogue-app';
+anchor.setAttribute("style", "z-index: 2147483647; text-align: center; position: relative;")
 
 document.body.appendChild(anchor);
 

@@ -22,7 +22,7 @@ const injectContentScript = (message) => {
         // this gets triggered when content_script doesn't exist on page
         // https://stackoverflow.com/questions/51732125/using-activetab-permissions-vs-all-urls
         // https://developer.chrome.com/extensions/content_scripts#programmatic
-        chrome.tabs.insertCSS(activeTab.id, { file: "css/all.css" })
+        // chrome.tabs.insertCSS(activeTab.id, { file: "css/all.css" })
         chrome.tabs.executeScript(activeTab.id, { file: "js/all.js", runAt: "document_end" }, () => {
           if (message) {
             chrome.tabs.sendMessage(activeTab.id, message)

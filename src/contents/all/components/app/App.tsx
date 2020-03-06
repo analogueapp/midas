@@ -1,6 +1,7 @@
 /*global chrome*/
 
 import React, { useEffect, useState } from 'react';
+import Frame, { FrameContextConsumer } from 'react-frame-component';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
@@ -71,29 +72,73 @@ const App = () => {
 
   return (
     <div
-      className={`analogue-mask ${show ? "shown" : ""}`}
-      onClick={() => setShow(false)}
+      style={{
+        position: "fixed",
+        width: "0",
+        height: "0",
+        top: "0",
+        right: "0",
+        zIndex: "2147483647",
+      }}
     >
-      <div className="analogue-sidebar">
-        <div className="analogue-modal" onClick={(e) => {
-          e.stopPropagation()
-        }}>
-          <CloseOutlined
-            className="close"
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              setShow(false)
-            }}
-          />
-          <img src={logo} className="logo" alt="Analogue Icon" />
-          <p className="message">{message}</p>
-          <ContentPreview content={content} />
+      <div
+        style={{
+          position: "fixed",
+          top: "0",
+          right: "0",
+          bottom: "0",
+          left: "0",
+          zIndex: "2147483647",
+          transition: "transform 100ms cubic-bezier(0, 0, 0, 1) 0s, visibility 100ms ease 0s",
+          willChange: "transform, visibility",
+          visibility: show ? "visible" : "hidden",
+          transform: show ? "translateX(0)" : "translateX(464px)",
+          opacity: show ? "1" : "0",
+        }}
+      >
+        <Frame
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "block",
+            border: "none"
+          }}
+          head={[<link type="text/css" rel="stylesheet" href={chrome.runtime.getURL("/css/all.css")}></link>]}
+        >
+         <FrameContextConsumer>
+         {
+           // Callback is invoked with iframe's window and document instances
+           ({document, window}) => {
+              // Render Children
+              return (
+                <div className="analogue-mask" onClick={() => setShow(false)}>
+                  <div className="analogue-fixed-sidebar">
+                    <div className="analogue-modal" onClick={(e) => {
+                      e.stopPropagation()
+                    }}>
+                      <CloseOutlined
+                        className="close"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShow(false)
+                        }}
+                      />
+                      <img src={logo} className="logo" alt="Analogue Icon" />
+                      <p className="message">{message}</p>
+                      <ContentPreview content={content} />
 
-          <div className="addNote">
-            Add Note
-          </div>
-        </div>
+                      <div className="addNote">
+                        Add Note
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+          }
+          </FrameContextConsumer>
+        </Frame>
       </div>
     </div>
   )
