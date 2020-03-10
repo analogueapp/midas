@@ -15,7 +15,11 @@ module.exports = api => {
 
     return {
         presets: ['@babel/preset-typescript', envPreset],
-        plugins: ['lodash', '@babel/plugin-transform-runtime'],
+        plugins: [
+          'lodash',
+          '@babel/plugin-transform-runtime',
+          ['import', { 'libraryName': 'antd', 'style': 'css' }],
+        ],
         env: {
             development: {
                 presets: [['@babel/preset-react', { development: true }]],
