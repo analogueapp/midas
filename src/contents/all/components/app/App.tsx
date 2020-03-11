@@ -11,7 +11,6 @@ import {
   CloseOutlined
 } from '@ant-design/icons';
 
-import logo from './logo.png';
 
 import './App.scss';
 
