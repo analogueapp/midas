@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
 import ContentPreview from '../content/ContentPreview/ContentPreview';
+import Knots from '../knots/Knots';
 
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined, CloseOutlined } from '@ant-design/icons';
@@ -186,6 +187,8 @@ const App = () => {
 
                       <ContentPreview content={content} />
 
+                      {log && <Knots knots={log.knots} /> }
+                    
                       <div className="addNote">
                         Add a note
                       </div>

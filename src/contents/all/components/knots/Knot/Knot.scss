@@ -1,0 +1,37 @@
+.knot {
+
+  &.ant-timeline-item {
+    &:only-child {
+      .ant-timeline-item-head:not(.ant-timeline-item-head-custom) {
+        display: none;
+      }
+
+      .ant-timeline-item-content {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .knotCard {
+    font-family: 'Montserrat', sans-serif;
+    background: #313131;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 5px 0;
+    position: relative;
+    transition: all 0.21s ease;
+
+    &.private {
+      filter: brightness(66%);
+    }
+
+    p {
+      color: #aaa;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+    }
+  }
+}
