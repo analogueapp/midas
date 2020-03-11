@@ -7,18 +7,22 @@ import { hot } from 'react-hot-loader/root';
 
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 
-import {
-  CloseOutlined
-} from '@ant-design/icons';
-
+import { Menu, Dropdown } from 'antd';
+import { DownOutlined, CloseOutlined, CheckCircleOutlined, ClockCircleOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 
 import './App.scss';
+
+const statusMap = {
+  pub: { message: "Added", icon: <CheckCircleOutlined /> },
+  saved: { message: "Saved for later", icon: <ClockCircleOutlined /> },
+  priv: { message: "Added (private)", icon: <LockOutlined /> }
+}
 
 const App = () => {
 
   const [show, setShow] = useState(false);
   const [content, setContent] = useState(null)
-  const [message, setMessage] = useState("Adding...");
+  const [message, setMessage] = useState("Adding");
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -30,6 +34,10 @@ const App = () => {
       sendResponse({ status: true }) // respond to background page
     }
 
+    if (request.message === "auth_user") {
+      dispatch({ type: 'SET_USER_TOKEN', token: request.token })
+    }
+
     if (request.message === "clicked_browser_action") {
       if (user) {
         setShow(true)
@@ -38,15 +46,14 @@ const App = () => {
       }
     }
 
-    if (request.message === "auth_user") {
-      dispatch({ type: 'SET_USER_TOKEN', token: request.token })
-    }
-
     if (request.message === "parse_content_response") {
       if (request.body.errors) {
         setMessage(request.body.message ? request.body.message : "We're having trouble with that URL . . . ")
       } else {
-        setMessage("Added")
+        setMessage(request.body.content.log && request.body.content.log.status
+          ? statusMap[request.body.content.log.status].message
+          : "Added"
+        )
         setContent(request.body.content)
       }
     }
@@ -77,7 +84,7 @@ const App = () => {
         height: "0",
         top: "0",
         right: "0",
-        zIndex: "2147483647",
+        zIndex: 2147483647,
       }}
     >
       <div
@@ -87,7 +94,7 @@ const App = () => {
           right: "0",
           bottom: "0",
           left: "0",
-          zIndex: "2147483647",
+          zIndex: 2147483647,
           transition: "transform 100ms cubic-bezier(0, 0, 0, 1) 0s, visibility 100ms ease 0s",
           willChange: "transform, visibility",
           visibility: show ? "visible" : "hidden",
@@ -116,19 +123,53 @@ const App = () => {
                       e.stopPropagation()
                     }}>
                       <CloseOutlined
-                        className="close"
+                        className="closeBtn"
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
                           setShow(false)
                         }}
                       />
-                      <img src={logo} className="logo" alt="Analogue Icon" />
-                      <p className="message">{message}</p>
+
+                      <Dropdown
+                        disabled={!content}
+                        align={{offset: [0, 10]}}
+                        overlayClassName="dropdownStatusOverlay"
+                        getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                        overlay={
+                          <Menu>
+                            {content && content.log && content.log.status !== "pub" &&
+                              <Menu.Item>
+                                <CheckCircleOutlined /> Add to library
+                              </Menu.Item>
+                            }
+                            {content && content.log && content.log.status !== "saved" &&
+                              <Menu.Item>
+                                <ClockCircleOutlined /> Save for later
+                              </Menu.Item>
+                            }
+                            {content && content.log && content.log.status !== "priv" &&
+                              <Menu.Item>
+                                <LockOutlined /> Make private
+                              </Menu.Item>
+                            }
+                          </Menu>
+                        }
+                      >
+                        <div className="dropdownStatus">
+                          {content && content.log && content.log.status
+                            ? statusMap[content.log.status].icon
+                            : <LoadingOutlined />
+                          }
+                          {message}
+                          {content && content.log && <DownOutlined /> }
+                        </div>
+                      </Dropdown>
+
                       <ContentPreview content={content} />
 
                       <div className="addNote">
-                        Add Note
+                        Add a note
                       </div>
                     </div>
                   </div>

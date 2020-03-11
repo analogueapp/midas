@@ -43,6 +43,29 @@ h6 {
   -webkit-font-smoothing: antialiased;
 }
 
+// ANT DESIGN OVERRIDES
+body {
+  background: none;
+  line-height: 1em;
+}
+
+.ant-dropdown-menu {
+  background: #2a2a2a;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
+}
+
+.ant-dropdown-menu-item {
+  font-size: 16px;
+  padding: 10px 14px;
+
+  > .anticon:first-child {
+    min-width: 16px;
+    margin-right: 11px;
+    font-size: 16px;
+  }
+}
+
+// ANALOGUE SPECIFIC
 .analogue-mask {
   width: 100vw;
   height: 100vh;
@@ -55,7 +78,7 @@ h6 {
     .analogue-modal {
       width: 360px;
       background: #242424;
-      box-shadow: rgba(0, 0, 0, 0.2) 0 2px 16px 0;
+      box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
       margin: 32px auto;
       border-width: 1px;
       border-style: solid;
@@ -66,45 +89,60 @@ h6 {
       position: relative;
       z-index: 2147483647;
 
-      .anticon.anticon-close {
+      .closeBtn.anticon.anticon-close {
         position: absolute;
-        top: 25px;
+        top: 22px;
         right: 21px;
         color: #aaa;
-        font-size: 18px;
+        font-size: 21px;
         transition: 0.21s ease all;
+        cursor: pointer;
 
-        &.anticon-close.close {
-          cursor: pointer;
-
-          &:hover {
-            color: #e3e3e3;
-          }
+        &:hover {
+          color: #e3e3e3;
         }
       }
 
-
-      .message {
+      .dropdownStatus {
         user-select: none;
         text-align: left;
         font-family: $montserrat;
-        font-weight: 400 !important;
+        font-weight: 400;
         color: #e3e3e3;
         line-height: 1em;
         padding: 0;
-        margin: 8px auto 10px 60px;
+        margin: 0;
         font-size: 16px;
         text-transform: uppercase;
         letter-spacing: 1px;
         color: #aaa;
+        display: inline-block;
+        cursor: pointer;
 
         .anticon {
-          margin-left: 5px;
 
-          &.anticon-check {
+          &:first-child {
+            font-size: 26px;
+            width: 46px;
+            margin-right: 18px;
+            vertical-align: -0.3em;
+          }
+
+          &:nth-child(2) {
+            font-size: 15px;
+            margin-left: 5px;
+            color: #777;
+          }
+
+          &.anticon-check-circle {
             color: #c7ac75;
           }
         }
+      }
+
+      .dropdownStatusOverlay {
+        min-width: 0 !important;
+        width: 171px;
       }
 
       .addNote {
@@ -113,13 +151,12 @@ h6 {
         text-transform: uppercase;
         font-size: 14px;
         margin-top: 15px;
-        font-weight: 400 !important;
+        font-weight: 400;
         font-family: $montserrat;
         color: #aaa;
         cursor: pointer;
         border-top: 1px solid #313131;
       }
     }
-
   }
 }
