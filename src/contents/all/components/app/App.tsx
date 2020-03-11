@@ -188,10 +188,6 @@ const App = () => {
                       <ContentPreview content={content} />
 
                       {log && <Knots knots={log.knots} /> }
-                    
-                      <div className="addNote">
-                        Add a note
-                      </div>
                     </div>
                   </div>
                 </div>
