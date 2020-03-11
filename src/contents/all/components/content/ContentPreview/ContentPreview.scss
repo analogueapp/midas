@@ -2,10 +2,10 @@ $montserrat: 'Montserrat', sans-serif;
 
 .contentPreviewWrapper {
   display: block;
-  margin: 35px auto 25px;
+  margin: 25px auto;
   text-decoration: none;
-  color: #aaa !important;
-  font-weight: 300 !important;
+  color: #aaa;
+  font-weight: 300;
 
   &:hover {
     color: #aaa;
@@ -94,7 +94,7 @@ $montserrat: 'Montserrat', sans-serif;
     overflow: hidden;
     line-height: 1.5em;
     font-family: $montserrat;
-    font-weight: 400 !important;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
 
