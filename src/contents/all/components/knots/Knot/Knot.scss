@@ -14,12 +14,13 @@
 
   .knotCard {
     font-family: 'Montserrat', sans-serif;
-    background: #313131;
+    background: #242424;
     padding: 15px;
     border-radius: 4px;
     margin: 5px 0;
     position: relative;
     transition: all 0.21s ease;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
 
     &.private {
       filter: brightness(66%);
