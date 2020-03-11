@@ -18,7 +18,7 @@ module.exports = api => {
         plugins: [
           'lodash',
           '@babel/plugin-transform-runtime',
-          ['import', { 'libraryName': 'antd', 'style': 'css' }],
+          ['import', { 'libraryName': 'antd', 'style': true }],
         ],
         env: {
             development: {

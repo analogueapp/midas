@@ -61,7 +61,7 @@ const commonConfig: Configuration = {
             raw: true,
         }),
         new WebpackBar({
-            name: 'chrome extension',
+            name: 'analogue midas',
             color: '#0f9d58',
         }),
         new FriendlyErrorsPlugin(),
@@ -114,7 +114,22 @@ const commonConfig: Configuration = {
             },
             {
                 test: /\.less$/,
-                use: [...getCssLoaders(1), 'less-loader'],
+                use: [
+                  MiniCssExtractPlugin.loader,
+                  {
+                    loader: 'css-loader'
+                  },
+                  {
+                    loader: 'less-loader',
+                    options: {
+                      hmr: __DEV__ ,
+                      javascriptEnabled: true,
+                      modifyVars: {
+                        'hack': `true; @import "${resolve(__dirname, '../../src/styles/antd-analogue.less')}";`,
+                      },
+                    },
+                  },
+                ],
             },
             {
                 test: /\.scss$/,
