@@ -140,6 +140,12 @@ body {
       .dropdownStatusOverlay {
         min-width: 0 !important;
         width: 171px;
+        opacity: 1 !important;
+
+        &.slide-up-enter.slide-up-enter-active {
+          animation: none;
+          opacity: 1 !important;
+        }
       }
 
       .addNote {

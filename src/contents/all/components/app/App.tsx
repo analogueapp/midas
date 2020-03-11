@@ -136,7 +136,7 @@ const App = () => {
 
                       <Dropdown
                         disabled={!content}
-                        align={{offset: [-15, 15]}}
+                        align={{offset: [-14, 15]}}
                         overlayClassName="dropdownStatusOverlay"
                         getPopupContainer={(triggerNode) => triggerNode.parentNode}
                         overlay={
