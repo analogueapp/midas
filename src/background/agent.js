@@ -38,7 +38,13 @@ const Contents = {
     requests.post(`/contents/parse?url=${value}`),
 }
 
+const Logs = {
+  update: (log) =>
+    requests.put(`/logs/${log.id}`, { log }),
+};
+
 export default {
+  Logs,
   Contents,
   setToken: _token => { token = _token; }
 };

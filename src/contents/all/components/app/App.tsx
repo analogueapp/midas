@@ -23,10 +23,36 @@ const App = () => {
 
   const [show, setShow] = useState(false);
   const [content, setContent] = useState(null)
+  const [log, setLog] = useState(null)
   const [message, setMessage] = useState("Adding...");
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  // set message listener when component mounts
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(messageListener)
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener)
+    }
+  }, [user])
+
+
+  useEffect(() => {
+    if (user && show && !content) {
+      chrome.runtime.sendMessage({ message: "parse_content" })
+    }
+    return
+  }, [show])
+
+
+  const updateLogStatus = target => {
+    const newLog = Object.assign({}, content.log, { status: target.key })
+    setLog(newLog)
+    setMessage(statusMessage[target.key])
+    chrome.runtime.sendMessage({ message: "log_update", log: newLog })
+  }
 
   const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
@@ -56,26 +82,19 @@ const App = () => {
           : "Added"
         )
         setContent(request.body.content)
+        setLog(request.body.content.log)
       }
     }
+
+
+    if (request.message === "log_update_response") {
+      setMessage(request.body.log && request.body.log.status
+        ? statusMessage[request.body.log.status]
+        : "Added"
+      )
+      setLog(request.body.log)
+    }
   }
-
-  // set message listener when component mounts
-  useEffect(() => {
-    chrome.runtime.onMessage.addListener(messageListener)
-
-    return () => {
-      chrome.runtime.onMessage.removeListener(messageListener)
-    }
-  }, [user])
-
-
-  useEffect(() => {
-    if (user && show && !content) {
-      chrome.runtime.sendMessage({ message: "parse_content" })
-    }
-    return
-  }, [show])
 
   return (
     <div
@@ -135,24 +154,24 @@ const App = () => {
                       <img src={logo} className="logo" alt="Analogue Icon" />
 
                       <Dropdown
-                        disabled={!content}
+                        disabled={!log}
                         align={{offset: [-14, 15]}}
                         overlayClassName="dropdownStatusOverlay"
                         getPopupContainer={(triggerNode) => triggerNode.parentNode}
                         overlay={
-                          <Menu>
-                            {content && content.log && content.log.status !== "pub" &&
-                              <Menu.Item>
+                          <Menu onClick={updateLogStatus}>
+                            {log && log.status !== "pub" &&
+                              <Menu.Item key="pub">
                                 Add to library
                               </Menu.Item>
                             }
-                            {content && content.log && content.log.status !== "saved" &&
-                              <Menu.Item>
+                            {log && log.status !== "saved" &&
+                              <Menu.Item key="saved">
                                 Save for later
                               </Menu.Item>
                             }
-                            {content && content.log && content.log.status !== "priv" &&
-                              <Menu.Item>
+                            {log && log.status !== "priv" &&
+                              <Menu.Item key="priv">
                                 Add privately
                               </Menu.Item>
                             }
@@ -161,7 +180,7 @@ const App = () => {
                       >
                         <div className="dropdownStatus">
                           {message}
-                          {content && content.log && <DownOutlined /> }
+                          {log && <DownOutlined /> }
                         </div>
                       </Dropdown>
 

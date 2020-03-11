@@ -87,9 +87,20 @@ const messageListener = (request) => {
     agent.setToken(sessionStorage.getItem("analogue-jwt"))
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
-      // Send a message to the active tab
+      // Send a message to the active tab with server response
       agent.Contents.parse(activeTab.url).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
+      })
+    })
+  }
+
+  if (request.message === "log_update") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Logs.update(request.log).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "log_update_response", body: response });
       })
     })
   }
