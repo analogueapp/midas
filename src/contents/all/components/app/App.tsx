@@ -8,21 +8,22 @@ import { hot } from 'react-hot-loader/root';
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 
 import { Menu, Dropdown } from 'antd';
-import { DownOutlined, CloseOutlined, CheckCircleOutlined, ClockCircleOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
+import { DownOutlined, CloseOutlined } from '@ant-design/icons';
 
+import logo from './logo.png';
 import './App.scss';
 
-const statusMap = {
-  pub: { message: "Added", icon: <CheckCircleOutlined /> },
-  saved: { message: "Saved for later", icon: <ClockCircleOutlined /> },
-  priv: { message: "Added (private)", icon: <LockOutlined /> }
+const statusMessage = {
+  pub: "Added",
+  saved: "Saved for later",
+  priv: "Added privately"
 }
 
 const App = () => {
 
   const [show, setShow] = useState(false);
   const [content, setContent] = useState(null)
-  const [message, setMessage] = useState("Adding");
+  const [message, setMessage] = useState("Adding...");
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const App = () => {
         setMessage(request.body.message ? request.body.message : "We're having trouble with that URL . . . ")
       } else {
         setMessage(request.body.content.log && request.body.content.log.status
-          ? statusMap[request.body.content.log.status].message
+          ? statusMessage[request.body.content.log.status]
           : "Added"
         )
         setContent(request.body.content)
@@ -131,36 +132,34 @@ const App = () => {
                         }}
                       />
 
+                      <img src={logo} className="logo" alt="Analogue Icon" />
+
                       <Dropdown
                         disabled={!content}
-                        align={{offset: [0, 10]}}
+                        align={{offset: [-15, 15]}}
                         overlayClassName="dropdownStatusOverlay"
                         getPopupContainer={(triggerNode) => triggerNode.parentNode}
                         overlay={
                           <Menu>
                             {content && content.log && content.log.status !== "pub" &&
                               <Menu.Item>
-                                <CheckCircleOutlined /> Add to library
+                                Add to library
                               </Menu.Item>
                             }
                             {content && content.log && content.log.status !== "saved" &&
                               <Menu.Item>
-                                <ClockCircleOutlined /> Save for later
+                                Save for later
                               </Menu.Item>
                             }
                             {content && content.log && content.log.status !== "priv" &&
                               <Menu.Item>
-                                <LockOutlined /> Make private
+                                Add privately
                               </Menu.Item>
                             }
                           </Menu>
                         }
                       >
                         <div className="dropdownStatus">
-                          {content && content.log && content.log.status
-                            ? statusMap[content.log.status].icon
-                            : <LoadingOutlined />
-                          }
                           {message}
                           {content && content.log && <DownOutlined /> }
                         </div>
