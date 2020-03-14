@@ -8578,6 +8578,13 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-trix@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-trix/-/react-trix-0.7.0.tgz#f320b0bfda2aad650f7e12e09654ef8ef6d07c0a"
+  integrity sha512-0GkzZkHry7tuA4h+BYe0k57iw1EwnDZo7+haV3hp3r5M0AKlMRAWSw1DvX8KKhUubXMqHwS8Z0zBUcuG2mv07g==
+  dependencies:
+    trix "^1.2.2"
+
 react@^16.12.0:
   version "16.12.0"
   resolved "https://registry.npm.taobao.org/react/download/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
@@ -10369,6 +10376,11 @@ trim@0.0.1:
   version "0.0.1"
   resolved "https://registry.npm.taobao.org/trim/download/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
   integrity sha1-WFhUf2spB1fulczMZm+1AITEYN0=
+
+trix@^1.2.2:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-1.2.3.tgz#354d8002b3b8f7af426a85097c2fa2042a538d2b"
+  integrity sha512-1E/abahXhFgrTsIfd20c2NRp3VXqtwzseFevfZdHjvqS2+7TDfGGefn2BAeHnsInR3QWoLn33xAXw6aGZVVRgw==
 
 trough@^1.0.0:
   version "1.0.5"
