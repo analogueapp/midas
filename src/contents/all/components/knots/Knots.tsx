@@ -2,6 +2,8 @@ import React from 'react';
 
 import Knot from './Knot/Knot';
 
+import './Knots.scss';
+
 const Knots = props => {
   if (props.knots && props.knots.length > 0) {
     return (
