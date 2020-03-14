@@ -3,6 +3,7 @@ import React from 'react';
 import { Timeline } from 'antd';
 
 import './Knot.scss';
+import '../Trix.scss';
 
 const Knot = props => (
   <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
