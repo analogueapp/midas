@@ -140,7 +140,7 @@ const App = () => {
               return (
                 <div className="analogue-mask" onClick={() => setShow(false)}>
                   <div className="analogue-fixed-sidebar">
-                    <div className="analogue-modal" onClick={(e) => {
+                    <div className={`analogue-modal ${content ? "loaded" : ""}`} onClick={(e) => {
                       e.stopPropagation()
                     }}>
                       <CloseOutlined

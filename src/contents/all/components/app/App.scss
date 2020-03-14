@@ -115,6 +115,13 @@ body,
       padding: 20px;
       position: relative;
       z-index: 2147483647;
+      max-height: 170px;
+      transition: max-height 0.31s ease;
+      overflow: hidden;
+
+      &.loaded {
+        max-height: calc(100vh - 64px);
+      }
 
       .logo {
         position: absolute;
