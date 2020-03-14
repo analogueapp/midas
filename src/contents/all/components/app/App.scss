@@ -33,12 +33,10 @@ h6 {
 }
 
 * {
-  border: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
   font-weight: inherit;
   outline: 0;
   padding: 0;
-  text-decoration: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -68,6 +66,33 @@ body {
 }
 
 // ANALOGUE SPECIFIC
+html {
+  --scrollbarBG: #1a1a1a;
+  --thumbBG: #313131;
+  --scrollbarBGLight: #242424;
+  --thumbBGLight: #3a3a3a;
+}
+
+body,
+.knots {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+
+  &::-webkit-scrollbar {
+    width: 11px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+  }
+}
+
 .analogue-mask {
   width: 100vw;
   height: 100vh;
@@ -78,7 +103,7 @@ body {
     right: 32px;
 
     .analogue-modal {
-      width: 360px;
+      width: 400px;
       background: #1a1a1a;
       box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
       margin: 32px auto;
