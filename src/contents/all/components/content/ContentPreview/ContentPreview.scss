@@ -2,7 +2,8 @@ $montserrat: 'Montserrat', sans-serif;
 
 .contentPreviewWrapper {
   display: block;
-  margin: 25px auto;
+  margin: 25px auto 0;
+  padding-bottom: 25px;
   text-decoration: none;
   color: #aaa;
   font-weight: 300;
@@ -13,6 +14,11 @@ $montserrat: 'Montserrat', sans-serif;
       color: #c7ac75;
     }
   }
+}
+
+.loaded .contentPreviewWrapper {
+  border-bottom: 1px solid #2a2a2a;
+  box-shadow: rgba(255, 255, 255, 0.21) 0px 8px 4px -10px;
 }
 
 .contentPreview {
