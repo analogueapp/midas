@@ -22,7 +22,7 @@ const statusMessage = {
 
 const App = () => {
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
   const [message, setMessage] = useState("Adding...");

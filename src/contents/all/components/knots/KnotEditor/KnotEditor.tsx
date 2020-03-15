@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TrixEditor } from "react-trix";
 import { Timeline } from "antd";
-import trix from 'trix';
+import trix from "trix";
 
 import "trix/dist/trix.css";
 import "../Trix.scss";
@@ -16,35 +16,20 @@ const KnotEditor = props => {
 
   const knotEditor = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (knotEditor) {
-      if (props.knot) {
-        knotEditor.addEventListener("trix-blur", updateKnot);
-        // knotEditor.addEventListener("trix-focus", showSave);
-      }
-      knotEditor.addEventListener("keydown", onKeyDown);
-
-      if (props.autoFocus) {
-        const editorInput = knotEditor.firstElementChild.firstElementChild.nextElementSibling;
-        editorInput.focus();
-      }
-    }
-
-    return () => {
-      if (knotEditor) {
-        if (props.knot) {
-          knotEditor.removeEventListener("trix-blur", updateKnot);
-          // knotEditor.removeEventListener("trix-focus", showSave);
-
-          knotEditor.removeEventListener("trix-file-accept", trixFileAcceptEvent)
-          knotEditor.removeEventListener("trix-attachment-add", trixAddAttachmentEvent)
-          knotEditor.removeEventListener("trix-attachment-remove", trixRemoveAttachmentEvent)
-        }
-        knotEditor.removeEventListener("keydown", onKeyDown);
-        knotEditor.removeEventListener("trix-change", handleEditorChange)
-      }
-    }
-  }, [])
+  // custom hook for attaching and removing event listeners
+  // https://dev.to/adrianbdesigns/custom-react-hooks-useeventlistener-1kp
+  const useEventListener = (target, type, listener, ...options) => {
+    useEffect(() => {
+      const targetIsRef = target.hasOwnProperty("current");
+      const currentTarget = targetIsRef ? target.current : target;
+      if (currentTarget)
+        currentTarget.addEventListener(type, listener, ...options);
+      return () => {
+        if (currentTarget)
+          currentTarget.removeEventListener(type, listener, ...options);
+      };
+    }, [target, type, listener, options])
+  }
 
   const onKeyDown = (e) => {
     if (e.key == "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -68,14 +53,14 @@ const KnotEditor = props => {
 
   const handleEditorReady = (trix) => {
     this.trixEditor = trix
-    // this.trixAddAttachmentButtonToToolbar()
-    if (knotEditor) {
-      knotEditor.addEventListener("trix-change", this.handleEditorChange)
-      if (props.knot) {
-        knotEditor.addEventListener("trix-file-accept", this.trixFileAcceptEvent)
-        knotEditor.addEventListener("trix-attachment-add", this.trixAddAttachmentEvent)
-        knotEditor.addEventListener("trix-attachment-remove", this.trixRemoveAttachmentEvent)
-      }
+
+    useEventListener(knotEditor, "keydown", onKeyDown);
+    // trix specific
+    useEventListener(knotEditor, "trix-change", handleEditorChange)
+    if (props.knot) {
+      useEventListener(knotEditor, "trix-file-accept", trixFileAcceptEvent)
+      useEventListener(knotEditor, "trix-attachment-add", trixAddAttachmentEvent)
+      useEventListener(knotEditor, "trix-attachment-remove", trixRemoveAttachmentEvent)
     }
   }
 
