@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Timeline } from "antd";
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
 
@@ -9,12 +9,31 @@ const KnotInput = props => {
 
   const platform = window.navigator.platform.includes("Mac")
 
+  const knotEditor = useRef<HTMLInputElement>(null)
   const [body, setBody] = useState(RichTextEditor.createEmptyValue())
   const [showFooter, setShowFooter] = useState(false)
 
+  useEffect(() => {
+    const targetIsRef = knotEditor.hasOwnProperty("current")
+    const currentTarget = targetIsRef ? knotEditor.current : knotEditor;
+    if (currentTarget)
+      currentTarget.addEventListener("keydown", onKeyDown)
+    return () => {
+      if (currentTarget)
+        currentTarget.removeEventListener("keydown", onKeyDown)
+    };
+  }, [])
+
+  const onKeyDown = (e) => {
+    if (e.key == "Enter" && (e.metaKey || e.ctrlKey)) {
+      console.log("cmd enter")
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   const onChange = (value) => {
     setBody(value)
-
     if (value.toString("markdown").length >= 3) {
       if (!showFooter) setShowFooter(true)
     } else {
@@ -26,7 +45,7 @@ const KnotInput = props => {
     <Timeline.Item className={`knot ${props.hasKnots ? "" : "ant-timeline-item-last"}`}>
       <div className="knotCard">
         <div className="knotEditorWrapper">
-          <div className="knotEditor">
+          <div className="knotEditor" ref={knotEditor}>
             {props.show &&
               <RichTextEditor
                 autoFocus
