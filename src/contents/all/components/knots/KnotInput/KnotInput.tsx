@@ -7,11 +7,13 @@ import "./KnotInput.scss";
 
 const KnotInput = props => {
 
-  const platform = window.navigator.platform.includes("Mac")
+  const isMac = window.navigator.platform.includes("Mac")
 
   const knotEditor = useRef<HTMLInputElement>(null)
-  const [body, setBody] = useState(RichTextEditor.createEmptyValue())
+
+  const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
+  const [body, setBody] = useState(RichTextEditor.createEmptyValue())
 
   useEffect(() => {
     const targetIsRef = knotEditor.hasOwnProperty("current")
@@ -26,15 +28,29 @@ const KnotInput = props => {
 
   const onKeyDown = (e) => {
     if (e.key == "Enter" && (e.metaKey || e.ctrlKey)) {
-      console.log("cmd enter")
+      setSubmit(true)
       e.preventDefault()
-      e.stopPropagation()
     }
   }
 
-  const onChange = (value) => {
+  const onChange = value => {
     setBody(value)
-    if (value.toString("markdown").length >= 3) {
+
+    const tempHtml = value.toString("html")
+    const tempText = value.toString("markdown")
+
+    if (submit) {
+      props.createKnot(
+        tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
+        tempHtml.substring(0, tempHtml.length-11) // remove last line <p><br></p>
+      )
+      setSubmit(false)
+      setShowFooter(false)
+      setBody(RichTextEditor.createEmptyValue())
+    }
+
+    // show help text after typing
+    if (tempText.length >= 3) {
       if (!showFooter) setShowFooter(true)
     } else {
       setShowFooter(false)
@@ -59,7 +75,7 @@ const KnotInput = props => {
         </div>
       </div>
       <div className={`knotCardFooter ${showFooter ? "show" : "hide"}`}>
-        <p><code>{platform ? "⌘" : "⌃"}</code><code>Enter</code><span>to save</span></p>
+        <p><code>{isMac ? "⌘" : "⌃"}</code><code>Enter</code><span>to save</span></p>
       </div>
     </Timeline.Item>
   )

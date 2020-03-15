@@ -25,7 +25,7 @@ const App = () => {
   const [show, setShow] = useState(false)
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
-  const [message, setMessage] = useState("Adding...");
+  const [message, setMessage] = useState("Loading...");
 
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
@@ -49,10 +49,16 @@ const App = () => {
 
 
   const updateLogStatus = target => {
-    const newLog = Object.assign({}, content.log, { status: target.key })
+    const newLog = { ...log, status: target.key }
     setLog(newLog)
     setMessage(statusMessage[target.key])
     chrome.runtime.sendMessage({ message: "log_update", log: newLog })
+  }
+
+  const createKnot = (bodyHtml, bodyText) => {
+    const newLog = { ...log, knots: [{ body: bodyHtml }, ...log.knots] }
+    setLog(newLog)
+    // TODO API call to server
   }
 
   const messageListener = (request, sender, sendResponse) => {
@@ -173,7 +179,13 @@ const App = () => {
 
                 <ContentPreview content={content} />
 
-                {log && <Knots show={show} knots={log.knots} /> }
+                {log &&
+                  <Knots
+                    show={show}
+                    knots={log.knots}
+                    createKnot={createKnot}
+                  />
+                }
               </div>
             )
           }
