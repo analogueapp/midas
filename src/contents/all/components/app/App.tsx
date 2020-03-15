@@ -173,7 +173,7 @@ const App = () => {
 
                 <ContentPreview content={content} />
 
-                {log && <Knots knots={log.knots} /> }
+                {log && <Knots show={show} knots={log.knots} /> }
               </div>
             )
           }

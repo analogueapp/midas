@@ -7,7 +7,7 @@ import './Knots.scss';
 
 const Knots = props => (
   <div className="knots">
-    <KnotInput autoFocus hasKnots={props.knots && props.knots.length > 0} />
+    <KnotInput show={props.show} hasKnots={props.knots && props.knots.length > 0} />
     {props.knots.map((knot, index) =>
       <Knot
         key={knot.id}
