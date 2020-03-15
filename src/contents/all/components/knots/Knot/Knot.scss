@@ -1,6 +1,7 @@
 .knot {
-
   &.ant-timeline-item {
+    padding-bottom: 25px;
+
     &:only-child {
       .ant-timeline-item-head:not(.ant-timeline-item-head-custom) {
         display: none;

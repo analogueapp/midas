@@ -7,9 +7,20 @@ import "./KnotInput.scss";
 
 const KnotInput = props => {
 
-  const [body, setBody] = useState(RichTextEditor.createEmptyValue())
+  const platform = window.navigator.platform.includes("Mac")
 
-  const onChange = (value) => setBody(value)
+  const [body, setBody] = useState(RichTextEditor.createEmptyValue())
+  const [showFooter, setShowFooter] = useState(false)
+
+  const onChange = (value) => {
+    setBody(value)
+
+    if (value.toString("markdown").length >= 3) {
+      if (!showFooter) setShowFooter(true)
+    } else {
+      setShowFooter(false)
+    }
+  }
 
   return (
     <Timeline.Item className={`knot ${props.hasKnots ? "" : "ant-timeline-item-last"}`}>
@@ -27,6 +38,9 @@ const KnotInput = props => {
             }
           </div>
         </div>
+      </div>
+      <div className={`knotCardFooter ${showFooter ? "show" : "hide"}`}>
+        <p><code>{platform ? "⌘" : "⌃"}</code><code>Enter</code><span>to save</span></p>
       </div>
     </Timeline.Item>
   )

@@ -1,14 +1,14 @@
 trix-editor, .trix-content {
   border: none;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   padding: 0;
   min-height: 0;
   line-height: 1.5em;
   color: #ccc;
 
   a {
-    font-weight: 300;
+    font-weight: 400;
   }
 
   h1 {
@@ -17,7 +17,7 @@ trix-editor, .trix-content {
   }
   p {
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
   }
   b, strong {
     font-weight: 500;
@@ -53,7 +53,7 @@ trix-editor, .trix-content {
     h1 {
       line-height: 1.5em;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       color: #555;
       margin-bottom: 0;
     }
@@ -62,7 +62,7 @@ trix-editor, .trix-content {
   &:empty::before {
     color: #777;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     content: attr(placeholder);
     width: 100%;
     max-width: 800px;
@@ -94,14 +94,14 @@ trix-editor, .trix-content {
       .attachment a:hover, .attachment a:visited:hover {
         color: inherit; }
   .attachment__caption {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
     margin-top: 0.5em;
     margin-bottom: 2.1em;
     padding: 0;
     text-align: center;
     textarea {
-      font-weight: 300;
+      font-weight: 400;
     }
   }
     .attachment__caption .attachment__name + .attachment__size::before {
@@ -177,7 +177,7 @@ trix-toolbar {
 
   .trix-input--dialog {
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     border: none;
     background: transparent;
 
@@ -194,7 +194,7 @@ trix-toolbar {
 
   input.trix-button--dialog {
     font-size: 11px;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #aaa !important;
@@ -208,7 +208,7 @@ trix-toolbar {
   }
 
   [data-trix-dialog] [data-trix-validate]:invalid {
-    background-color: #330000;
+    background-color: #340000;
   }
 
 

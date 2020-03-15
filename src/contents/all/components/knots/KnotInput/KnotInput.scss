@@ -1,5 +1,5 @@
 .DraftEditor-root {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.5em;
 }
@@ -9,4 +9,50 @@
 
 .DraftEditor-editorContainer {
   color: #ccc;
+}
+
+.knot {
+  .knotCardFooter {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    transition: all 0.21s ease-in-out;
+
+    &.show {
+      opacity: 1;
+    }
+
+    p {
+      margin-top: 3px;
+      font-size: 12px;
+      color: #888;
+      text-align: right;
+
+      span {
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+
+      code {
+        background: #2a2a2a;
+        color: #e3e3e3;
+        padding: 4px 5px 0;
+        height: 18px;
+        margin-right: 5px;
+        text-align: center;
+        line-height: 1em;
+        vertical-align: middle;
+        border-radius: 4px;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 400;
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+
+        &:first-child {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
