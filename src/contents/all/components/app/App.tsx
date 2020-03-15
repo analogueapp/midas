@@ -23,8 +23,11 @@ const statusMessage = {
 const App = () => {
 
   const [show, setShow] = useState(false)
+  const [loading, setLoading] = useState(false)
+
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
+
   const [message, setMessage] = useState("Loading...");
 
   const user = useSelector(state => state.user);
@@ -56,6 +59,7 @@ const App = () => {
   }
 
   const createKnot = (bodyHtml, bodyText) => {
+    setLoading(true)
     chrome.runtime.sendMessage({
       message: "create_knot",
       log: log,
@@ -110,6 +114,7 @@ const App = () => {
     // }
 
     if (request.message === "create_knot_response") {
+      setLoading(false)
       const newLog = { ...log, knots: request.body.knots }
       setLog(newLog)
     }
@@ -192,6 +197,7 @@ const App = () => {
                 {log &&
                   <Knots
                     show={show}
+                    loading={loading}
                     knots={log.knots}
                     createKnot={createKnot}
                   />
