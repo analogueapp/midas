@@ -68,7 +68,9 @@ const App = () => {
 
     if (request.message === "clicked_browser_action") {
       if (user) {
-        setShow(true)
+        setTimeout(() => {
+          setShow(true)
+        }, 111)
       } else {
         window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
       }
