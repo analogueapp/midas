@@ -43,6 +43,7 @@ h6 {
 body {
   background: none;
   line-height: 1em;
+  overflow: hidden;
 }
 
 .ant-dropdown-menu {
@@ -91,92 +92,80 @@ body,
   }
 }
 
-.analogue-mask {
-  width: 100vw;
-  height: 100vh;
+.analogue-modal {
+  width: 400px;
+  background: #1a1a1a;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.04);
+  border-image: initial;
+  border-radius: 8px;
+  padding: 20px;
   position: relative;
+  z-index: 2147483647;
+  max-height: 170px;
+  transition: max-height 0.31s ease;
+  overflow: hidden;
 
-  .analogue-fixed-sidebar {
-    position: fixed;
-    right: 32px;
+  &.loaded {
+    max-height: calc(100vh - 64px);
+  }
 
-    .analogue-modal {
-      width: 400px;
-      background: #1a1a1a;
-      box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
-      margin: 32px auto;
-      border-width: 1px;
-      border-style: solid;
-      border-color: rgba(0, 0, 0, 0.04);
-      border-image: initial;
-      border-radius: 8px;
-      padding: 20px;
-      position: relative;
-      z-index: 2147483647;
-      max-height: 170px;
-      transition: max-height 0.31s ease;
-      overflow: hidden;
+  .logo {
+    position: absolute;
+    width: 31px;
+    height: 31px;
+    object-fit: contain;
+    left: 27px;
+    top: 21px;
+  }
 
-      &.loaded {
-        max-height: calc(100vh - 64px);
-      }
+  .closeBtn.anticon.anticon-close {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    color: #aaa;
+    font-size: 21px;
+    transition: 0.21s ease all;
+    cursor: pointer;
 
-      .logo {
-        position: absolute;
-        width: 31px;
-        height: 31px;
-        object-fit: contain;
-        left: 27px;
-        top: 21px;
-      }
+    &:hover {
+      color: #e3e3e3;
+    }
+  }
 
-      .closeBtn.anticon.anticon-close {
-        position: absolute;
-        top: 25px;
-        right: 20px;
-        color: #aaa;
-        font-size: 21px;
-        transition: 0.21s ease all;
-        cursor: pointer;
+  .dropdownStatus {
+    user-select: none;
+    text-align: left;
+    font-family: $montserrat;
+    font-weight: 400;
+    color: #e3e3e3;
+    line-height: 1em;
+    padding: 0;
+    margin: 8px auto 10px 60px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+    display: inline-block;
+    cursor: pointer;
 
-        &:hover {
-          color: #e3e3e3;
-        }
-      }
+    .anticon {
+      font-size: 15px;
+      margin-left: 5px;
+      color: #777;
+    }
+  }
 
-      .dropdownStatus {
-        user-select: none;
-        text-align: left;
-        font-family: $montserrat;
-        font-weight: 400;
-        color: #e3e3e3;
-        line-height: 1em;
-        padding: 0;
-        margin: 8px auto 10px 60px;
-        font-size: 16px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #aaa;
-        display: inline-block;
-        cursor: pointer;
+  .dropdownStatusOverlay {
+    min-width: 0 !important;
+    width: 181px;
+    opacity: 1 !important;
 
-        .anticon {
-          font-size: 15px;
-          margin-left: 5px;
-          color: #777;
-        }
-      }
-
-      .dropdownStatusOverlay {
-        min-width: 0 !important;
-        width: 181px;
-        opacity: 1 !important;
-
-        &.slide-up-enter.slide-up-enter-active {
-          animation: none;
-          opacity: 1 !important;
-        }
-      }
+    &.slide-up-enter.slide-up-enter-active {
+      animation: none;
+      opacity: 1 !important;
     }
   }
 }

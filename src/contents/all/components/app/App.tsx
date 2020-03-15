@@ -101,102 +101,83 @@ const App = () => {
     <div
       style={{
         position: "fixed",
-        width: "0",
-        height: "0",
-        top: "0",
-        right: "0",
+        width: "400px",
+        right: "21px",
+        top: "21px",
         zIndex: 2147483647,
+        transform: show ? "translateX(0)" : "translateX(421px)",
+        transition: "transform 0.21s ease-in-out",
       }}
     >
-      <div
+      <Frame
         style={{
-          position: "fixed",
-          top: "0",
-          right: "0",
-          bottom: "0",
-          left: "0",
-          zIndex: 2147483647,
-          transition: "transform 100ms cubic-bezier(0, 0, 0, 1) 0s, visibility 100ms ease 0s",
-          willChange: "transform, visibility",
-          visibility: show ? "visible" : "hidden",
-          transform: show ? "translateX(0)" : "translateX(464px)",
-          opacity: show ? "1" : "0",
+          width: "100%",
+          height: "100vh",
+          display: "block",
+          border: "none"
         }}
+        head={[<link type="text/css" rel="stylesheet" href={chrome.runtime.getURL("/css/all.css")}></link>]}
       >
-        <Frame
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "block",
-            border: "none"
-          }}
-          head={[<link type="text/css" rel="stylesheet" href={chrome.runtime.getURL("/css/all.css")}></link>]}
-        >
-         <FrameContextConsumer>
-         {
-           // Callback is invoked with iframe's window and document instances
-           ({document, window}) => {
-              // Render Children
-              return (
-                <div className="analogue-mask" onClick={() => setShow(false)}>
-                  <div className="analogue-fixed-sidebar">
-                    <div className={`analogue-modal ${content ? "loaded" : ""}`} onClick={(e) => {
-                      e.stopPropagation()
-                    }}>
-                      <CloseOutlined
-                        className="closeBtn"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          setShow(false)
-                        }}
-                      />
+       <FrameContextConsumer>
+       {
+         // Callback is invoked with iframe's window and document instances
+         ({document, window}) => {
+            // Render Children
+            return (
+              <div className={`analogue-modal ${content ? "loaded" : ""}`} onClick={(e) => {
+                e.stopPropagation()
+              }}>
+                <CloseOutlined
+                  className="closeBtn"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setShow(false)
+                  }}
+                />
 
-                      <img src={logo} className="logo" alt="Analogue Icon" />
+                <img src={logo} className="logo" alt="Analogue Icon" />
 
-                      <Dropdown
-                        disabled={!log}
-                        align={{offset: [-14, 15]}}
-                        overlayClassName="dropdownStatusOverlay"
-                        getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                        overlay={
-                          <Menu onClick={updateLogStatus}>
-                            {log && log.status !== "pub" &&
-                              <Menu.Item key="pub">
-                                Add to library
-                              </Menu.Item>
-                            }
-                            {log && log.status !== "saved" &&
-                              <Menu.Item key="saved">
-                                Save for later
-                              </Menu.Item>
-                            }
-                            {log && log.status !== "priv" &&
-                              <Menu.Item key="priv">
-                                Add privately
-                              </Menu.Item>
-                            }
-                          </Menu>
-                        }
-                      >
-                        <div className="dropdownStatus">
-                          {message}
-                          {log && <DownOutlined /> }
-                        </div>
-                      </Dropdown>
-
-                      <ContentPreview content={content} />
-
-                      {log && <Knots knots={log.knots} /> }
-                    </div>
+                <Dropdown
+                  disabled={!log}
+                  align={{offset: [-14, 15]}}
+                  overlayClassName="dropdownStatusOverlay"
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                  overlay={
+                    <Menu onClick={updateLogStatus}>
+                      {log && log.status !== "pub" &&
+                        <Menu.Item key="pub">
+                          Add to library
+                        </Menu.Item>
+                      }
+                      {log && log.status !== "saved" &&
+                        <Menu.Item key="saved">
+                          Save for later
+                        </Menu.Item>
+                      }
+                      {log && log.status !== "priv" &&
+                        <Menu.Item key="priv">
+                          Add privately
+                        </Menu.Item>
+                      }
+                    </Menu>
+                  }
+                >
+                  <div className="dropdownStatus">
+                    {message}
+                    {log && <DownOutlined /> }
                   </div>
-                </div>
-              )
-            }
+                </Dropdown>
+
+                <ContentPreview content={content} />
+
+                {log && <Knots knots={log.knots} /> }
+              </div>
+            )
           }
-          </FrameContextConsumer>
-        </Frame>
-      </div>
+        }
+        </FrameContextConsumer>
+      </Frame>
     </div>
   )
 }
