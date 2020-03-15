@@ -2,13 +2,13 @@ import React from 'react';
 import FlipMove from 'react-flip-move';
 
 import Knot from './Knot/Knot';
-import KnotEditor from './KnotEditor/KnotEditor';
+import KnotInput from './KnotInput/KnotInput';
 
 import './Knots.scss';
 
 const Knots = props => (
   <div className="knots">
-    <KnotEditor autoFocus hasKnots={props.knots && props.knots.length > 0} />
+    <KnotInput autoFocus hasKnots={props.knots && props.knots.length > 0} />
     <FlipMove
       duration={300}
       staggerDelayBy={40}
