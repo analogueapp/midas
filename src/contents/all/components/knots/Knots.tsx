@@ -24,7 +24,7 @@ const Knots = props => {
           className={`knotLoading ${hasKnots ? "" : "ant-timeline-item-last"}`}
         />
       }
-      {props.knots &&
+      {hasKnots &&
         <>
         {props.knots.map((knot, index) =>
           <Knot

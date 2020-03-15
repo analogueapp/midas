@@ -51,8 +51,8 @@ $montserrat: 'Montserrat', sans-serif;
       content: "";
     }
     .imgWrapper, h5, .details {
-      background: -webkit-gradient(linear, left top, right top, color-stop(25%, #313131), color-stop(37%, #3a3a3a), color-stop(63%, #313131));
-      background: linear-gradient(90deg, #313131 25%, #3a3a3a 37%, #313131 63%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(25%, #242424), color-stop(37%, #2a2a2a), color-stop(63%, #242424));
+      background: linear-gradient(90deg, #242424 25%, #2a2a2a 37%, #242424 63%);
       background-size: 400% 100%;
       -webkit-animation: skeleton-loading 1.1s ease infinite;
       animation: skeleton-loading 1.1s ease infinite;
@@ -84,7 +84,7 @@ $montserrat: 'Montserrat', sans-serif;
     line-height: 1em;
     overflow: hidden;
     border-radius: 7px;
-    border: 1px solid #333;
+    border: 1px solid #242424;
 
     img {
       height: 100%;
