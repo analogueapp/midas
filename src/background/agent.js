@@ -41,10 +41,16 @@ const Contents = {
 const Logs = {
   update: (log) =>
     requests.put(`/logs/${log.id}`, { log }),
-};
+}
+
+const Knots = {
+  create: (knot, log) =>
+    requests.post(`/knots`, { knot: knot, log_id: log.id }),
+}
 
 export default {
   Logs,
+  Knots,
   Contents,
   setToken: _token => { token = _token; }
-};
+}

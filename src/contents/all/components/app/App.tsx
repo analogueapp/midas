@@ -37,7 +37,7 @@ const App = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [user])
+  }, [user, content, log])
 
 
   useEffect(() => {
@@ -56,9 +56,14 @@ const App = () => {
   }
 
   const createKnot = (bodyHtml, bodyText) => {
-    const newLog = { ...log, knots: [{ body: bodyHtml }, ...log.knots] }
-    setLog(newLog)
-    // TODO API call to server
+    chrome.runtime.sendMessage({
+      message: "create_knot",
+      log: log,
+      knot: {
+        body: bodyHtml,
+        bodyText: bodyText
+      }
+    })
   }
 
   const messageListener = (request, sender, sendResponse) => {
@@ -95,13 +100,18 @@ const App = () => {
       }
     }
 
+    // optional for response from log_update
+    // if (request.message === "log_update_response") {
+    //   setMessage(request.body.log && request.body.log.status
+    //     ? statusMessage[request.body.log.status]
+    //     : "Added"
+    //   )
+    //   setLog(request.body.log)
+    // }
 
-    if (request.message === "log_update_response") {
-      setMessage(request.body.log && request.body.log.status
-        ? statusMessage[request.body.log.status]
-        : "Added"
-      )
-      setLog(request.body.log)
+    if (request.message === "create_knot_response") {
+      const newLog = { ...log, knots: request.body.knots }
+      setLog(newLog)
     }
   }
 
