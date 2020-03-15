@@ -128,6 +128,7 @@ const App = () => {
         right: "21px",
         top: "21px",
         zIndex: 2147483647,
+        willChange: "transform",
         transform: show ? "translateX(0)" : "translateX(421px)",
         transition: "transform 0.21s ease-in-out",
       }}
