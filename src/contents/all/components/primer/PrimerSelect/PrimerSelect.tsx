@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Content, Log } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
@@ -12,11 +12,18 @@ interface Props {
 }
 
 const PrimerSelect = (props: Props) => {
+
+  const [show, setShow] = useState(false)
+  const toggleShow = () => setShow(!show)
+
   return (
     <div className="primerSelect">
-      <div className="primerSelectAction">
+      <div className="primerSelectAction" onClick={toggleShow}>
         <PrimerItem collection={props.content.collection} />
-        <DownOutlined />
+        <DownOutlined className={`${show ? "show" : ""}`}/>
+      </div>
+      <div className={`primerSelectList ${show ? "show" : ""}`}>
+        <p>test</p>
       </div>
     </div>
   )

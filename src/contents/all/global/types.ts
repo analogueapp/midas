@@ -39,6 +39,7 @@ export interface Content {
   publishedAt: string
   title: string
   slug: string
+  collection: string
 }
 
 export interface Primer {

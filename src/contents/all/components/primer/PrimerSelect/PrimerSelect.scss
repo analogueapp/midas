@@ -1,4 +1,5 @@
 .primerSelect {
+
   .primerSelectAction {
     border-top: 1px solid #2a2a2a;
     box-shadow: rgba(255, 255, 255, 0.21) 0px -8px 4px -10px;
@@ -12,6 +13,18 @@
 
     &:hover {
       background: #242424;
+      .anticon {
+        color: #e3e3e3
+      }
+    }
+
+    .anticon {
+      transition: all 0.21s ease;
+      color: #777;
+
+      &.show {
+        transform: rotate(180deg);
+      }
     }
 
     .primerItem {
@@ -21,6 +34,16 @@
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+    }
+  }
+
+  .primerSelectList {
+    max-height: 0;
+    transition: all 0.21s ease-in-out;
+
+    &.show {
+      height: auto;
+      max-height: 400px;
     }
   }
 }
