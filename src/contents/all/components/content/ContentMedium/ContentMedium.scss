@@ -1,0 +1,38 @@
+.contentMedium {
+  font-size: 13px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  color: #ccc;
+
+  svg {
+    vertical-align: -0.125em;
+
+    &.tvIcon {
+      vertical-align: -0.1em;
+    }
+  }
+
+  .anticon {
+    svg {
+      vertical-align: -0.02em;
+    }
+  }
+
+  &.noText {
+    .text {
+      display: none;
+    }
+  }
+
+  a {
+    font-weight: 300;
+    text-decoration: none;
+    color: #ccc;
+
+    &:hover, &:active, &:visited, &:focus {
+      font-weight: 300;
+      text-decoration: none;
+    }
+  }
+}
