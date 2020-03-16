@@ -1,6 +1,17 @@
 import React from 'react';
-import { AudioOutlined, CustomerServiceOutlined } from '@ant-design/icons';
-import { FiFilm, FiBook, FiFileText, FiTv, FiFilter } from "react-icons/fi";
+import {
+  AudioOutlined,
+  CustomerServiceOutlined,
+  PlayCircleOutlined,
+  LinkOutlined
+} from '@ant-design/icons';
+import {
+  FiFilm,
+  FiBook,
+  FiFileText,
+  FiTv,
+  FiFilter
+} from "react-icons/fi";
 import { FaSignature } from "react-icons/fa";
 
 import './ContentMedium.scss';
@@ -53,23 +64,13 @@ const ContentMedium = props => {
   mediumKey = mediumKey === "episode" ? `${props.content.form} ${mediumKey}` : mediumKey
 
   return (
-    <div className={`contentMedium ${props.noText ? "noText" : ""}`}>
-      {!props.noLink && props.content.originUrl && props.content.formDisplay !== "film"
-        ? (
-          <a href={`${props.content.originUrl}`} target="_blank">
-            <span>
-              {mediumIcons[mediumKey]}
-              <span className="text"> {props.content.mediumDisplay}</span>
-            </span>
-          </a>
-        )
-        : (
-          <span>
-            {mediumIcons[mediumKey]}
-            <span className="text"> {props.content.mediumDisplay}</span>
-          </span>
-        )
-      }
+    <div className="contentMedium">
+      <span>
+        {mediumIcons[mediumKey]}
+        {!props.noText &&
+          <span className="text"> {props.content.mediumDisplay}</span>
+        }
+      </span>
     </div>
   )
 }

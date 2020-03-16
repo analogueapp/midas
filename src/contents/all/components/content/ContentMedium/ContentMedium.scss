@@ -1,9 +1,9 @@
 .contentMedium {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   text-transform: uppercase;
   margin-bottom: 5px;
-  color: #ccc;
+  color: #aaa;
 
   svg {
     vertical-align: -0.125em;
@@ -19,19 +19,13 @@
     }
   }
 
-  &.noText {
-    .text {
-      display: none;
-    }
-  }
-
   a {
-    font-weight: 300;
+    font-weight: 400;
     text-decoration: none;
-    color: #ccc;
+    color: #aaa;
 
     &:hover, &:active, &:visited, &:focus {
-      font-weight: 300;
+      font-weight: 400;
       text-decoration: none;
     }
   }

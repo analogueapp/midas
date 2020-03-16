@@ -3,6 +3,8 @@ import React from 'react';
 import ProgressiveImage from 'react-progressive-image';
 import placeholderImg from '../../../assets/img/placeholders/placeholder_1x1.jpg';
 
+import ContentMedium from '../ContentMedium/ContentMedium';
+
 import './ContentPreview.scss'
 
 const ContentPreviewHeader = props => {
@@ -29,7 +31,7 @@ const ContentPreviewHeader = props => {
           <h5 className="title">{props.content.title}</h5>
 
           <div className="details">
-            {props.content.originUrl}
+            <ContentMedium content={props.content} />
           </div>
 
         </div>
