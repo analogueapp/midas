@@ -11,7 +11,7 @@ import Knots from '../knot/Knots';
 import { Menu, Dropdown } from 'antd';
 import { DownOutlined, CloseOutlined } from '@ant-design/icons';
 
-import logo from './logo.png';
+import logo from '../../assets/img/logo_icon.png';
 import './App.scss';
 
 const statusMessage = {
