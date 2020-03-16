@@ -52,7 +52,7 @@ const PrimerItem = (props: Props) => {
 
         {props.selectable &&
           <div className="addBtn">
-            <Button><Icon type="check" /></Button>
+            <Button><CheckOutlined /></Button>
           </div>
         }
       </div>
