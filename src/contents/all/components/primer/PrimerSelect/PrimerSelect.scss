@@ -1,0 +1,26 @@
+.primerSelect {
+  .primerSelectAction {
+    border-top: 1px solid #2a2a2a;
+    box-shadow: rgba(255, 255, 255, 0.21) 0px -8px 4px -10px;
+    margin: 15px -20px 0;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: ease all 0.21s;
+    display: flex;
+    align-items: center;
+    user-select: none;
+
+    &:hover {
+      background: #242424;
+    }
+
+    .primerItem {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+    }
+  }
+}

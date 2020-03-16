@@ -7,9 +7,10 @@ import { hot } from 'react-hot-loader/root';
 
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots';
+import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
 
 import { Menu, Dropdown } from 'antd';
-import { DownOutlined, CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, DownOutlined } from '@ant-design/icons';
 
 import logo from '../../assets/img/logo_icon.png';
 import './App.scss';
@@ -203,9 +204,7 @@ const App = () => {
                       knots={log.knots}
                       createKnot={createKnot}
                     />
-                    <div className="actionFooter">
-                      test
-                    </div>
+                    <PrimerSelect content={content} log={log} />
                   </>
                 }
               </div>

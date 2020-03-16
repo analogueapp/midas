@@ -102,7 +102,7 @@ body,
   border-color: rgba(0, 0, 0, 0.04);
   border-image: initial;
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   position: relative;
   z-index: 2147483647;
   // max-height: 170px;
@@ -168,13 +168,6 @@ body,
       animation: none;
       opacity: 1 !important;
     }
-  }
-
-  .actionFooter {
-    border-top: 1px solid #2a2a2a;
-    box-shadow: rgba(255, 255, 255, 0.21) 0px -8px 4px -10px;
-    margin: 15px -21px 0;
-    padding: 21px 21px 0;
   }
 }
 
