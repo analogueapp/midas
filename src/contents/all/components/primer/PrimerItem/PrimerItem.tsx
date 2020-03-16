@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, Button } from 'antd';
+import { Button } from 'antd';
 import { Primer, Log } from '../../../global/types';
 
 import ProgressiveImage from 'react-progressive-image';
@@ -16,7 +16,7 @@ interface Props {
   primer: Primer
   collection?: string
   selectable?: boolean
-  selected?: boolean // ? denotes optional prop in TS
+  selected?: boolean
 }
 
 const PrimerItem = (props: Props) => {
@@ -43,7 +43,7 @@ const PrimerItem = (props: Props) => {
 
   if (props.collection) {
     return (
-      <List.Item className={`primerItem collection ${props.selectable ? "selected" : ""}`}>
+      <div className={`primerItem collection ${props.selectable ? "selectable selected" : ""}`}>
         <div className="imgWrapper">
           {mediumIcons[props.collection]}
         </div>
@@ -55,13 +55,13 @@ const PrimerItem = (props: Props) => {
             <Button><Icon type="check" /></Button>
           </div>
         }
-      </List.Item>
+      </div>
     )
   }
 
   return (
-    <List.Item
-      className={`primerItem ${selected ? "selected" : ""}`}
+    <div
+      className={`primerItem ${props.selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
       onClick={props.selectable ? this.togglePrimer : null}
     >
       <div className="imgWrapper">
@@ -87,7 +87,7 @@ const PrimerItem = (props: Props) => {
           <Button>{selected ? <CheckOutlined /> : "Add"}</Button>
         </div>
       }
-    </List.Item>
+    </div>
   )
 }
 

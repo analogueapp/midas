@@ -5,6 +5,9 @@
   border-radius: 7px;
   transition: all 0.21s ease;
   cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
 
   &.collection {
     .title {
@@ -23,13 +26,15 @@
     }
   }
 
-  &:hover, &:active {
-    background: #313131;
-
-    .addBtn {
+  &.selectable {
+    &:hover, &:active {
       background: #313131;
-      opacity: 1;
-      visibility: visible;
+
+      .addBtn {
+        background: #313131;
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
@@ -70,7 +75,6 @@
     font-size: 15px;
     font-weight: 400;
     margin-bottom: 1px;
-    width: 181px;
   }
   .anticon {
     color: #aaa;
