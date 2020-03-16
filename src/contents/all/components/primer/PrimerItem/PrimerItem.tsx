@@ -12,7 +12,9 @@ import './PrimerItem.scss'
 
 interface Props {
   // updateCurrentPrimers?: (currentSelected: boolean) => void
-  selected?: boolean
+  collection: string
+  selectable: boolean
+  selected: boolean
   primer: Primer
   log: Log
 }
@@ -22,7 +24,7 @@ interface State {
 }
 
 class PrimerItem extends React.Component<Props, State> {
-
+  
   state = {
     selected: this.props.selected ? true : false,
   }
@@ -34,7 +36,7 @@ class PrimerItem extends React.Component<Props, State> {
     this.setState({ selected: !currentSelected })
 
     if (this.state.selected) {
-      // todo add to primes
+      // todo add to primer
       // agent.Primers.removeLog(this.props.primer.slug, this.props.log.id).then(
       //   res => this.props.updateCurrentPrimers(currentSelected)
       // )
@@ -47,21 +49,28 @@ class PrimerItem extends React.Component<Props, State> {
 
   render() {
 
-    <List.Item className="primerItem selected collection">
-      <div className="imgWrapper">
-        {mediumIcons[this.props.contentCollection]}
-      </div>
-      <h5 className="title">{this.props.contentCollection}</h5>
+    if (this.props.collection) {
+      return (
+        <List.Item className={`primerItem collection ${this.props.selectable ? "selected" : ""}`}>
+          <div className="imgWrapper">
+            {mediumIcons[this.props.collection]}
+          </div>
 
-      <div className="addBtn">
-        <Button><Icon type="check" /></Button>
-      </div>
-    </List.Item>
+          <h5 className="title">{this.props.collection}</h5>
+
+          {this.props.selectable &&
+            <div className="addBtn">
+              <Button><Icon type="check" /></Button>
+            </div>
+          }
+        </List.Item>
+      )
+    }
 
     return (
       <List.Item
         className={`primerItem ${this.state.selected ? "selected" : ""}`}
-        onClick={this.togglePrimer}
+        onClick={this.props.selectable ? this.togglePrimer : null}
       >
         <div className="imgWrapper">
           <ProgressiveImage
@@ -73,6 +82,7 @@ class PrimerItem extends React.Component<Props, State> {
             )}
           </ProgressiveImage>
         </div>
+
         <h5 className="title">{this.props.primer.title}</h5>
 
         <ul className="ant-list-item-action">
@@ -80,9 +90,11 @@ class PrimerItem extends React.Component<Props, State> {
           {this.props.primer.private && <li><LockOutlined /></li>}
         </ul>
 
-        <div className="addBtn">
-          <Button>{this.state.selected ? <CheckOutlined /> : "Add"}</Button>
-        </div>
+        {this.props.selectable &&
+          <div className="addBtn">
+            <Button>{this.state.selected ? <CheckOutlined /> : "Add"}</Button>
+          </div>
+        }
       </List.Item>
     )
   }
