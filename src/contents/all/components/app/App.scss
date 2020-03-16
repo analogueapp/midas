@@ -169,6 +169,13 @@ body,
       opacity: 1 !important;
     }
   }
+
+  .actionFooter {
+    border-top: 1px solid #2a2a2a;
+    box-shadow: rgba(255, 255, 255, 0.21) 0px -8px 4px -10px;
+    margin: 15px -21px 0;
+    padding: 21px 21px 0;
+  }
 }
 
 @keyframes fadein {

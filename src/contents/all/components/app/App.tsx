@@ -196,12 +196,17 @@ const App = () => {
                 <ContentPreview content={content} />
 
                 {log &&
-                  <Knots
-                    show={show}
-                    loading={loading}
-                    knots={log.knots}
-                    createKnot={createKnot}
-                  />
+                  <>
+                    <Knots
+                      show={show}
+                      loading={loading}
+                      knots={log.knots}
+                      createKnot={createKnot}
+                    />
+                    <div className="actionFooter">
+                      test
+                    </div>
+                  </>
                 }
               </div>
             )
