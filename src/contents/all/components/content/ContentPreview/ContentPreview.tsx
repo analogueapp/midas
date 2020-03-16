@@ -10,13 +10,12 @@ import './ContentPreview.scss'
 const ContentPreviewHeader = props => {
   if (props.content) {
     return (
-      <a
-        target="_blank"
-        className="contentPreviewWrapper"
-        href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}`}
-      >
-        <div className="contentPreview">
-
+      <div className="contentPreviewWrapper">
+        <a
+          target="_blank"
+          className="contentPreview"
+          href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}`}
+        >
           <div className="imgWrapper">
             <ProgressiveImage
               src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`}
@@ -33,9 +32,8 @@ const ContentPreviewHeader = props => {
           <div className="details">
             <ContentMedium content={props.content} />
           </div>
-
-        </div>
-      </a>
+        </a>
+      </div>
     )
   }
   return (
