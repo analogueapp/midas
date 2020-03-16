@@ -93,7 +93,7 @@ body,
   }
 }
 
-.analogue-modal {
+.analogueModal {
   width: 400px;
   background: #1a1a1a;
   box-shadow: rgba(0, 0, 0, 0.2) 0 4px 24px;
@@ -112,60 +112,63 @@ body,
   //   max-height: calc(100vh - 64px);
   // }
 
-  .logo {
-    position: absolute;
-    width: 31px;
-    height: 31px;
-    object-fit: contain;
-    left: 27px;
-    top: 21px;
-  }
+  .analogueModalHeader {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px 10px;
 
-  .closeBtn.anticon.anticon-close {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    color: #aaa;
-    font-size: 21px;
-    transition: 0.21s ease all;
-    cursor: pointer;
+    .logo {
+      width: 31px;
+      height: 31px;
+      margin: 0 15px;
+      object-fit: contain;
+    }
 
-    &:hover {
+    .closeBtn.anticon.anticon-close {
+      color: #aaa;
+      font-size: 21px;
+      transition: 0.21s ease all;
+      cursor: pointer;
+
+      &:hover {
+        color: #e3e3e3;
+      }
+    }
+
+    .dropdownStatus {
+      user-select: none;
+      text-align: left;
+      font-family: $montserrat;
+      font-weight: 400;
       color: #e3e3e3;
+      line-height: 1em;
+      font-size: 16px;
+      margin: 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #aaa;
+      display: flex;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      cursor: pointer;
+
+      .anticon {
+        font-size: 15px;
+        margin-left: 5px;
+        color: #777;
+      }
     }
-  }
 
-  .dropdownStatus {
-    user-select: none;
-    text-align: left;
-    font-family: $montserrat;
-    font-weight: 400;
-    color: #e3e3e3;
-    line-height: 1em;
-    padding: 20px 20px 0;
-    margin: 8px auto 10px 60px;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #aaa;
-    display: inline-block;
-    cursor: pointer;
-
-    .anticon {
-      font-size: 15px;
-      margin-left: 5px;
-      color: #777;
-    }
-  }
-
-  .dropdownStatusOverlay {
-    min-width: 0 !important;
-    width: 181px;
-    opacity: 1 !important;
-
-    &.slide-up-enter.slide-up-enter-active {
-      animation: none;
+    .dropdownStatusOverlay {
+      min-width: 0 !important;
+      width: 181px;
       opacity: 1 !important;
+
+      &.slide-up-enter.slide-up-enter-active {
+        animation: none;
+        opacity: 1 !important;
+      }
     }
   }
 }

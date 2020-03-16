@@ -149,50 +149,54 @@ const App = () => {
          ({document, window}) => {
             // Render Children
             return (
-              <div className={`analogue-modal ${content ? "loaded" : ""}`} onClick={(e) => {
+              <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
                 e.stopPropagation()
               }}>
-                <CloseOutlined
-                  className="closeBtn"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setShow(false)
-                  }}
-                />
 
-                <img src={logo} className="logo" alt="Analogue Icon" />
+                <div className="analogueModalHeader">
 
-                <Dropdown
-                  disabled={!log}
-                  align={{offset: [-14, 15]}}
-                  overlayClassName="dropdownStatusOverlay"
-                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                  overlay={
-                    <Menu onClick={updateLogStatus}>
-                      {log && log.status !== "pub" &&
-                        <Menu.Item key="pub">
-                          Add to library
-                        </Menu.Item>
-                      }
-                      {log && log.status !== "saved" &&
-                        <Menu.Item key="saved">
-                          Save for later
-                        </Menu.Item>
-                      }
-                      {log && log.status !== "priv" &&
-                        <Menu.Item key="priv">
-                          Add privately
-                        </Menu.Item>
-                      }
-                    </Menu>
-                  }
-                >
-                  <div className="dropdownStatus">
-                    {message}
-                    {log && <DownOutlined /> }
-                  </div>
-                </Dropdown>
+                  <img src={logo} className="logo" alt="Analogue Icon" />
+
+                  <Dropdown
+                    disabled={!log}
+                    align={{offset: [-14, 15]}}
+                    overlayClassName="dropdownStatusOverlay"
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                    overlay={
+                      <Menu onClick={updateLogStatus}>
+                        {log && log.status !== "pub" &&
+                          <Menu.Item key="pub">
+                            Add to library
+                          </Menu.Item>
+                        }
+                        {log && log.status !== "saved" &&
+                          <Menu.Item key="saved">
+                            Save for later
+                          </Menu.Item>
+                        }
+                        {log && log.status !== "priv" &&
+                          <Menu.Item key="priv">
+                            Add privately
+                          </Menu.Item>
+                        }
+                      </Menu>
+                    }
+                  >
+                    <div className="dropdownStatus">
+                      {message}
+                      {log && <DownOutlined /> }
+                    </div>
+                  </Dropdown>
+
+                  <CloseOutlined
+                    className="closeBtn"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setShow(false)
+                    }}
+                  />
+                </div>
 
                 <ContentPreview content={content} />
 
