@@ -37,12 +37,12 @@ const KnotInput = props => {
     setBody(value)
 
     const tempHtml = value.toString("html")
-    const tempText = value.toString("markdown")
+    const tempText = value.getEditorState().getCurrentContent().getPlainText() // value.toString("markdown")
 
     if (submit) {
       props.createKnot(
+        tempHtml.substring(0, tempHtml.length-11), // remove last line <p><br></p>
         tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
-        tempHtml.substring(0, tempHtml.length-11) // remove last line <p><br></p>
       )
       setSubmit(false)
       setShowFooter(false)
