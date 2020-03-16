@@ -1,9 +1,9 @@
 .knots {
   max-height: calc(100vh - 300px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  margin: 0 -20px -17px;
-  padding: 35px 20px 0;
+  margin-bottom: -17px;
+  padding: 15px 20px 0;
 
   .knotLoading {
     padding-bottom: 55px;

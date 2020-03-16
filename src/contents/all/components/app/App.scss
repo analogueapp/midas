@@ -102,7 +102,6 @@ body,
   border-color: rgba(0, 0, 0, 0.04);
   border-image: initial;
   border-radius: 8px;
-  padding: 20px 20px 0 20px;
   position: relative;
   z-index: 2147483647;
   // max-height: 170px;
@@ -143,7 +142,7 @@ body,
     font-weight: 400;
     color: #e3e3e3;
     line-height: 1em;
-    padding: 0;
+    padding: 20px 20px 0;
     margin: 8px auto 10px 60px;
     font-size: 16px;
     text-transform: uppercase;

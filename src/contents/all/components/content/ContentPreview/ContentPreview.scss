@@ -1,8 +1,13 @@
 $montserrat: 'Montserrat', sans-serif;
 
 .contentPreviewWrapper {
-  margin: 20px;
+  padding: 20px;
 }
+
+// .loaded .contentPreviewWrapper {
+//   border-bottom: 1px solid #2a2a2a;
+//   box-shadow: rgba(255, 255, 255, 0.21) 0px 8px 4px -10px;
+// }
 
 .contentPreview {
   text-decoration: none;
