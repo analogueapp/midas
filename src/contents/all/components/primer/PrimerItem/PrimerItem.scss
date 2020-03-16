@@ -1,0 +1,118 @@
+.primerItem {
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 7px;
+  transition: all 0.21s ease;
+  cursor: pointer;
+
+  &.collection {
+    .title {
+      text-transform: capitalize;
+    }
+
+    .imgWrapper {
+      background: #3a3a3a;
+      border-radius: 5px;
+      text-align: center;
+      svg {
+        font-size: 20px;
+        color: #aaa;
+        margin-top: 6px;
+      }
+    }
+  }
+
+  &:hover, &:active {
+    background: #313131;
+
+    .addBtn {
+      background: #313131;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &.selected {
+    .addBtn {
+      opacity: 1;
+      visibility: visible;
+
+      .ant-btn {
+        box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.33), inset -3px -3px 11px -8px rgba(255, 255, 255, 0.33), inset 5px 5px 10px 0 rgba(0, 0, 0, 0.66);
+        width: 26px;
+        height: 26px;
+        padding: 0;
+      }
+    }
+  }
+
+  .imgWrapper {
+    width: 33px;
+    height: 33px;
+    float: left;
+    margin-right: 10px;
+    line-height: 1em;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+
+  h5 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 1px;
+    width: 181px;
+  }
+  .anticon {
+    color: #aaa;
+    font-size: 16px;
+  }
+
+  .ant-list-item-action {
+    margin-left: 0;
+    width: 55px;
+
+
+    > li {
+      padding: 0 5px;
+      float: right;
+    }
+  }
+
+  .addBtn {
+    width: 52px;
+    height: 28px;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 17px;
+    text-align: right;
+    transition: all 0.21s ease;
+
+    .ant-btn {
+      width: 52px;
+      height: 28px;
+      padding: 3px 10px;
+      font-size: 13px;
+      vertical-align: middle;
+      transition: all 0.21s ease;
+
+      .anticon {
+        font-size: 12px;
+
+        &.anticon-check {
+          color: #c7ac75;
+        }
+      }
+    }
+  }
+}
