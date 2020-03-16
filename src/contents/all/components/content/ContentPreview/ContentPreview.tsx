@@ -1,5 +1,8 @@
 import React from 'react';
 
+import ProgressiveImage from 'react-progressive-image';
+import placeholderImg from '../../../assets/img/placeholders/placeholder_1x1.jpg';
+
 import './ContentPreview.scss'
 
 const ContentPreviewHeader = props => {
@@ -13,7 +16,14 @@ const ContentPreviewHeader = props => {
         <div className="contentPreview">
 
           <div className="imgWrapper">
-            <img className="blur" src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`} alt={props.content.title} />
+            <ProgressiveImage
+              src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`}
+              placeholder={placeholderImg}
+            >
+              {(src, loading) => (
+                <img className={loading ? "" : "blur"} src={src} alt={props.content.title} />
+              )}
+            </ProgressiveImage>
           </div>
 
           <h5 className="title">{props.content.title}</h5>
