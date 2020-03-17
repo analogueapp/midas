@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Timeline } from "antd";
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
 
+import KeyboardShortcut from '../../common/KeyboardShortcut/KeyboardShortcut'
+
 import "../Knot/Knot.scss"
 import "./KnotInput.scss";
 
 const KnotInput = props => {
-
-  const isMac = window.navigator.platform.includes("Mac")
 
   const knotEditor = useRef<HTMLInputElement>(null)
 
@@ -75,7 +75,7 @@ const KnotInput = props => {
         </div>
       </div>
       <div className={`knotCardFooter ${showFooter ? "show" : "hide"}`}>
-        <p><code>{isMac ? "⌘" : "⌃"}</code><code>Enter</code><span>to save</span></p>
+        <KeyboardShortcut text="to save" keys={['CMD', 'Enter']} />
       </div>
     </Timeline.Item>
   )
