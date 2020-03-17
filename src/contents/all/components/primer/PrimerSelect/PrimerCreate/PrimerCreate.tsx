@@ -49,6 +49,14 @@ const PrimerCreate = (props: Props) => {
     setShowInput(false)
   }
 
+  const handleInputClose = () => {
+    if (props.defaultShowInput) {
+      props.toggleShowParent()
+    } else {
+      setShowInput(false)
+    }
+  }
+
   const onPressEnter = () => {
     console.log("enter press", inputValue)
     setShowInput(false)
@@ -56,11 +64,7 @@ const PrimerCreate = (props: Props) => {
 
   const onKeyDown = (e) => {
     if (e.key === 'Escape') {
-      if (props.defaultShowInput) {
-        props.toggleShowParent()
-      } else {
-        setShowInput(false)
-      }
+      handleInputClose()
     }
   }
 
@@ -78,8 +82,8 @@ const PrimerCreate = (props: Props) => {
               onKeyDown={onKeyDown}
               placeholder="Name your collection"
             />
-            <KeyboardShortcut className="fadeIn" text="Create" keys={['ENTER']} />
-            <KeyboardShortcut text="Cancel" keys={['ESC']} />
+            <KeyboardShortcut onClick={onPressEnter} className="fadeIn" text="Create" keys={['ENTER']} />
+            <KeyboardShortcut onClick={handleInputClose} text="Cancel" keys={['ESC']} />
           </>
         )
         : (
