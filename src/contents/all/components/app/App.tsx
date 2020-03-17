@@ -203,21 +203,21 @@ const App = () => {
 
                 <ContentPreview content={content} />
 
+                <Knots
+                  show={show}
+                  loading={loading}
+                  log={log}
+                  knots={log ? log.knots : []}
+                  createKnot={createKnot}
+                  primersHeight={primersHeight}
+                />
+
                 {log &&
-                  <>
-                    <Knots
-                      show={show}
-                      loading={loading}
-                      knots={log.knots}
-                      createKnot={createKnot}
-                      primersHeight={primersHeight}
-                    />
-                    <PrimerSelect
-                      log={log}
-                      content={content}
-                      updatePrimersHeight={updatePrimersHeight}
-                    />
-                  </>
+                  <PrimerSelect
+                    log={log}
+                    content={content}
+                    updatePrimersHeight={updatePrimersHeight}
+                  />
                 }
               </div>
             )

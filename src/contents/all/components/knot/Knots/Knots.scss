@@ -5,6 +5,10 @@
   padding: 15px 20px 0;
   transition: all 0.21s ease;
 
+  &.show {
+    max-height: calc(100vh - 275px);
+  }
+
   .knotLoading {
     padding-bottom: 55px;
     animation: fadein 0.7s;

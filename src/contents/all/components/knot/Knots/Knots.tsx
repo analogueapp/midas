@@ -21,11 +21,8 @@ const Knots = (props: Props) => {
 
   return (
     <div
-      style={{ maxHeight: props.primersHeight
-        ? `calc(100vh - ${275 + props.primersHeight}px)`
-        : "calc(100vh - 275px)"
-      }}
-      className="knots"
+      style={props.primersHeight ? { maxHeight: `calc(100vh - ${275 + props.primersHeight}px)` } : {}}
+      className={`knots ${props.log ? "show" : ""}`}
     >
       <KnotInput
         show={props.show}
