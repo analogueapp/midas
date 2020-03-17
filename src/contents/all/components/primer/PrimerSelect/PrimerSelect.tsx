@@ -79,7 +79,7 @@ const PrimerSelect = (props: Props) => {
             )
           }
         </div>
-        <div className="primerSelectListFooter">
+        <div className={`primerSelectListFooter ${primers.length === 0 ? "soloItem" : ""}`}>
           <PrimerCreate
             showParent={show}
             defaultShowInput={primers.length === 0}
