@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Knot from './Knot/Knot';
-import KnotInput from './KnotInput/KnotInput';
+import Knot from '../Knot/Knot';
+import KnotInput from '../KnotInput/KnotInput';
 
 import { Timeline } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';

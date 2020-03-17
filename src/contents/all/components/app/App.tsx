@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 
 import ContentPreview from '../content/ContentPreview/ContentPreview';
-import Knots from '../knot/Knots';
+import Knots from '../knot/Knots/Knots';
 import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
 
 import { Menu, Dropdown } from 'antd';
