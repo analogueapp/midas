@@ -4,12 +4,13 @@
 
   &.show {
     .ant-input-affix-wrapper {
-      flex-basis: calc(100% - 200px);
+      flex-basis: calc(100% - 195px);
     }
 
     .keyboardShorcut.fadeIn {
       width: 95px;
       opacity: 1;
+      margin-left: 15px;
       visibility: visible;
     }
   }
@@ -33,6 +34,10 @@
     .ant-input-suffix {
       position: absolute;
       right: 10px;
+
+      .ant-input-clear-icon {
+        animation: fadein 0.21s;
+      }
     }
   }
 
@@ -55,13 +60,17 @@
   }
 
   .keyboardShorcut {
-    margin-left: 15px;
+    margin-left: 10px;
+    background: #242424;
+    z-index: 1;
 
     &.fadeIn {
       opacity: 0;
       visibility: hidden;
       width: 0;
-      transition: 0.21s ease width;
+      z-index: 0;
+      margin: 0;
+      transition: 0.21s ease all;
     }
 
     code {
