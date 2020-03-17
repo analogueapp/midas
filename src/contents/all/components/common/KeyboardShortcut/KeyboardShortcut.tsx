@@ -29,9 +29,8 @@ const KeyboardShortcut = (props: Props) => {
 
   return (
     <label
-      style={{ cursor: props.onClick ? "pointer" : "auto" }}
       onClick={props.onClick}
-      className={`keyboardShorcut ${props.className ? props.className : ""} ${props.vertical ? "column" : ""}`}>
+      className={`keyboardShorcut ${props.onClick ? "clickable" : ""} ${props.className ? props.className : ""} ${props.vertical ? "column" : ""}`}>
       {props.keys.map(key =>
         <code
           key={key}

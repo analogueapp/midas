@@ -45,7 +45,6 @@ const KnotInput = props => {
         tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
       )
       setSubmit(false)
-      setShowFooter(false)
       setBody(RichTextEditor.createEmptyValue())
     }
 
@@ -55,6 +54,15 @@ const KnotInput = props => {
     } else {
       setShowFooter(false)
     }
+  }
+
+  const onSubmit = () => {
+    props.createKnot(
+      body.toString("html"),
+      body.getEditorState().getCurrentContent().getPlainText()
+    )
+    setSubmit(false)
+    setBody(RichTextEditor.createEmptyValue())
   }
 
   return (
@@ -75,7 +83,7 @@ const KnotInput = props => {
         </div>
       </div>
       <div className="knotCardFooter">
-        {showFooter && <KeyboardShortcut text="Save" keys={['CMD', 'ENTER']} /> }
+        {showFooter && <KeyboardShortcut onClick={onSubmit} text="Save" keys={['CMD', 'ENTER']} /> }
       </div>
     </Timeline.Item>
   )

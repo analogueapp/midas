@@ -5,6 +5,17 @@ label.keyboardShorcut {
   align-items: center;
   flex-shrink: 0;
   animation: fadein 0.21s;
+  user-select: none;
+
+  &.clickable {
+    cursor: pointer;
+
+    > * { transition: all 0.21s ease; }
+
+    &:hover > * {
+      filter: brightness(1.21);
+    }
+  }
 
   code {
     background: #2a2a2a;
