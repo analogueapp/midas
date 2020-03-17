@@ -1,9 +1,8 @@
 .primerSelect {
 
   .primerSelectAction {
-    border-top: 1px solid #2a2a2a;
-    box-shadow: rgba(255, 255, 255, 0.21) 0px -8px 4px -10px;
-    margin: 15px -20px 0;
+    border-top: 1px solid #202020;
+    border-bottom: 1px solid transparent;
     padding: 15px 20px;
     cursor: pointer;
     transition: ease all 0.21s;
@@ -13,18 +12,24 @@
 
     &:hover {
       background: #242424;
+
       .anticon {
         color: #e3e3e3
+      }
+    }
+
+    &.show {
+      background: #242424;
+      border-bottom: 1px solid #2a2a2a;
+
+      .anticon.anticon-down {
+        transform: rotate(180deg);
       }
     }
 
     .anticon {
       transition: all 0.21s ease;
       color: #777;
-
-      &.show {
-        transform: rotate(180deg);
-      }
     }
 
     .primerItem {
@@ -39,11 +44,26 @@
 
   .primerSelectList {
     max-height: 0;
+    background: #242424;
     transition: all 0.21s ease-in-out;
+    overflow: hidden;
 
     &.show {
       height: auto;
       max-height: 400px;
+    }
+
+    .primerSelectListFooter {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-top: 1px solid #2a2a2a;
+      text-transform: uppercase;
+      font-size: 15px;
+
+      &:only-child {
+        border-color: transparent;
+      }
     }
   }
 }

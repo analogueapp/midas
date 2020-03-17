@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import { Content, Log } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
+import PrimerCreateInput from './PrimerCreateInput/PrimerCreateInput';
 
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import './PrimerSelect.scss';
 
 interface Props {
@@ -16,14 +17,19 @@ const PrimerSelect = (props: Props) => {
   const [show, setShow] = useState(false)
   const toggleShow = () => setShow(!show)
 
+  const [primers, setPrimers] = useState([])
+
   return (
     <div className="primerSelect">
-      <div className="primerSelectAction" onClick={toggleShow}>
+      <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
         <PrimerItem collection={props.content.collection} />
-        <DownOutlined className={`${show ? "show" : ""}`}/>
+        <DownOutlined />
       </div>
+
       <div className={`primerSelectList ${show ? "show" : ""}`}>
-        <p>test</p>
+        <div className="primerSelectListFooter">
+          <PrimerCreateInput />
+        </div>
       </div>
     </div>
   )
