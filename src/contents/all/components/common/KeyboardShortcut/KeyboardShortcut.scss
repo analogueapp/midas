@@ -3,6 +3,8 @@ label.keyboardShorcut {
   color: #888;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  animation: fadein 0.31s;
 
   code {
     background: #2a2a2a;

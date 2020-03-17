@@ -15,12 +15,7 @@
   .knotCardFooter {
     position: absolute;
     right: 0;
-    opacity: 0;
     margin-top: 3px;
     transition: all 0.21s ease-in-out;
-
-    &.show {
-      opacity: 1;
-    }
   }
 }

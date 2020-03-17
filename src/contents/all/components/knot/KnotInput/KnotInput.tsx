@@ -74,8 +74,8 @@ const KnotInput = props => {
           </div>
         </div>
       </div>
-      <div className={`knotCardFooter ${showFooter ? "show" : "hide"}`}>
-        <KeyboardShortcut text="save" keys={['CMD', 'ENTER']} />
+      <div className="knotCardFooter">
+        {showFooter && <KeyboardShortcut text="Save" keys={['CMD', 'ENTER']} /> }
       </div>
     </Timeline.Item>
   )

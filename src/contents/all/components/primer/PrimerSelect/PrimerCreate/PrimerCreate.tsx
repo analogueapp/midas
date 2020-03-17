@@ -59,7 +59,7 @@ const PrimerCreate = (props: Props) => {
   }
 
   return (
-    <div className="primerCreate">
+    <div className={`primerCreate ${inputValue.length > 2 ? "show" : ""}`}>
       {showInput
         ? (
           <>
@@ -72,7 +72,7 @@ const PrimerCreate = (props: Props) => {
               onKeyDown={onKeyDown}
               placeholder="Name your collection"
             />
-            <KeyboardShortcut color="#2f2f2f" text="Create" keys={['ENTER']} />
+            <KeyboardShortcut className="fadeIn" text="Create" keys={['ENTER']} />
             <KeyboardShortcut text="Cancel" keys={['ESC']} />
           </>
         )

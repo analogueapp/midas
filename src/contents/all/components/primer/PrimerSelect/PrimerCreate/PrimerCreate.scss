@@ -2,6 +2,18 @@
   display: flex;
   align-items: center;
 
+  &.show {
+    .ant-input-affix-wrapper {
+      flex-basis: calc(100% - 200px);
+    }
+
+    .keyboardShorcut.fadeIn {
+      width: 95px;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
   .ant-input-affix-wrapper {
     border-radius: 7px;
     border: none;
@@ -10,6 +22,8 @@
     align-items: center;
     background: #2f2f2f;
     padding: 0 12px;
+    transition: flex-basis 0.21 ease-in-out;
+    flex-basis: 100%;
 
     &:hover, &:active, &:focus {
       border: none;
@@ -37,6 +51,21 @@
     &:hover, &:active, &:focus {
       border: none;
       box-shadow: none;
+    }
+  }
+
+  .keyboardShorcut {
+    margin-left: 15px;
+
+    &.fadeIn {
+      opacity: 0;
+      visibility: hidden;
+      width: 0;
+      transition: 0.21s ease width;
+    }
+
+    code {
+      background: #3a3a3a;
     }
   }
 }

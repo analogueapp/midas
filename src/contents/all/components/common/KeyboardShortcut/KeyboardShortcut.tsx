@@ -19,19 +19,19 @@ const keyMap = (key) => {
 
 interface Props {
   text: string
-  color?: string
+  className?: string
+  vertical?: boolean
   keys: [string]
 }
 
 const KeyboardShortcut = (props: Props) => {
 
   return (
-    <label className="keyboardShorcut">
+    <label className={`keyboardShorcut ${props.className ? props.className : ""} ${props.vertical ? "column" : ""}`}>
       {props.keys.map(key =>
         <code
           key={key}
           className={key === "CMD" ? "cmd" : ""}
-          style={{ background: props.color ? props.color : "#2a2a2a" }}
         >
           {keyMap(key)}
         </code>
