@@ -8,6 +8,7 @@ import ContentMedium from '../ContentMedium/ContentMedium';
 import './ContentPreview.scss'
 
 const ContentPreviewHeader = props => {
+
   if (props.content) {
     return (
       <div className="contentPreviewWrapper">
@@ -38,8 +39,10 @@ const ContentPreviewHeader = props => {
     <div className="contentPreviewWrapper">
       <div className="contentPreview loading">
         <div className="imgWrapper" />
-        <h5 className="title" />
-        <div className="details" />
+        <div className="contentDetails">
+          <h5 className="title" />
+          <div className="details" />
+        </div>
       </div>
     </div>
   )
