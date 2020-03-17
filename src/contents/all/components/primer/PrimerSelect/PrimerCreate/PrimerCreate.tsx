@@ -46,7 +46,10 @@ const PrimerCreate = (props: Props) => {
     setShowInput(false)
   }
 
-  const onPressEnter = () => console.log("enter press", inputValue)
+  const onPressEnter = () => {
+    console.log("enter press", inputValue)
+    setShowInput(false)
+  }
 
   const onKeyDown = (e) => {
     if (e.key === 'Escape') {
@@ -77,9 +80,12 @@ const PrimerCreate = (props: Props) => {
           </>
         )
         : (
-          <div className="">
-            <PlusOutlined /> New Collection
-          </div>
+          <>
+            <div className="createBtn" onClick={() => setShowInput(true)}>
+              <PlusOutlined /> New Collection
+            </div>
+            <span className="doneBtn" onClick={props.toggleShowParent}>Done</span>
+          </>
         )
       }
     </div>
