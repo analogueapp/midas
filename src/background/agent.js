@@ -26,8 +26,8 @@ const requests = {
 };
 
 const Auth = {
-  current: () =>
-    requests.get('/user'),
+  primers: () =>
+    requests.get("/user/primers"),
 }
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
@@ -49,23 +49,12 @@ const Knots = {
 }
 
 const Primers = {
-  // get: slug =>
-  //   requests.get(`/primers/${slug}`),
   create: primer =>
     requests.post("/primers", { primer }),
-  // del: slug =>
-  //   requests.del(`/primers/${slug}`),
-  // update: (primer) =>
-  //   requests.put(`/primers/${primer.slug}`, { primer }),
-  // sortLog: (slug, id, position) =>
-  //   requests.put(`/primers/${slug}/log/${id}/sort/${position}`),
-  // removeLog: (slug, log_id) =>
-  //   requests.del(`/primers/${slug}/remove/${log_id}`),
-  // addLog: (slug, log_id) =>
-  //   requests.put(`/primers/${slug}/add/${log_id}`),
 };
 
 export default {
+  Auth,
   Logs,
   Knots,
   Primers,

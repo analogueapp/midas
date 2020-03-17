@@ -28,7 +28,9 @@ const PrimerSelect = (props: Props) => {
   const _container = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    // TODO load primers from API on mount
+    chrome.runtime.sendMessage({ message: "get_primers" })
+
+    return () => null
   }, [])
 
   useEffect(() => {
@@ -40,6 +42,9 @@ const PrimerSelect = (props: Props) => {
   }, [primers])
 
   const messageListener = (request, sender, sendResponse) => {
+    if (request.message === "get_primers_response") {
+      setPrimers(request.body.primers)
+    }
     if (request.message === "create_primer_response") {
       setPrimers([request.body.primer, ...primers])
     }
@@ -53,15 +58,18 @@ const PrimerSelect = (props: Props) => {
       </div>
 
       <div className={`primerSelectList ${show ? "show" : ""}`}>
-        {primers && primers.length > 0 &&
-          primers.map(primer =>
-            <PrimerItem
-              selectable
-              log={props.log}
-              primer={primer}
-            />
-          )
-        }
+        <div className="primerSelectListScroll">
+          {primers && primers.length > 0 &&
+            primers.map(primer =>
+              <PrimerItem
+                key={primer.id}
+                selectable
+                log={props.log}
+                primer={primer}
+              />
+            )
+          }
+        </div>
         <div className="primerSelectListFooter">
           <PrimerCreate
             showParent={show}
