@@ -1,7 +1,7 @@
 .primerSelect {
 
   .primerSelectAction {
-    border-top: 1px solid #202020;
+    border-top: 1px solid #2f2f2f;
     border-bottom: 1px solid transparent;
     padding: 15px 20px;
     cursor: pointer;
@@ -20,7 +20,7 @@
 
     &.show {
       background: #242424;
-      border-bottom: 1px solid #2a2a2a;
+      border-bottom: 1px solid #2f2f2f;
 
       .anticon.anticon-down {
         transform: rotate(180deg);
@@ -55,7 +55,7 @@
 
     .primerSelectListFooter {
       padding: 15px 20px;
-      border-top: 1px solid #2a2a2a;
+      border-top: 1px solid #2f2f2f;
 
       &:only-child {
         border-color: transparent;
