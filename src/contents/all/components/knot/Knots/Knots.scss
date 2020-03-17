@@ -2,11 +2,12 @@
   max-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 15px 20px 0;
   transition: all 0.21s ease;
+  padding: 0 20px;
 
   &.show {
     max-height: calc(100vh - 275px);
+    padding: 15px 20px 0;
   }
 
   .knotLoading {

@@ -19,7 +19,16 @@ const PrimerSelect = (props: Props) => {
 
   const [show, setShow] = useState(false)
   const toggleShow = () => {
-    props.updatePrimersHeight(show ? 0 : _container.current.clientHeight)
+    // _container.current.clientHeight doesn't calculate till after transition, so hard coding it
+    const footerHeight = 71
+    const primerItemHeight = 53
+    props.updatePrimersHeight(
+      show
+      ? 0
+      : primers.length < 5
+        ? primers.length * primerItemHeight + footerHeight
+        : 392
+    )
     setShow(!show)
   }
 
@@ -51,13 +60,13 @@ const PrimerSelect = (props: Props) => {
   }
 
   return (
-    <div className="primerSelect" ref={_container}>
+    <div className="primerSelect">
       <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
         <PrimerItem collection={props.content.collection} />
         <DownOutlined />
       </div>
 
-      <div className={`primerSelectList ${show ? "show" : ""}`}>
+      <div className={`primerSelectList ${show ? "show" : ""}`} ref={_container}>
         <div className="primerSelectListScroll">
           {primers && primers.length > 0 &&
             primers.map(primer =>

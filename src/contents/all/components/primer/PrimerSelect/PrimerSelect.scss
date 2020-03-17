@@ -1,4 +1,6 @@
 .primerSelect {
+  overflow: hidden;
+  border-radius: 8px;
 
   .primerSelectAction {
     border-top: 1px solid #2f2f2f;
@@ -49,8 +51,13 @@
     overflow: hidden;
 
     &.show {
-      height: auto;
-      max-height: 400px;
+      max-height: 392px;
+    }
+
+    .primerSelectListScroll {
+      max-height: 321px;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     .primerSelectListFooter {

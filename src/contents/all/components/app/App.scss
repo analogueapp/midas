@@ -74,7 +74,8 @@ html {
 }
 
 body,
-.knots {
+.knots,
+.primerSelectListScroll {
   scrollbar-width: thin;
   scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 
@@ -101,13 +102,7 @@ body,
   border-radius: 8px;
   position: relative;
   z-index: 2147483647;
-  // max-height: 170px;
-  // transition: max-height 0.7s ease-in-out;
-  overflow: hidden;
-
-  // &.loaded {
-  //   max-height: calc(100vh - 64px);
-  // }
+  overflow: visible;
 
   .analogueModalHeader {
     display: flex;
