@@ -36,8 +36,7 @@ const Knots = (props: Props) => {
         />
       }
       {hasKnots &&
-        <>
-        {props.knots.map((knot, index) =>
+        props.knots.map((knot, index) =>
           <Knot
             key={knot.id}
             knot={knot}
@@ -45,8 +44,7 @@ const Knots = (props: Props) => {
             totalKnots={props.knots.length}
             isLast={props.knots.length-1 === index}
           />
-        )}
-        </>
+        )
       }
     </div>
   )
