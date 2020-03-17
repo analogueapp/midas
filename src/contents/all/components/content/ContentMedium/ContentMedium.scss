@@ -1,32 +1,17 @@
 .contentMedium {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.5em;
   font-weight: 400;
   text-transform: uppercase;
-  margin-bottom: 5px;
   color: #aaa;
+  display: flex;
+  align-items: center;
 
-  svg {
-    vertical-align: -0.125em;
-
-    &.tvIcon {
-      vertical-align: -0.1em;
-    }
-  }
-
-  .anticon {
-    svg {
-      vertical-align: -0.02em;
-    }
-  }
-
-  a {
-    font-weight: 400;
-    text-decoration: none;
-    color: #aaa;
-
-    &:hover, &:active, &:visited, &:focus {
-      font-weight: 400;
-      text-decoration: none;
-    }
+  .text {
+    margin-left: 3px;
+    white-space: nowrap;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }

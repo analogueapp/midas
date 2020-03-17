@@ -1,14 +1,5 @@
 $montserrat: 'Montserrat', sans-serif;
 
-.contentPreviewWrapper {
-  padding: 20px;
-}
-
-// .loaded .contentPreviewWrapper {
-//   border-bottom: 1px solid #2a2a2a;
-//   box-shadow: rgba(255, 255, 255, 0.21) 0px 8px 4px -10px;
-// }
-
 .contentPreview {
   text-decoration: none;
   display: block;
@@ -18,12 +9,42 @@ $montserrat: 'Montserrat', sans-serif;
   color: #aaa;
   background: #242424;
   transition: all 0.21s ease;
+  display: flex;
+  align-items: center;
 
   &:hover, &:active, &:focus {
     text-decoration: none;
     box-shadow: rgba(0, 0, 0, 0.21) 0px 2px 4px;
 
     h5 { color: #c7ac75; }
+  }
+
+  img {
+    width: 44px;
+    height: 44px;
+    margin-right: 15px;
+    border-radius: 7px;
+    border: 1px solid #242424;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .contentDetails {
+    overflow: hidden;
+    box-sizing: unset;
+  }
+
+  h5 {
+    white-space: nowrap;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1.5em;
+    font-family: $montserrat;
+    font-weight: 400;
+    font-size: 18px;
+    transition: 0.21s ease all;
+    color: #e3e3e3;
   }
 
   &.loading {
@@ -38,7 +59,6 @@ $montserrat: 'Montserrat', sans-serif;
       background-size: 400% 100%;
       -webkit-animation: skeleton-loading 1.1s ease infinite;
       animation: skeleton-loading 1.1s ease infinite;
-
     }
 
     h5 {
@@ -58,63 +78,16 @@ $montserrat: 'Montserrat', sans-serif;
     }
   }
 
-  .imgWrapper {
-    width: 44px;
-    height: 44px;
-    float: left;
-    margin-right: 15px;
-    line-height: 1em;
-    overflow: hidden;
-    border-radius: 7px;
-    border: 1px solid #242424;
-
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
-  .details, h5 {
-    text-align: left;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    line-height: 1.5em;
-    font-family: $montserrat;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  h5 {
-    font-size: 18px;
-    margin: 2px auto -2px;
-    transition: 0.21s ease all;
-    color: #e3e3e3;
-
-  }
-
-  .details {
-    font-size: 13px;
-    margin-bottom: 0;
-
-    .contentMedium {
-      font-size: 13px;
-      margin-right: 3px;
-      margin-bottom: 0;
-      display: inline-block;
-    }
-
-    .creatorList {
-      font-size: 13px;
-      white-space: nowrap;
-      .creator {
-        color: #e3e3e3;
-      }
-    }
-  }
-
 }
+
+.contentPreviewWrapper {
+  padding: 20px;
+}
+
+// .loaded .contentPreviewWrapper {
+//   border-bottom: 1px solid #2a2a2a;
+//   box-shadow: rgba(255, 255, 255, 0.21) 0px 8px 4px -10px;
+// }
 
 
 @keyframes skeleton-loading {

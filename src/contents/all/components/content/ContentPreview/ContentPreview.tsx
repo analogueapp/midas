@@ -16,20 +16,18 @@ const ContentPreviewHeader = props => {
           className="contentPreview"
           href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}`}
         >
-          <div className="imgWrapper">
-            <ProgressiveImage
-              src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`}
-              placeholder={placeholderImg}
-            >
-              {(src, loading) => (
-                <img className={loading ? "" : "blur"} src={src} alt={props.content.title} />
-              )}
-            </ProgressiveImage>
-          </div>
+          <ProgressiveImage
+            src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}/${props.content.imageUrl}?s=${props.content.formDisplay === "film" || props.content.formDisplay === "book" ? "full" : "medium"}`}
+            placeholder={placeholderImg}
+          >
+            {(src, loading) => (
+              <img className={loading ? "" : "blur"} src={src} alt={props.content.title} />
+            )}
+          </ProgressiveImage>
 
-          <h5 className="title">{props.content.title}</h5>
+          <div className="contentDetails">
+            <h5 className="title">{props.content.title}</h5>
 
-          <div className="details">
             <ContentMedium content={props.content} />
           </div>
         </a>

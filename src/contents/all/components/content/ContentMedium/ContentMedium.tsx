@@ -65,12 +65,10 @@ const ContentMedium = props => {
 
   return (
     <div className="contentMedium">
-      <span>
-        {mediumIcons[mediumKey]}
-        {!props.noText &&
-          <span className="text"> {props.content.mediumDisplay}</span>
-        }
-      </span>
+      {mediumIcons[mediumKey]}
+      {!props.noText &&
+        <p className="text">{props.content.mediumDisplay}</p>
+      }
     </div>
   )
 }
