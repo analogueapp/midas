@@ -33,6 +33,9 @@ const PrimerCreate = (props: Props) => {
     } else {
       // reset input value on hide parent or input
       setInputValue("")
+      if (_input.current) {
+        _input.current.input.blur()
+      }
     }
   }, [showInput, props.showParent])
 
