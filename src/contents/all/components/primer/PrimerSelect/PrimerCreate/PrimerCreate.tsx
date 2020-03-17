@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Input } from 'antd';
 
@@ -19,10 +21,6 @@ const PrimerCreate = (props: Props) => {
   const [showInput, setShowInput] = useState(props.defaultShowInput)
 
   const _input = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    // TODO load primers from API on mount
-  }, [])
 
   useEffect(() => {
     // focus input on show
@@ -58,7 +56,10 @@ const PrimerCreate = (props: Props) => {
   }
 
   const onPressEnter = () => {
-    console.log("enter press", inputValue)
+    chrome.runtime.sendMessage({
+      message: "create_primer",
+      title: inputValue,
+    })
     setShowInput(false)
   }
 

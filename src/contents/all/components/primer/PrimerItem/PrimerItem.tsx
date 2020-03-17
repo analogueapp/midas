@@ -62,7 +62,7 @@ const PrimerItem = (props: Props) => {
   return (
     <div
       className={`primerItem ${props.selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
-      onClick={props.selectable ? this.togglePrimer : null}
+      onClick={props.selectable ? togglePrimer : null}
     >
       <div className="imgWrapper">
         <ProgressiveImage

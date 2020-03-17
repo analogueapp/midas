@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+/*global chrome*/
+
+import React, { useState, useRef, useEffect } from 'react';
 
 import { Content, Log } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
@@ -23,7 +25,25 @@ const PrimerSelect = (props: Props) => {
 
   const [primers, setPrimers] = useState([])
 
-  const _container = useRef<HTMLInputElement>(null);
+  const _container = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    // TODO load primers from API on mount
+  }, [])
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(messageListener)
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener)
+    }
+  }, [primers])
+
+  const messageListener = (request, sender, sendResponse) => {
+    if (request.message === "create_primer_response") {
+      setPrimers([request.body.primer, ...primers])
+    }
+  }
 
   return (
     <div className="primerSelect" ref={_container}>
@@ -33,6 +53,15 @@ const PrimerSelect = (props: Props) => {
       </div>
 
       <div className={`primerSelectList ${show ? "show" : ""}`}>
+        {primers && primers.length > 0 &&
+          primers.map(primer =>
+            <PrimerItem
+              selectable
+              log={props.log}
+              primer={primer}
+            />
+          )
+        }
         <div className="primerSelectListFooter">
           <PrimerCreate
             showParent={show}

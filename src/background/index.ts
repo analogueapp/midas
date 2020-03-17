@@ -115,6 +115,17 @@ const messageListener = (request) => {
       })
     })
   }
+
+  if (request.message === "create_primer") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Primers.create({ title: request.title }).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "create_primer_response", body: response });
+      })
+    })
+  }
 }
 chrome.runtime.onMessage.addListener(messageListener)
 
