@@ -4,7 +4,7 @@ import { Content, Log } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
 import PrimerCreate from './PrimerCreate/PrimerCreate';
 
-import { DownOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
 import './PrimerSelect.scss';
 
 interface Props {
