@@ -18,7 +18,7 @@ interface Props {
 const PrimerCreate = (props: Props) => {
 
   const [inputValue, setInputValue] = useState("")
-  const [showInput, setShowInput] = useState(props.defaultShowInput)
+  const [showInput, setShowInput] = useState(false)
 
   const _input = useRef<HTMLInputElement>(null)
 
@@ -35,7 +35,13 @@ const PrimerCreate = (props: Props) => {
         _input.current.input.blur()
       }
     }
+    return () => null
   }, [showInput, props.showParent])
+
+  useEffect(() => {
+    setShowInput(props.defaultShowInput)
+    return () => null
+  }, [props.defaultShowInput])
 
   const onChange = (e) => {
     const value = e.clear ? "" : e.target.value
