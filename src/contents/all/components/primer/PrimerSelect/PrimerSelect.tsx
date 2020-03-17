@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Content, Log } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
-import PrimerCreateInput from './PrimerCreateInput/PrimerCreateInput';
+import PrimerCreate from './PrimerCreate/PrimerCreate';
 
 import { DownOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import './PrimerSelect.scss';
@@ -28,7 +28,11 @@ const PrimerSelect = (props: Props) => {
 
       <div className={`primerSelectList ${show ? "show" : ""}`}>
         <div className="primerSelectListFooter">
-          <PrimerCreateInput />
+          <PrimerCreate
+            showParent={show}
+            defaultShowInput={primers.length === 0}
+            toggleShowParent={toggleShow}
+          />
         </div>
       </div>
     </div>
