@@ -19,7 +19,7 @@ label.keyboardShorcut {
     font-weight: 400;
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
 
-    &:first-child {
+    &.cmd {
       font-size: 14px;
     }
   }

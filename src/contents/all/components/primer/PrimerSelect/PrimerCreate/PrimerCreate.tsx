@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Input } from 'antd';
 
+import KeyboardShortcut from '../../../common/KeyboardShortcut/KeyboardShortcut'
+
 import { PlusOutlined } from '@ant-design/icons';
 
 import './PrimerCreate.scss';
@@ -70,6 +72,8 @@ const PrimerCreate = (props: Props) => {
               onKeyDown={onKeyDown}
               placeholder="Name your collection"
             />
+            <KeyboardShortcut color="#2f2f2f" text="Create" keys={['ENTER']} />
+            <KeyboardShortcut text="Cancel" keys={['ESC']} />
           </>
         )
         : (
