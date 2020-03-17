@@ -8,11 +8,25 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import './Knots.scss';
 
-const Knots = props => {
+interface Props {
+  knots: []
+  show: boolean
+  loading: boolean
+  primersHeight: number
+  createKnot: () => void
+}
+
+const Knots = (props: Props) => {
   const hasKnots = props.knots && props.knots.length > 0
 
   return (
-    <div className="knots">
+    <div
+      style={{ maxHeight: props.primersHeight
+        ? `calc(100vh - ${275 + props.primersHeight}px)`
+        : "calc(100vh - 275px)"
+      }}
+      className="knots"
+    >
       <KnotInput
         show={props.show}
         createKnot={props.createKnot}
@@ -32,7 +46,6 @@ const Knots = props => {
             knot={knot}
             index={index}
             totalKnots={props.knots.length}
-            log={props.log}
             isLast={props.knots.length-1 === index}
           />
         )}

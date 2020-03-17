@@ -34,6 +34,9 @@ const App = () => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  const [primersHeight, setPrimersHeight] = useState(0)
+  const updatePrimersHeight = (height: number) => setPrimersHeight(height)
+
   // set message listener when component mounts
   useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
@@ -207,8 +210,13 @@ const App = () => {
                       loading={loading}
                       knots={log.knots}
                       createKnot={createKnot}
+                      primersHeight={primersHeight}
                     />
-                    <PrimerSelect content={content} log={log} />
+                    <PrimerSelect
+                      log={log}
+                      content={content}
+                      updatePrimersHeight={updatePrimersHeight}
+                    />
                   </>
                 }
               </div>
