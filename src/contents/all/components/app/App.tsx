@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
 import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
+import * as Sentry from '@sentry/browser';
 
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots/Knots';
@@ -40,6 +41,18 @@ const App = () => {
   // set message listener when component mounts
   useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
+
+    if (user && process.env.NODE_ENV === 'production') {
+      // set sentry scope
+      Sentry.configureScope((scope) => {
+        scope.setUser({
+          id: user.id.toString(),
+          name: user.name,
+          email: user.email,
+          username: user.username
+        });
+      });
+    }
 
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
