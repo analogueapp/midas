@@ -38,21 +38,20 @@ const PrimerSelect = (props: Props) => {
 
   useEffect(() => {
     chrome.runtime.sendMessage({ message: "get_primers" })
-
-    return () => null
-  }, [])
-
-  useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
 
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [primers])
+  }, [])
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "get_primers_response") {
-      setPrimers(request.body.primers)
+      setPrimers(
+        props.log.currentPrimers && props.log.currentPrimers.length > 0
+        ? request.body.primers.filter(primer => !props.log.currentPrimers.map(current => current.id).includes(primer.id))
+        : request.body.primers
+      )
     }
     if (request.message === "create_primer_response") {
       setPrimers([request.body.primer, ...primers])
@@ -68,6 +67,17 @@ const PrimerSelect = (props: Props) => {
 
       <div className={`primerSelectList ${show ? "show" : ""}`} ref={_container}>
         <div className="primerSelectListScroll">
+          {props.log && props.log.currentPrimers &&  props.log.currentPrimers.length > 0 &&
+            props.log.currentPrimers.map(primer =>
+              <PrimerItem
+                key={primer.id}
+                selected
+                selectable
+                log={props.log}
+                primer={primer}
+              />
+            )
+          }
           {primers && primers.length > 0 &&
             primers.map(primer =>
               <PrimerItem
