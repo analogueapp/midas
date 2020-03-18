@@ -122,7 +122,6 @@ const messageListener = (request) => {
 
       // Send a message to the active tab
       agent.Auth.primers().then(response => {
-        console.log("PRIMERS RESPONSE", response)
         chrome.tabs.sendMessage(activeTab.id, {message: "get_primers_response", body: response });
       })
     })
