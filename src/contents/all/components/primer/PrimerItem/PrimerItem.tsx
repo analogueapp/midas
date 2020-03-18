@@ -66,7 +66,7 @@ const PrimerItem = (props: Props) => {
     >
       <div className="imgWrapper">
         <ProgressiveImage
-          src={props.primer.image}
+          src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}${props.primer.image}`}
           placeholder={placeholderImg}
         >
           {(src, loading) => (
