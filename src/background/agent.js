@@ -51,11 +51,15 @@ const Knots = {
 const Primers = {
   create: primer =>
     requests.post("/primers", { primer }),
-  updateLogs: (slug, log_id, remove) => remove 
+  updateLogs: (slug, log_id, remove) => remove
     ? requests.del(`/primers/${slug}/remove/${log_id}`)
     : requests.put(`/primers/${slug}/add/${log_id}`)
+}
 
-};
+const Activity = {
+  notify: (activities) =>
+    requests.post("/activity/notify", { activities }),
+}
 
 export default {
   Auth,
@@ -63,5 +67,6 @@ export default {
   Knots,
   Primers,
   Contents,
+  Activity,
   setToken: _token => { token = _token; }
 }
