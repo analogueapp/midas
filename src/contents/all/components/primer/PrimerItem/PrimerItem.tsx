@@ -11,12 +11,12 @@ import { LockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/i
 import './PrimerItem.scss'
 
 interface Props {
-  // updateCurrentPrimers?: (currentSelected: boolean) => void
   log: Log
   primer: Primer
   collection?: string
   selectable?: boolean
   selected?: boolean
+  updateCurrentPrimers?: (primer: Primer, remove: boolean) => void
 }
 
 const PrimerItem = (props: Props) => {
@@ -24,21 +24,8 @@ const PrimerItem = (props: Props) => {
   const [selected, setSelected] = useState(props.selected ? true : false)
 
   const togglePrimer = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const currentSelected = selected;
+    props.updateCurrentPrimers(props.primer, selected)
     setSelected(!selected)
-
-    if (selected) {
-      // todo add to primer
-      // agent.Primers.removeLog(props.primer.slug, props.log.id).then(
-      //   res => props.updateCurrentPrimers(currentSelected)
-      // )
-    } else {
-      // agent.Primers.addLog(props.primer.slug, props.log.id).then(
-      //   res => props.updateCurrentPrimers(currentSelected)
-      // )
-    }
   }
 
   if (props.collection) {

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 
-import { Content, Log } from '../../../global/types';
+import { Content, Log, Primer } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
 import PrimerCreate from './PrimerCreate/PrimerCreate';
 
@@ -33,6 +33,7 @@ const PrimerSelect = (props: Props) => {
   }
 
   const [primers, setPrimers] = useState([])
+  const [currentPrimerTitles, setCurrentPrimerTitles] = useState(props.log.currentPrimers.map((primer) => primer.title))
 
   const _container = useRef<HTMLInputElement>(null)
 
@@ -58,14 +59,23 @@ const PrimerSelect = (props: Props) => {
     }
   }
 
+  const updateCurrentPrimers = (primer: Primer, remove: boolean) => {
+    // TODO
+    // chrome.runtime.sendMessage({ message: "update_primer", primer: primer, log: log })
+    if (remove) {
+      setCurrentPrimerTitles(currentPrimerTitles.filter(primerTitle => primerTitle !== primer.title ))
+    } else {
+      setCurrentPrimerTitles([primer.title, ...currentPrimerTitles])
+    }
+  }
+
   return (
     <div className="primerSelect">
       <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
         <PrimerItem collection={props.content.collection} />
-        {props.log && props.log.currentPrimers &&
-          props.log.currentPrimers.length > 1
-            ? <p>+ {props.log.currentPrimers.length} collections</p>
-            : <p>+ {props.log.currentPrimers[0].title}</p>
+        {currentPrimerTitles.length > 1
+          ? <p>+ {currentPrimerTitles.length} collections</p>
+          : <p>+ {currentPrimerTitles[0]}</p>
         }
         <DownOutlined />
       </div>
@@ -80,6 +90,7 @@ const PrimerSelect = (props: Props) => {
                 selectable
                 log={props.log}
                 primer={primer}
+                updateCurrentPrimers={updateCurrentPrimers}
               />
             )
           }
@@ -90,6 +101,7 @@ const PrimerSelect = (props: Props) => {
                 selectable
                 log={props.log}
                 primer={primer}
+                updateCurrentPrimers={updateCurrentPrimers}
               />
             )
           }
