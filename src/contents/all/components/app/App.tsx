@@ -82,7 +82,7 @@ const App = () => {
     }
 
     if (request.message === "auth_user") {
-      dispatch({ type: 'SET_USER_TOKEN', token: request.token })
+      dispatch({ type: 'SET_USER', user: request.user })
     }
 
     if (request.message === "clicked_browser_action") {
