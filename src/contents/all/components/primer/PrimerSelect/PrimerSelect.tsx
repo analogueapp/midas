@@ -39,12 +39,17 @@ const PrimerSelect = (props: Props) => {
 
   useEffect(() => {
     chrome.runtime.sendMessage({ message: "get_primers" })
+
+    return () => null
+  }, [])
+
+  useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
 
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [])
+  }, [primers])
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "get_primers_response") {
