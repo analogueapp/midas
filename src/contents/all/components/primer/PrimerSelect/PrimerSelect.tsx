@@ -62,6 +62,11 @@ const PrimerSelect = (props: Props) => {
     <div className="primerSelect">
       <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
         <PrimerItem collection={props.content.collection} />
+        {props.log && props.log.currentPrimers &&
+          props.log.currentPrimers.length > 1
+            ? <p>+ {props.log.currentPrimers.length} collections</p>
+            : <p>+ {props.log.currentPrimers[0].title}</p>
+        }
         <DownOutlined />
       </div>
 

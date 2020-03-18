@@ -29,18 +29,25 @@
       }
     }
 
-    .anticon {
+    .anticon.anticon-down {
       transition: all 0.21s ease;
       color: #777;
+      margin-left: auto;
     }
 
     .primerItem {
       padding: 0;
       margin: 0;
-      display: flex;
-      -webkit-box-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
+      animation: none;
+    }
+
+    p {
+      margin-left: 5px;
+      line-height: 2.1em;
+      font-size: 16px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
