@@ -64,6 +64,11 @@ const PrimerItem = (props: Props) => {
       className={`primerItem ${props.selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
       onClick={props.selectable ? togglePrimer : null}
     >
+      {props.selectable &&
+        <div className="addBtn">
+          <Button>{selected ? <CheckOutlined /> : "Add"}</Button>
+        </div>
+      }
       <div className="imgWrapper">
         <ProgressiveImage
           src={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3001'}${props.primer.image}`}
@@ -77,16 +82,8 @@ const PrimerItem = (props: Props) => {
 
       <h5 className="title">{props.primer.title}</h5>
 
-      <ul className="ant-list-item-action">
-        {props.primer.shared && <li><UsergroupAddOutlined /></li>}
-        {props.primer.private && <li><LockOutlined /></li>}
-      </ul>
-
-      {props.selectable &&
-        <div className="addBtn">
-          <Button>{selected ? <CheckOutlined /> : "Add"}</Button>
-        </div>
-      }
+      {props.primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
+      {props.primer.private && <LockOutlined className="infoIcon" /> }
     </div>
   )
 }

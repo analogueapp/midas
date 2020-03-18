@@ -8,6 +8,8 @@
   user-select: none;
   display: flex;
   align-items: center;
+  position: relative;
+  animation: fadein 0.7s;
 
   &.collection {
     .title {
@@ -31,9 +33,13 @@
       background: #313131;
 
       .addBtn {
-        background: #313131;
         opacity: 1;
         visibility: visible;
+      }
+
+      .infoIcon {
+        opacity: 0;
+        visibility: hidden;
       }
     }
   }
@@ -48,6 +54,24 @@
         width: 26px;
         height: 26px;
         padding: 0;
+        border: none;
+        border-radius: 4px;
+      }
+    }
+
+    .infoIcon {
+      opacity: 1;
+      visibility: visible;
+
+      &:last-child {
+        margin-right: 40px;
+      }
+    }
+
+    &:hover, &:active {
+      .infoIcon {
+        opacity: 1;
+        visibility: visible;
       }
     }
   }
@@ -58,6 +82,7 @@
     margin-right: 10px;
     line-height: 1em;
     overflow: hidden;
+    flex-shrink: 0;
 
     img {
       height: 100%;
@@ -74,30 +99,26 @@
     font-size: 15px;
     font-weight: 400;
     margin-bottom: 1px;
+    flex: 1;
   }
+
   .anticon {
     color: #aaa;
     font-size: 16px;
-  }
 
-  .ant-list-item-action {
-    margin-left: 0;
-    width: 55px;
-
-
-    > li {
-      padding: 0 5px;
-      float: right;
+    &.infoIcon {
+      margin-left: 10px;
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.21s ease;
     }
   }
 
   .addBtn {
-    width: 52px;
-    height: 28px;
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    right: 17px;
+    right: 10px;
     text-align: right;
     transition: all 0.21s ease;
 
@@ -108,6 +129,10 @@
       font-size: 13px;
       vertical-align: middle;
       transition: all 0.21s ease;
+      /* For Neumorphism Effect */
+      box-shadow: 2px 3px 5px 2px rgba(0,0,0,0.66), -1px 0 7px -2px rgba(255,255,255,0.33);
+      border: none;
+      /* For Neumorphism Effect */
 
       .anticon {
         font-size: 12px;

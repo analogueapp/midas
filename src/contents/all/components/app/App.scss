@@ -65,6 +65,18 @@ body {
   }
 }
 
+.ant-btn {
+  box-shadow: 2px 3px 5px 2px rgba(0,0,0,0.66), -1px 0 7px -2px rgba(255,255,255,0.33);
+  border: none;
+  transition: all 0.21s ease;
+  text-transform: uppercase;
+  color: #aaa;
+
+  &:not([disabled]):active {
+    box-shadow: 2px 2px 3px 1px rgba(0,0,0,0.33), inset -3px -3px 11px -8px rgba(255, 255, 255, 0.33), inset 5px 5px 10px 0 rgba(0, 0, 0, 0.66);
+  }
+}
+
 // ANALOGUE SPECIFIC
 html {
   --scrollbarBG: #1a1a1a;
