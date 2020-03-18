@@ -7,6 +7,8 @@ import { wrapStore } from 'webext-redux';
 
 import agent from './agent';
 
+import logo from './assets/img/logo_icon.png';
+
 const store = createStore(rootReducer, {});
 
 const injectContentScript = (message) => {
@@ -150,5 +152,28 @@ const messageListener = (request) => {
   }
 }
 chrome.runtime.onMessage.addListener(messageListener)
+
+
+// create notification using analogueUrl as id
+// ids must be unique to trigger new notifications, so have to add uid to front of URL in case url is the same
+const generatedUid = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
+const analogueUrl = "https://www.analogue.app";
+var options = {
+  type: "basic",
+  iconUrl: logo,
+  title: "Activity on Analogue",
+  message: 'Rosemarie Tang (@rj) just liked your note "hey there I love joel here is a longer note, see how long it truncates for what is up gangs"',
+}
+
+// chrome.notifications.create(generatedUid + analogueUrl, options, (notificationId) => {
+//   console.log("notification id", notificationId)
+//   console.log("Last error:", chrome.runtime.lastError);
+// })
+
+// create a on Click listener for notifications
+chrome.notifications.onClicked.addListener((notificationId) => {
+  // remove uid from id to get analogue url
+  chrome.tabs.create({url: notificationId.substring(10)})
+});
 
 wrapStore(store);
