@@ -84,7 +84,9 @@ const PrimerSelect = (props: Props) => {
         <PrimerItem collection={props.content.collection} />
         {currentPrimerTitles.length > 1
           ? <p>+ {currentPrimerTitles.length} collections</p>
-          : <p>+ {currentPrimerTitles[0]}</p>
+          : currentPrimerTitles.length > 0
+            ? <p>+ {currentPrimerTitles[0]}</p>
+            : null
         }
         <DownOutlined />
       </div>
