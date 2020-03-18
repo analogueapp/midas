@@ -74,8 +74,7 @@ html {
 }
 
 body,
-.knots,
-.primerSelectListScroll {
+.knots {
   scrollbar-width: thin;
   scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 
@@ -91,6 +90,25 @@ body,
     background-color: var(--thumbBG) ;
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
+  }
+}
+
+.primerSelectListScroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBGLight) var(--scrollbarBGLight);
+
+  &::-webkit-scrollbar {
+    width: 11px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbarBGLight);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBGLight) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBGLight);
   }
 }
 
