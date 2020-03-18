@@ -65,8 +65,12 @@ const PrimerSelect = (props: Props) => {
   }
 
   const updateCurrentPrimers = (primer: Primer, remove: boolean) => {
-    // TODO
-    // chrome.runtime.sendMessage({ message: "update_primer", primer: primer, log: log })
+    chrome.runtime.sendMessage({
+      message: "update_primer",
+      primer: primer,
+      log: props.log,
+      remove: remove
+    })
     if (remove) {
       setCurrentPrimerTitles(currentPrimerTitles.filter(primerTitle => primerTitle !== primer.title ))
     } else {

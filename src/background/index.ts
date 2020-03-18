@@ -137,6 +137,17 @@ const messageListener = (request) => {
       })
     })
   }
+
+  if (request.message === "update_primer") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Primers.updateLogs(request.primer.slug, request.log.id, request.remove).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
+      })
+    })
+  }
 }
 chrome.runtime.onMessage.addListener(messageListener)
 

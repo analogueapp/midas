@@ -51,6 +51,8 @@ const Knots = {
 const Primers = {
   create: primer =>
     requests.post("/primers", { primer }),
+  updateLogs: (slug, log_id, remove) =>
+    requests.put(`/primers/${slug}/${remove ? "remove" : "add"}/${log_id}`),
 };
 
 export default {
