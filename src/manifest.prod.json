@@ -1,8 +1,8 @@
 {
   "name": "Analogue",
   "short_name": "Analogue",
-  "version": "0.1",
-  "description": "Track and organize the content you love.",
+  "version": "1.0",
+  "description": "Share what inspires you.",
   "manifest_version": 2,
   "minimum_chrome_version": "79",
   "homepage_url": "https://www.analogue.app",
