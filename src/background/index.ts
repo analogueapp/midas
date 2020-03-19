@@ -107,8 +107,8 @@ const streamCallback = (data) => {
 
         // create notification object from activity
         const title = `${activity.user.name} (@${activity.user.username}) ${activity.activity.notify_owner
-                  ? " replied in your note"
-                  : ` ${verbWords[activity.activity.verb]} ${activity.activity.verb === "Mention" ? objectWords["Mention"] : objectWords[activity.objectType]}` }`
+                  ? "replied in your note"
+                  : `${verbWords[activity.activity.verb]} ${activity.activity.verb === "Mention" ? objectWords["Mention"] : activity.activity.verb === "Add" ? activity.primer.title : objectWords[activity.objectType]}` }`
 
         const message = activity.response
           ? activity.response.body
@@ -116,7 +116,7 @@ const streamCallback = (data) => {
             ? activity.object.body
             : activity.activity.verb === "Like" && activity.objectType === "Knot"
               ? activity.object.bodyText
-              : activity.activity.verb === "Log" && activity.log && activity.log.content
+              : activity.activity.verb === "Add" || activity.activity.verb === "Log" && activity.log && activity.log.content
                 ? activity.log.content.title
                 : "View their profile on Analogue"
 
