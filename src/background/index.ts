@@ -1,13 +1,15 @@
 /*global chrome*/
-
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 
 import { wrapStore } from 'webext-redux';
 
 import agent from './agent';
+import { verbWords, objectWords } from './utils/activity';
 
 import logo from './assets/img/logo_icon.png';
+
+const rootUrl = process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'
 
 const store = createStore(rootReducer, {})
 
@@ -76,7 +78,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const authListener = (request) => {
   const user = request.user
-  console.log("AUTH LISTENER CALLED", user)
   agent.setToken(request.user.token)
   sessionStorage.setItem("analogue-jwt", user.token)
   // connect to realtime updates via stream
@@ -98,28 +99,48 @@ const authListener = (request) => {
 chrome.runtime.onMessageExternal.addListener(authListener)
 
 const streamCallback = (data) => {
-  console.log("STREAMCALLBACK NOTIFICATION", data )
   // only make data call on new notifications, not delete
   if (data.new && data.new.length > 0) {
     agent.Activity.notify(data.new).then(
       res => {
-        console.log("RESPONSE FROM ACTIVITY", res)
         const activity = res.activities[0];
 
-        // create notification using analogueUrl as id
-        // ids must be unique to trigger new notifications, so have to add uid to front of URL in case url is the same
-        const generatedUid = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
-        const analogueUrl = "https://www.analogue.app";
+        // create notification object from activity
+        const title = `${activity.user.name} (@${activity.user.username}) ${activity.activity.notify_owner
+                  ? " replied in your note"
+                  : ` ${verbWords[activity.activity.verb]} ${activity.activity.verb === "Mention" ? objectWords["Mention"] : objectWords[activity.objectType]}` }`
+
+        const message = activity.response
+          ? activity.response.body
+          : activity.activity.verb === "Like" && activity.objectType === "Response"
+            ? activity.object.body
+            : activity.activity.verb === "Like" && activity.objectType === "Knot"
+              ? activity.object.bodyText
+              : activity.activity.verb === "Log" && activity.log && activity.log.content
+                ? activity.log.content.title
+                : "View their profile on Analogue"
+
+        const iconUrl = activity.log && activity.log.content && activity.log.content.image
+          ? `${rootUrl}${activity.log.content.image}`
+          : logo
+
         var options = {
           type: "basic",
-          iconUrl: logo,
-          title: "Activity on Analogue",
-          message: 'Rosemarie Tang (@rj) just liked your note "hey there I love joel here is a longer note, see how long it truncates for what is up gangs"',
+          title: title,
+          message: message,
+          iconUrl: iconUrl,
         }
 
-        chrome.notifications.create(generatedUid + analogueUrl, options, (notificationId) => {
-          console.log("notification id", notificationId)
-          console.log("Last error:", chrome.runtime.lastError);
+        const notificationUrl = activity.log && activity.log.content
+          ? `/${activity.log.content.formSlug}/${activity.log.content.slug}?u=${activity.log.user.username}`
+          : `/@${activity.user.username}`
+
+        // url is id of notification for onClick anchor
+        // ids must be unique to trigger new notifications, so have to add uid to front of URL in case url is the same
+        const generatedUid = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
+
+        chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
+          console.log("Last error:", chrome.runtime.lastError)
         })
       }
     )
