@@ -5,7 +5,7 @@ import rootReducer from './reducers';
 import { wrapStore } from 'webext-redux';
 
 import agent from './agent';
-import { verbWords, objectWords } from './utils/activity';
+import { verbWords, objectWords, getDataUri } from './utils/activity';
 
 import logo from './assets/img/logo_icon.png';
 
@@ -120,17 +120,6 @@ const streamCallback = (data) => {
                 ? activity.log.content.title
                 : "View their profile on Analogue"
 
-        const iconUrl = activity.log && activity.log.content && activity.log.content.image
-          ? `${rootUrl}${activity.log.content.image}`
-          : logo
-
-        var options = {
-          type: "basic",
-          title: title,
-          message: message,
-          iconUrl: iconUrl,
-        }
-
         const notificationUrl = activity.log && activity.log.content
           ? `/${activity.log.content.formSlug}/${activity.log.content.slug}?u=${activity.log.user.username}`
           : `/@${activity.user.username}`
@@ -139,9 +128,32 @@ const streamCallback = (data) => {
         // ids must be unique to trigger new notifications, so have to add uid to front of URL in case url is the same
         const generatedUid = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
 
-        chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
-          console.log("Last error:", chrome.runtime.lastError)
-        })
+        // if not follow, fetch data URI of image
+        // can only accept dataUri or local resources
+        // https://stackoverflow.com/a/44487435
+        if (activity.log && activity.log.content && activity.log.content.imageUrl) {
+          getDataUri(`${rootUrl}${activity.log.content.imageUrl}`, function(dataUri) {
+            var options = {
+              type: "basic",
+              title: title,
+              message: message,
+              iconUrl: dataUri,
+            }
+            chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
+              console.log("Last error:", chrome.runtime.lastError)
+            })
+          })
+        } else {
+          var options = {
+            type: "basic",
+            title: title,
+            message: message,
+            iconUrl: logo,
+          }
+          chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
+            console.log("Last error:", chrome.runtime.lastError)
+          })
+        }
       }
     )
   }
@@ -149,7 +161,7 @@ const streamCallback = (data) => {
 const streamSuccessCallback = () => console.log('now listening to changes in realtime')
 const streamFailCallback = data => console.log('realtime connnection failed', data)
 
-// create a on Click listener for notifications
+// create a onClick listener for notifications
 chrome.notifications.onClicked.addListener((notificationId) => {
   // remove uid from id to get analogue url
   chrome.tabs.create({url: notificationId.substring(10)})
