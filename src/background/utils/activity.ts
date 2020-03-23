@@ -1,7 +1,7 @@
 export const verbWords = {
   Like: 'liked',
   Response: 'replied to',
-  Log: 'also added',
+  Log: 'added',
   Follow: 'started following',
   Mention: 'mentioned',
   Add: 'added to:'
@@ -9,7 +9,7 @@ export const verbWords = {
 export const objectWords = {
   Knot: 'your note',
   Response: 'your response',
-  Content: '',
+  Content: 'from you',
   User: 'you',
   Mention: 'you in a response',
   Primer: ''
