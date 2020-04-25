@@ -21,7 +21,7 @@ interface Props {
 
 const PrimerItem = (props: Props) => {
 
-  const [selected, setSelected] = useState(props.selected ? true : false)
+  const [selected, setSelected] = useState(props.selected || false)
 
   const togglePrimer = (e) => {
     props.updateCurrentPrimers(props.primer, selected)
