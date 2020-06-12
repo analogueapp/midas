@@ -39,10 +39,18 @@ Detailed [installation guide](https://webkul.com/blog/how-to-install-the-unpacke
 ### Start `mainframe`
 In a separate process/tab, run `mainframe` locally so it can communicate with your local Rails API insteady of the live production API.
 
+### Debugging
+In `chrome://extensions/`, you'll find the extension installed:
+<p align="center"><a href="chrome://extensions/" target="_blank"><img src="/docs/extension.png" alt="Installed extension" /></a></p>
+
+You can click on `background page` to open up Chrome dev tools to inspect errors from the background:
+
+<p align="center"><a href="chrome://extensions/" target="_blank"><img src="/docs/dev_console.png" alt="Dev console" /></a></p>
+
 ## File Structure
 
 ### Background
-The background page lives in the `src/background` folder. This is the main part of the app that communicates with Analogue. It runs in the background of the chrome browser and is the only way to send external API requests. 
+The background page lives in the `src/background` folder. This is the main part of the app that communicates with Analogue. It runs in the background of the chrome browser and is the only way to send external API requests.
 
 - `src/background/index.ts` - the entry point for the background script and an entry for webpack.
 - `src/background/agent.js` - contains all API requests to Analogue.
