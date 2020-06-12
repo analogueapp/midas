@@ -26,12 +26,6 @@ Based on [awesome-chrome-extension-boilerplate](https://github.com/tjx666/awesom
 yarn install
 ```
 
-### Add key to Manifest
-Add this line to your `manifest.json`. This is so that the Chrome extension ID matches the production id and installs locally correctly.
-```
-"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArVlw5imfFMKK5pNK8eAIRt9P4Kx8ttRioitL1BshuD2qbyKkhv9ziB8FYysqRw6trwXwwxlSCGqjVaAL9Khr/FYz278ZNqLi/R0IczwArdQcLglc5ryUGVn8nbVh4YTMNMnHC3SIv/nao4H6ZEnD+RyyoSVPvnj7es5gVdxlL/2fZfKTXNitiuklNlPBEI1mo7Om/98y+UZKaJkG3tUfPPJrSpy42FseqrcDNjP8CgEf891l0CzXOatnhX9hofjpYC4Gb2tOGV12T5yzPOqH9dOPIpwzI5xQ9PqIKwXi6GINdGv1UfSEDWYOV9tZMoHkutGwfmUQXoLsnJVDbG78HQIDAQAB",
-```
-
 ### Start dev server locally
 
 ```
