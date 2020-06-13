@@ -1,7 +1,7 @@
 {
   "name": "Analogue",
   "short_name": "Analogue",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Share what inspires you.",
   "manifest_version": 2,
   "minimum_chrome_version": "79",
