@@ -112,12 +112,12 @@ const App = () => {
       if (request.body.errors) {
         setMessage(request.body.message ? request.body.message : "We're having trouble with that URL . . . ")
       } else {
-        setMessage(request.body.content.log && request.body.content.log.status
-          ? statusMessage[request.body.content.log.status]
+        setMessage(request.body.log && request.body.log.status
+          ? statusMessage[request.body.log.status]
           : "Added"
         )
         setContent(request.body.content)
-        setLog(request.body.content.log)
+        setLog(request.body.log)
       }
     }
 
