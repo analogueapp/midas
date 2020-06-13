@@ -132,8 +132,10 @@ const App = () => {
 
     if (request.message === "create_knot_response") {
       setLoading(false)
-      const newLog = { ...log, knots: request.body.knots }
-      setLog(newLog)
+      setLog({
+        ...log,
+        knots: [request.body, ...log.knots]
+      })
     }
   }
 
