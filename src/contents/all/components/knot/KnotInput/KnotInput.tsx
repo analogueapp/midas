@@ -7,9 +7,15 @@ import KeyboardShortcut from '../../common/KeyboardShortcut/KeyboardShortcut'
 import "../Knot/Knot.scss"
 import "./KnotInput.scss";
 
-const KnotInput = props => {
+interface Props {
+  createKnot: (bodyHtml: string, bodyText: string) => void //return type?
+  hasKnots: boolean
+  show: boolean
+}
 
-  const knotEditor = useRef<HTMLInputElement>(null)
+const KnotInput = ({createKnot, hasKnots, show}: Props) => {
+
+  const knotEditor = useRef(null)
 
   const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
@@ -40,7 +46,7 @@ const KnotInput = props => {
     const tempText = value.getEditorState().getCurrentContent().getPlainText() // value.toString("markdown")
 
     if (submit) {
-      props.createKnot(
+      createKnot(
         tempHtml.substring(0, tempHtml.length-11), // remove last line <p><br></p>
         tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
       )
@@ -57,7 +63,7 @@ const KnotInput = props => {
   }
 
   const onSubmit = () => {
-    props.createKnot(
+    createKnot(
       body.toString("html"),
       body.getEditorState().getCurrentContent().getPlainText()
     )
@@ -66,17 +72,17 @@ const KnotInput = props => {
   }
 
   return (
-    <Timeline.Item className={`knot ${props.hasKnots ? "" : "ant-timeline-item-last"}`}>
+    <Timeline.Item className={`knot ${hasKnots ? "" : "ant-timeline-item-last"}`}>
       <div className="knotCard">
         <div className="knotEditorWrapper">
           <div className="knotEditor" ref={knotEditor}>
-            {props.show &&
+            {show &&
               <RichTextEditor
                 autoFocus
                 toolbarConfig={{ display: [] }}
                 value={body}
                 onChange={onChange}
-                placeholder={props.hasKnots ? "Add another note..." : "Add a note..."}
+                placeholder={hasKnots ? "Add another note..." : "Add a note..."}
               />
             }
           </div>

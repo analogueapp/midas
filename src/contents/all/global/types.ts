@@ -60,3 +60,31 @@ export interface Log {
   id: number
   currentPrimers: Primer[]
 }
+
+export interface Knot {
+  id: number
+  body: string
+  bodyText: string
+  postedAt: string
+  private?: boolean
+  logId?: number
+  updatedAt?: string
+  createdAt?: string
+  responses?: any[]
+  like?: Like
+  likesCount?: number
+  totalResponses?: number
+  user?: User
+  episode?: any
+  log?: Log
+  pinned?: boolean
+}
+
+export interface Like {
+  id: number
+  user_id: number
+  likeable_id: number
+  likeable_type: string
+  created_at?: string
+  updated_at?: string
+}

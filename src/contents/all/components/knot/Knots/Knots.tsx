@@ -6,14 +6,17 @@ import KnotInput from '../KnotInput/KnotInput';
 import { Timeline } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
+import { Log } from '../../../global/types'
+
 import './Knots.scss';
 
 interface Props {
-  knots: []
+  log: Log
+  knots: any[]
   show: boolean
   loading: boolean
   primersHeight: number
-  createKnot: () => void
+  createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
 const Knots = (props: Props) => {
@@ -38,7 +41,7 @@ const Knots = (props: Props) => {
       {hasKnots &&
         props.knots.map((knot, index) =>
           <Knot
-            key={knot.id}
+            key={knot.id} //knot has no id?
             knot={knot}
             index={index}
             totalKnots={props.knots.length}

@@ -7,7 +7,7 @@ import { wrapStore } from 'webext-redux';
 import agent from './agent';
 import { verbWords, objectWords, getDataUri } from './utils/activity';
 
-import logo from './assets/img/logo_icon.png';
+import * as logo from './assets/img/logo_icon.png';
 
 const rootUrl = process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'
 
@@ -15,7 +15,7 @@ const store = createStore(rootReducer, {})
 
 var stream = require('getstream');
 
-const injectContentScript = (message) => {
+const injectContentScript = (message = null) => {
   // first, query to see if content script already exists in active tab
   // https://stackoverflow.com/a/42377997
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {

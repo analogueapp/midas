@@ -69,6 +69,7 @@ const App = () => {
 
 
   const updateLogStatus = target => {
+
     const newLog = { ...log, status: target.key }
     setLog(newLog)
     setMessage(statusMessage[target.key])
@@ -223,7 +224,7 @@ const App = () => {
                   loading={loading}
                   log={log}
                   knots={log ? log.knots : []}
-                  createKnot={createKnot}
+                  createKnot={createKnot} // need to include params?
                   primersHeight={primersHeight}
                 />
 
