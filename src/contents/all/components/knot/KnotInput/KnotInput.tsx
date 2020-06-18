@@ -8,7 +8,7 @@ import "../Knot/Knot.scss"
 import "./KnotInput.scss";
 
 interface Props {
-  createKnot: (bodyHtml: string, bodyText: string) => void //return type?
+  createKnot: (bodyHtml: string, bodyText: string) => void
   hasKnots: boolean
   show: boolean
 }
