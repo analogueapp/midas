@@ -41,7 +41,7 @@ const Knots = (props: Props) => {
       {hasKnots &&
         props.knots.map((knot, index) =>
           <Knot
-            key={knot.id} //knot has no id?
+            key={knot.id}
             knot={knot}
             index={index}
             totalKnots={props.knots.length}

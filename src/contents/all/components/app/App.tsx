@@ -224,7 +224,7 @@ const App = () => {
                   loading={loading}
                   log={log}
                   knots={log ? log.knots : []}
-                  createKnot={createKnot} // need to include params?
+                  createKnot={createKnot}
                   primersHeight={primersHeight}
                 />
 
