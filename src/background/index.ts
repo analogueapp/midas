@@ -59,15 +59,9 @@ chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action" })
 })
 
-//keyboard shortcut
-
-// chrome.commands.getAll(function(commands){
-//   console.log(commands)
-// })
+//keyboard shortcut: triggers browser action
 
 chrome.commands.onCommand.addListener(function(command) {
-  console.log("Keyboard Shortcut!");
-
   injectContentScript({ message: "clicked_browser_action" })
 });
 
