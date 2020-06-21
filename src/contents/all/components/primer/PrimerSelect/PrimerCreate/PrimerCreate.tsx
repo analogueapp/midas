@@ -20,19 +20,19 @@ const PrimerCreate = (props: Props) => {
   const [inputValue, setInputValue] = useState("")
   const [showInput, setShowInput] = useState(false)
 
-  const _input = useRef<HTMLInputElement>(null)
+  const _input = useRef(null)
 
   useEffect(() => {
     // focus input on show
     if (showInput && props.showParent) {
       if (_input.current) {
-        _input.current.input.focus()
+        _input.current.focus()
       }
     } else {
       // reset input value on hide parent or input
       setInputValue("")
       if (_input.current) {
-        _input.current.input.blur()
+        _input.current.blur()
       }
     }
     return () => null

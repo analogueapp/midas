@@ -19,19 +19,19 @@ const keyMap = (key) => {
 
 interface Props {
   text: string
-  keys: [string]
+  keys: string[]
   className?: string
   vertical?: boolean
   onClick?: () => void
 }
 
-const KeyboardShortcut = (props: Props) => {
+const KeyboardShortcut = ({text, keys, className, vertical, onClick}: Props) => {
 
   return (
     <label
-      onClick={props.onClick}
-      className={`keyboardShorcut ${props.onClick ? "clickable" : ""} ${props.className ? props.className : ""} ${props.vertical ? "column" : ""}`}>
-      {props.keys.map(key =>
+      onClick={onClick}
+      className={`keyboardShorcut ${onClick ? "clickable" : ""} ${className ? className : ""} ${vertical ? "column" : ""}`}>
+      {keys.map(key =>
         <code
           key={key}
           className={key === "CMD" ? "cmd" : ""}
@@ -39,7 +39,7 @@ const KeyboardShortcut = (props: Props) => {
           {keyMap(key)}
         </code>
       )}
-      <span>{props.text}</span>
+      <span>{text}</span>
     </label>
   )
 }

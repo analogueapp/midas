@@ -11,8 +11,8 @@ import { LockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/i
 import './PrimerItem.scss'
 
 interface Props {
-  log: Log
-  primer: Primer
+  log?: Log
+  primer?: Primer
   collection?: string
   selectable?: boolean
   selected?: boolean

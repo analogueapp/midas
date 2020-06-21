@@ -5,11 +5,11 @@
         "isolatedModules": true,
 
         /* Strict Type-Checking Options */
-        "strict": true,
+        "strict": false,
 
         /* Additional Checks */
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
         "noImplicitReturns": true,
         "noImplicitAny": false,
         "noFallthroughCasesInSwitch": true,

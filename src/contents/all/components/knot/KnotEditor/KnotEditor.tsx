@@ -2,11 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TrixEditor } from "react-trix";
 import { Timeline } from "antd";
 import trix from "trix";
+import { User, Knot } from '../../../global/types';
 
 import "trix/dist/trix.css";
 import "../Trix.scss";
 import "../Knot/Knot.scss"
 import "./KnotEditor.scss";
+
+interface Props {
+  knot: Knot
+  onMetaEnter?: () => void
+  onEnter?: () => void
+  currentUser: User
+  hasKnots: boolean
+  autoFocus?: () => void
+  onChange?: () => void
+}
 
 const KnotEditor = props => {
 
@@ -193,6 +204,7 @@ const KnotEditor = props => {
               value={props.knot ? props.knot.body : ""}
               onEditorReady={handleEditorReady}
               onChange={props.knot ? onChange : props.onChange}
+              mergeTags={[]}
             />
           </div>
         </div>

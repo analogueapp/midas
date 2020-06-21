@@ -22,10 +22,10 @@ export const getDataUri = (url, callback) => {
 
   image.onload = function () {
       var canvas = document.createElement('canvas');
-      canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-      canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+      canvas.width = image.naturalWidth; // or 'width' if you want a special/scaled size
+      canvas.height = image.naturalHeight; // or 'height' if you want a special/scaled size
 
-      canvas.getContext('2d').drawImage(this, 0, 0);
+      canvas.getContext('2d').drawImage(image, 0, 0);
 
       // ... or get as Data URI
       callback(canvas.toDataURL('image/png'));

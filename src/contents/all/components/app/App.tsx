@@ -69,6 +69,7 @@ const App = () => {
 
 
   const updateLogStatus = target => {
+
     const newLog = { ...log, status: target.key }
     setLog(newLog)
     setMessage(statusMessage[target.key])
