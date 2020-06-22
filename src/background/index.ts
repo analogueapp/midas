@@ -59,6 +59,12 @@ chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action" })
 })
 
+//keyboard shortcut: triggers browser action
+
+chrome.commands.onCommand.addListener(function(command) {
+  injectContentScript({ message: "clicked_browser_action" })
+});
+
 chrome.tabs.onActivated.addListener(function(activeInfo) {
   injectContentScript()
 })

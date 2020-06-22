@@ -1,7 +1,7 @@
 {
   "name": "Analogue",
   "short_name": "Analogue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Share what inspires you.",
   "manifest_version": 2,
   "minimum_chrome_version": "79",
@@ -23,6 +23,14 @@
       "128": "icons/extension-icon-x128.png"
     },
     "default_title": "Add to Analogue"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Command+Shift+A"
+      }
+    }
   },
   "icons": {
     "16": "icons/extension-icon-x16.png",
