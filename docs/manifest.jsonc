@@ -33,12 +33,12 @@
     },
     "chrome_url_overrides": {},
     "commands": {
-          "_execute_browser_action": {
-            "suggested_key": {
-              "default": "Ctrl+Shift+Y",
-              "mac": "Command+Shift+Y"
-              }
+      "_execute_browser_action": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+A",
+          "mac": "Command+Shift+A"
         }
+      }
     },
     "content_capabilities": "",
     "content_scripts": [{}],

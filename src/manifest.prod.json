@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "minimum_chrome_version": "79",
   "homepage_url": "https://www.analogue.app",
-  "permissions": ["activeTab", "contextMenus", "notifications", "*://*.analogue.app/*", "<all_urls>"],
+  "permissions": ["activeTab", "contextMenus", "notifications", "*://*.analogue.app/*"],
   "content_security_policy": "script-src 'self' https://*.getstream.io; object-src 'self';",
   "background": {
     "scripts": ["js/background.js"],
@@ -25,12 +25,12 @@
     "default_title": "Add to Analogue"
   },
   "commands": {
-        "_execute_browser_action": {
-          "suggested_key": {
-            "default": "Ctrl+Shift+Y",
-            "mac": "Command+Shift+Y"
-            }
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A",
+        "mac": "Command+Shift+A"
       }
+    }
   },
   "icons": {
     "16": "icons/extension-icon-x16.png",
