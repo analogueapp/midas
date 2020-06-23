@@ -172,7 +172,7 @@ const App = () => {
                 e.stopPropagation()
               }}>
 
-                <div className="analogueModalHeader">
+                <div className="analogueModalHeader" id='analogueHeader'>
 
                   <img src={logo} className="logo" alt="Analogue Icon" />
 
@@ -180,7 +180,7 @@ const App = () => {
                     disabled={!log}
                     align={{offset: [-14, 15]}}
                     overlayClassName="dropdownStatusOverlay"
-                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                    getPopupContainer={() => document.getElementById("analogueHeader")}
                     overlay={
                       <Menu onClick={updateLogStatus}>
                         {log && log.status !== "pub" &&
