@@ -143,7 +143,7 @@
         "stylelint-config-prettier": "^8.0.1",
         "stylelint-config-rational-order": "^0.1.2",
         "stylelint-config-standard": "^20.0.0",
-        "stylelint-declaration-block-no-ignored-properties": "^2.2.0",
+        "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
         "stylelint-order": "^4.0.0",
         "terser-webpack-plugin": "^2.3.5",
         "ts-node": "^8.6.2",
