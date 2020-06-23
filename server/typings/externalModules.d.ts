@@ -46,7 +46,3 @@ declare module 'ssestream' {
 
     export = SSEStream;
 }
-
-declare module '*.png'
-
-declare module '*.jpg'
