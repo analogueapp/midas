@@ -64,7 +64,9 @@ const App = () => {
     if (user && show && !content) {
       chrome.runtime.sendMessage({ message: "parse_content" })
     }
-    return
+    if (!show && content) {
+      setContent(null)
+    }
   }, [show])
 
 
