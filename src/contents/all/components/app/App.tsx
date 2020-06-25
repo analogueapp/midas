@@ -69,11 +69,19 @@ const App = () => {
 
 
   const updateLogStatus = target => {
-
-    const newLog = { ...log, status: target.key }
-    setLog(newLog)
-    setMessage(statusMessage[target.key])
-    chrome.runtime.sendMessage({ message: "log_update", log: newLog })
+    if (target.key == "delete") {
+      const delLog = { ...log, status: target.key }
+      chrome.runtime.sendMessage({ message: "delete_log", log: delLog })
+      setShow(false)
+      setLog(null)
+      setContent(null)
+    }
+    else {
+      const newLog = { ...log, status: target.key }
+      setLog(newLog)
+      setMessage(statusMessage[target.key])
+      chrome.runtime.sendMessage({ message: "log_update", log: newLog })
+    }
   }
 
   const createKnot = (bodyHtml, bodyText) => {
@@ -196,6 +204,11 @@ const App = () => {
                         {log && log.status !== "priv" &&
                           <Menu.Item key="priv">
                             Add privately
+                          </Menu.Item>
+                        }
+                        {log &&
+                          <Menu.Item key="delete">
+                            Delete
                           </Menu.Item>
                         }
                       </Menu>

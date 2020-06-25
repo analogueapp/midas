@@ -41,6 +41,8 @@ const Contents = {
 const Logs = {
   update: (log) =>
     requests.put(`/logs/${log.id}`, { log }),
+  delete: (log) =>
+    requests.del(`/logs/${log.id}`, { log }),
 }
 
 const Knots = {
