@@ -202,8 +202,7 @@ const messageListener = (request) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 
-      // Send a message to the active tab
-      agent.Logs.delete(request.log).then(response => {
+      agent.Logs.delete(request.id).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "delete_log_response", body: response });
       })
     })
