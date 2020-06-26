@@ -70,8 +70,7 @@ const App = () => {
 
   const updateLogStatus = target => {
     if (target.key == "delete") {
-      const delLog = { ...log, status: target.key }
-      chrome.runtime.sendMessage({ message: "delete_log", log: delLog })
+	      chrome.runtime.sendMessage({ message: "delete_log", id: log.id })
       setShow(false)
       setLog(null)
       setContent(null)
