@@ -231,7 +231,7 @@ const App = () => {
                   />
                 </div>
 
-                <ContentPreview content={content} />
+                <ContentPreview content={content} user={user} />
 
                 <Knots
                   show={show}

@@ -83,25 +83,29 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const authListener = (request) => {
-  const user = request.user
-  agent.setToken(request.user.token)
-  sessionStorage.setItem("analogue-jwt", user.token)
-  // connect to realtime updates via stream
-  const client = stream.connect(
-    user.streamKey,
-    user.streamToken,
-    user.streamId,
-  );
-  const notificationFeed = client.feed('notification', user.id.toString())
-  notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
+  if (!sessionStorage.getItem("analogue-jwt")) {
+    const user = request.user
+    agent.setToken(request.user.token)
+    sessionStorage.setItem("analogue-jwt", user.token)
+    // connect to realtime updates via stream
+    const client = stream.connect(
+      user.streamKey,
+      user.streamToken,
+      user.streamId,
+    );
 
-  // Send a message to the active tab to trigger redux store of token
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0]
-    // must use openerTabId to get original tab that opened analogue login
-    chrome.tabs.sendMessage(activeTab.openerTabId, request);
-  })
+    const notificationFeed = client.feed('notification', user.id.toString())
+    notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
+
+    // Send a message to the active tab to trigger redux store of token
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+      // must use openerTabId to get original tab that opened analogue login
+      chrome.tabs.sendMessage(activeTab.openerTabId, request);
+    })
+  }
 }
+
 chrome.runtime.onMessageExternal.addListener(authListener)
 
 const streamCallback = (data) => {
@@ -127,7 +131,7 @@ const streamCallback = (data) => {
                 : "View their profile on Analogue"
 
         const notificationUrl = activity.log && activity.log.content
-          ? `/${activity.log.content.formSlug}/${activity.log.content.slug}?u=${activity.log.user.username}`
+          ? `/${activity.log.content.formSlug}/${activity.log.content.slug}/@${activity.log.user.username}`
           : `/@${activity.user.username}`
 
         // url is id of notification for onClick anchor
@@ -138,13 +142,14 @@ const streamCallback = (data) => {
         // can only accept dataUri or local resources
         // https://stackoverflow.com/a/44487435
         if (activity.log && activity.log.content && activity.log.content.imageUrl) {
-          getDataUri(`${rootUrl}${activity.log.content.imageUrl}`, function(dataUri) {
+          getDataUri(`${activity.log.content.imageUrl}`, function(dataUri) {
             var options = {
               type: "basic",
               title: title,
               message: message,
               iconUrl: dataUri,
             }
+
             chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
               console.log("Last error:", chrome.runtime.lastError)
             })

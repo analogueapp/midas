@@ -15,7 +15,7 @@ const ContentPreviewHeader = props => {
         <a
           target="_blank"
           className="contentPreview"
-          href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}`}
+          href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}/${props.content.formSlug}/${props.content.slug}/@${props.user.username}`}
         >
           <ProgressiveImage
             src={props.content.imageUrl}
@@ -28,7 +28,6 @@ const ContentPreviewHeader = props => {
 
           <div className="contentDetails">
             <h5 className="title">{props.content.title}</h5>
-
             <ContentMedium content={props.content} />
           </div>
         </a>
