@@ -83,44 +83,36 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const authListener = (request) => {
-  console.log("newAuth")
-  const user = request.user
-  agent.setToken(request.user.token)
-  sessionStorage.setItem("analogue-jwt", user.token)
-  // connect to realtime updates via stream
-  const client = stream.connect(
-    user.streamKey,
-    user.streamToken,
-    user.streamId,
-  );
+  if (!sessionStorage.getItem("analogue-jwt")) {
+    const user = request.user
+    agent.setToken(request.user.token)
+    sessionStorage.setItem("analogue-jwt", user.token)
+    // connect to realtime updates via stream
+    const client = stream.connect(
+      user.streamKey,
+      user.streamToken,
+      user.streamId,
+    );
 
-  const notificationFeed = client.feed('notification', user.id.toString())
+    const notificationFeed = client.feed('notification', user.id.toString())
+    notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
 
-  notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
-
-  // Send a message to the active tab to trigger redux store of token
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0]
-    // must use openerTabId to get original tab that opened analogue login
-    chrome.tabs.sendMessage(activeTab.openerTabId, request);
-  })
+    // Send a message to the active tab to trigger redux store of token
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+      // must use openerTabId to get original tab that opened analogue login
+      chrome.tabs.sendMessage(activeTab.openerTabId, request);
+    })
+  }
 }
 
-// chrome.runtime.onMessageExternal.addListener(authListener)
-
-if (!sessionStorage.getItem("analogue-jwt")) {
-  console.log("!session")
-  chrome.runtime.onMessageExternal.addListener(authListener)
-}
+chrome.runtime.onMessageExternal.addListener(authListener)
 
 const streamCallback = (data) => {
-
   // only make data call on new notifications, not delete
   if (data.new && data.new.length > 0) {
-
     agent.Activity.notify(data.new).then(
       res => {
-
         const activity = res.activities[0];
 
         // create notification object from activity
@@ -149,9 +141,7 @@ const streamCallback = (data) => {
         // if not follow, fetch data URI of image
         // can only accept dataUri or local resources
         // https://stackoverflow.com/a/44487435
-
         if (activity.log && activity.log.content && activity.log.content.imageUrl) {
-
           getDataUri(`${activity.log.content.imageUrl}`, function(dataUri) {
             var options = {
               type: "basic",
@@ -161,7 +151,7 @@ const streamCallback = (data) => {
             }
 
             chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
-
+              console.log("Last error:", chrome.runtime.lastError)
             })
           })
         } else {
@@ -172,7 +162,7 @@ const streamCallback = (data) => {
             iconUrl: logo,
           }
           chrome.notifications.create(generatedUid + rootUrl + notificationUrl, options, (notificationId) => {
-
+            console.log("Last error:", chrome.runtime.lastError)
           })
         }
       }
@@ -217,8 +207,7 @@ const messageListener = (request) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 
-      // Send a message to the active tab
-      agent.Logs.delete(request.log).then(response => {
+      agent.Logs.delete(request.id).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "delete_log_response", body: response });
       })
     })
