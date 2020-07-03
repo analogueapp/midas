@@ -95,7 +95,7 @@ const authListener = (request) => {
       user.streamToken,
       user.streamId,
     );
-
+    
     Segment.identify(user.id.toString(), {
       name: user.name,
       email: user.email,
