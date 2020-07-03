@@ -285,7 +285,7 @@ const messageListener = (request) => {
         window.analytics.track('Collection Created', {
           title: response.primer.title,
           userId: response.primer.users[0].id,
-          context: 'extension'
+          context: 'midas'
         })
 
       })
