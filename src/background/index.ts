@@ -67,13 +67,6 @@ chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action" })
 })
 
-//keyboard shortcut: triggers browser action
-
-chrome.commands.onCommand.addListener(function(command) {
-  window.analytics.track('Extension Shortcut')
-  injectContentScript({ message: "clicked_browser_action" })
-});
-
 chrome.tabs.onActivated.addListener(function(activeInfo) {
   injectContentScript()
 })
@@ -311,6 +304,7 @@ const messageListener = (request) => {
           window.analytics.track('Log Removed', {
             id: response.log_id,
             contentId: response.content_id,
+            primerId: request.primer.id,
             context: 'midas'
           })
         } else {
