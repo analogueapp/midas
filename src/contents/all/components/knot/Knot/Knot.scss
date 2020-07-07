@@ -45,3 +45,56 @@
     justify-content: flex-end;
   }
 }
+
+.ant-popover {
+  p {
+    font-size: 14px;
+  }
+
+  &.deleteConfirm {
+    .ant-popover-inner-content {
+      padding: 10px;
+    }
+    .ant-popover-message-title {
+      text-align: center;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .ant-popover-buttons {
+      .ant-btn:first-child {
+        margin-left: 0;
+        border: none;
+        background: transparent;
+        color: #aaa;
+        padding: 4px;
+        box-shadow: none;
+        &:active, &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .ant-popover-inner {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
+    border-radius: 8px;
+  }
+}
+
+.ant-popover-title {
+  border-bottom: none;
+}
+
+.ant-drawer-header {
+  .ant-drawer-title {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.ant-drawer-right, .ant-drawer-right .ant-drawer-content-wrapper {
+  max-width: 100vw;
+}

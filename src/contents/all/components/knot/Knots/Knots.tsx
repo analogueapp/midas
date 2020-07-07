@@ -17,6 +17,8 @@ interface Props {
   loading: boolean
   primersHeight: number
   createKnot: (bodyHtml: string, bodyText: string) => void
+  deleteKnot: any
+  editKnot: any
 }
 
 const Knots = (props: Props) => {
@@ -46,6 +48,8 @@ const Knots = (props: Props) => {
             index={index}
             totalKnots={props.knots.length}
             isLast={props.knots.length-1 === index}
+            editKnot={props.editKnot}
+            deleteKnot={props.deleteKnot}
           />
         )
       }

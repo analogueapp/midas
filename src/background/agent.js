@@ -48,6 +48,10 @@ const Logs = {
 const Knots = {
   create: (knot, log) =>
     requests.post(`/knots`, { knot: knot, log_id: log.id }),
+  edit: knot =>
+    requests.put(`/knots/${knot.id}`, { knot }),
+  delete: id =>
+    requests.del(`/knots/${id}`),
 }
 
 const Primers = {

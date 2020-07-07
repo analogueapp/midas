@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Timeline } from "antd";
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
 
+import { User, Knot } from '../../../global/types';
+
 import KeyboardShortcut from '../../common/KeyboardShortcut/KeyboardShortcut'
 
 import "../Knot/Knot.scss"
@@ -9,6 +11,8 @@ import "./KnotInput.scss";
 
 interface Props {
   createKnot: (bodyHtml: string, bodyText: string) => void
+  deleteKnot: any
+  editKnot: any
   hasKnots: boolean
   show: boolean
 }
@@ -20,6 +24,10 @@ const KnotInput = ({createKnot, hasKnots, show}: Props) => {
   const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
   const [body, setBody] = useState(RichTextEditor.createEmptyValue())
+  const [knot, setKnot] = useState<Knot>(null)
+
+  const [loading, setLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
 
   useEffect(() => {
     const targetIsRef = knotEditor.hasOwnProperty("current")

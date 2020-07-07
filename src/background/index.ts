@@ -263,6 +263,38 @@ const messageListener = (request) => {
     })
   }
 
+  if (request.message === "delete_knot") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.delete(request.id).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "delete_knot_response", body: response });
+
+        window.analytics.track('Knot Deleted', {
+          id: response.id,
+          logId: response.logId
+        })
+      })
+    })
+  }
+
+  if (request.message === "edit_knot") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.edit(request.id).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "edit_knot_response", body: response });
+
+        window.analytics.track('Knot Edited', {
+          id: response.id,
+          logId: response.logId
+        })
+      })
+    })
+  }
+
   if (request.message === "get_primers") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
