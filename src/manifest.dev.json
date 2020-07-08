@@ -8,7 +8,7 @@
   "minimum_chrome_version": "79",
   "homepage_url": "https://www.analogue.app",
   "permissions": ["activeTab", "contextMenus", "notifications", "http://localhost/*"],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://*.getstream.io; object-src 'self';",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://*.getstream.io https://*.segment.com https://*.amplitude.com https://*.mxpnl.com; object-src 'self';",
   "background": {
     "scripts": ["js/background.js"],
     "persistent": true

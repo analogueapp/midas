@@ -1,6 +1,7 @@
 /*global chrome*/
 import { createStore } from 'redux';
 import rootReducer from './reducers';
+import Segment from './utils/segment';
 
 import { wrapStore } from 'webext-redux';
 
@@ -9,11 +10,17 @@ import { verbWords, objectWords, getDataUri } from './utils/activity';
 
 import * as logo from './assets/img/logo_icon.png';
 
+declare global {
+  interface Window { analytics: any }
+}
+
 const rootUrl = process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'
 
 const store = createStore(rootReducer, {})
 
 var stream = require('getstream');
+
+window.analytics.load('5misG1vVKILgvkxtM7suBhUouTZBxbJ5')
 
 const injectContentScript = (message = null) => {
   // first, query to see if content script already exists in active tab
@@ -34,6 +41,7 @@ const injectContentScript = (message = null) => {
             chrome.tabs.sendMessage(activeTab.id, message)
           }
         })
+
         return
       } else {
         // trigger message to the active tab since already injected
@@ -58,12 +66,6 @@ chrome.contextMenus.create({
 chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action" })
 })
-
-//keyboard shortcut: triggers browser action
-
-chrome.commands.onCommand.addListener(function(command) {
-  injectContentScript({ message: "clicked_browser_action" })
-});
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
   injectContentScript()
@@ -93,6 +95,13 @@ const authListener = (request) => {
       user.streamToken,
       user.streamId,
     );
+
+    Segment.identify(user.id.toString(), {
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      type: user.type
+    })
 
     const notificationFeed = client.feed('notification', user.id.toString())
     notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
@@ -185,9 +194,20 @@ const messageListener = (request) => {
     agent.setToken(sessionStorage.getItem("analogue-jwt"))
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
+
+      window.analytics.track('Extension Clicked')
+
       // Send a message to the active tab with server response
       agent.Contents.parse(activeTab.url).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
+
+        if (response.newlyCreated) {
+          window.analytics.track('Log Created', {
+            id: response.log.id,
+            contentId: response.content.id,
+            context: 'midas'
+          })
+        }
       })
     })
   }
@@ -199,6 +219,12 @@ const messageListener = (request) => {
       // Send a message to the active tab
       agent.Logs.update(request.log).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "log_update_response", body: response });
+
+        window.analytics.track('Log Updated', {
+          id: response.log.id,
+          status: response.log.status,
+          context: 'midas'
+        })
       })
     })
   }
@@ -209,7 +235,15 @@ const messageListener = (request) => {
 
       agent.Logs.delete(request.id).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "delete_log_response", body: response });
+
+        window.analytics.track('Log Deleted', {
+          id: response.log.id,
+          contentId: response.log.contentId,
+          context: 'midas'
+        })
       })
+
+
     })
   }
 
@@ -220,6 +254,11 @@ const messageListener = (request) => {
       // Send a message to the active tab
       agent.Knots.create(request.knot, request.log).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "create_knot_response", body: response });
+
+        window.analytics.track('Knot Created', {
+          id: response.id,
+          logId: response.logId
+        })
       })
     })
   }
@@ -242,6 +281,13 @@ const messageListener = (request) => {
       // Send a message to the active tab
       agent.Primers.create({ title: request.title }).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "create_primer_response", body: response });
+
+        window.analytics.track('Collection Created', {
+          title: response.primer.title,
+          userId: response.primer.users[0].id,
+          context: 'midas'
+        })
+
       })
     })
   }
@@ -253,6 +299,22 @@ const messageListener = (request) => {
       // Send a message to the active tab
       agent.Primers.updateLogs(request.primer.slug, request.log.id, request.remove).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
+
+        if (response.removed) {
+          window.analytics.track('Log Removed', {
+            id: response.log_id,
+            contentId: response.content_id,
+            primerId: request.primer.id,
+            context: 'midas'
+          })
+        } else {
+          window.analytics.track('Log Added', {
+            id: response.log.id,
+            contentId: response.content.id,
+            primerId: response.log.currentPrimers[0].id,
+            context: 'midas'
+          })
+        }
       })
     })
   }
