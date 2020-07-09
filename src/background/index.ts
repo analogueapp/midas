@@ -187,6 +187,14 @@ chrome.notifications.onClicked.addListener((notificationId) => {
   chrome.tabs.create({url: notificationId.substring(10)})
 });
 
+function getSelectedText(tabId, cb) {
+  chrome.tabs.executeScript(tabId, {
+      code: "window.getSelection().toString();",
+  }, function(selection) {
+      cb(selection[0]);
+  });
+}
+
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
@@ -200,6 +208,23 @@ const messageListener = (request) => {
       // Send a message to the active tab with server response
       agent.Contents.parse(activeTab.url).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
+
+        //Selected text to knot: https://stackoverflow.com/a/41707359/13710099
+        getSelectedText(activeTab.id, function(text) {
+          localStorage.selectedText = text;
+          if (text) {
+            text = '"' + text + '"'
+            const selKnot = {body: text.toString("html"), bodytext: text}
+            agent.Knots.create(selKnot, response.log).then(response => {
+              chrome.tabs.sendMessage(activeTab.id, {message: "create_knot_response", body: response });
+
+              window.analytics.track('Knot Created', {
+                id: response.id,
+                logId: response.logId
+              })
+            })
+          }
+        })
 
         if (response.newlyCreated) {
           window.analytics.track('Log Created', {
@@ -242,8 +267,6 @@ const messageListener = (request) => {
           context: 'midas'
         })
       })
-
-
     })
   }
 
