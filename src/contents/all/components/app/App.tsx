@@ -97,28 +97,6 @@ const App = () => {
     })
   }
 
-  const deleteKnot = (knot) => {
-    setLoading(true)
-    setDeleteLoading(true)
-    chrome.runtime.sendMessage({
-      message: "delete_knot",
-      log: log,
-      knot: knot
-    })
-  }
-
-  const editKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
-    chrome.runtime.sendMessage({
-      message: "edit_knot",
-      log: log,
-      knot: {
-        body: bodyHtml,
-        bodyText: bodyText
-      }
-    })
-  }
-
   const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
 
@@ -261,8 +239,6 @@ const App = () => {
                   log={log}
                   knots={log ? log.knots : []}
                   createKnot={createKnot}
-                  deleteKnot={deleteKnot}
-                  editKnot={editKnot}
                   primersHeight={primersHeight}
                 />
 
