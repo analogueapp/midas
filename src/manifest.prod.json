@@ -25,11 +25,12 @@
     "default_title": "Add to Analogue"
   },
   "commands": {
-    "_execute_browser_action": {
+    "selectionToKnot": {
       "suggested_key": {
         "default": "Ctrl+Shift+A",
         "mac": "Command+Shift+A"
-      }
+      },
+      "description": "Makes knot from selected text"
     }
   },
   "icons": {
