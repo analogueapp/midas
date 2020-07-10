@@ -118,6 +118,13 @@ const App = () => {
       }
     }
 
+    if (request.message === "selection_to_knot") {
+      createKnot(
+        request.text.toString("html"),
+        request.text
+      )
+    }
+
     if (request.message === "parse_content_response") {
       if (request.body.errors) {
         setMessage(request.body.message ? request.body.message : "We're having trouble with that URL . . . ")

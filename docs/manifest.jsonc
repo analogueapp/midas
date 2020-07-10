@@ -33,11 +33,12 @@
     },
     "chrome_url_overrides": {},
     "commands": {
-      "_execute_browser_action": {
+      "selectionToKnot": {
         "suggested_key": {
           "default": "Ctrl+Shift+A",
           "mac": "Command+Shift+A"
-        }
+        },
+        "description": "Makes knot from selected text"
       }
     },
     "content_capabilities": "",
