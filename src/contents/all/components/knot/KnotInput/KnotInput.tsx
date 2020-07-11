@@ -53,22 +53,7 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
     const tempHtml = value.toString("html")
     const tempText = value.getEditorState().getCurrentContent().getPlainText() // value.toString("markdown")
 
-    if (submit) {
-      if (knot) {
-        editKnot(
-          tempHtml.substring(0, tempHtml.length-11), // remove last line <p><br></p>
-          tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
-        )
-      }
-      else {
-        createKnot(
-          tempHtml.substring(0, tempHtml.length-11), // remove last line <p><br></p>
-          tempText.replace(/(\r\n|\n|\r)/gm, ""), // remove trailing line break
-        )
-      }
-      setSubmit(false)
-      setBody(RichTextEditor.createEmptyValue())
-    }
+    if (submit) { onSubmit() }
 
     // show help text after typing
     if (tempText.length >= 3) {
@@ -81,11 +66,10 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
   const onSubmit = () => {
     if (knot) {
       editKnot(
-        body.toString("html"),
-        body.getEditorState().getCurrentContent().getPlainText()
+        knot.body,
+        knot.bodyText
       )
-    }
-    else {
+    } else {
       createKnot(
         body.toString("html"),
         body.getEditorState().getCurrentContent().getPlainText()
