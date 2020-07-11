@@ -14,10 +14,9 @@ interface Props {
   createKnot: (bodyHtml: string, bodyText: string) => void
   editKnot?: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
-  show: boolean
 }
 
-const KnotInput = ({knot, createKnot, editKnot, hasKnots, show}: Props) => {
+const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
 
   const knotEditor = useRef(null)
 
@@ -101,15 +100,13 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots, show}: Props) => {
       <div className="knotCard">
         <div className="knotEditorWrapper">
           <div className="knotEditor" ref={knotEditor}>
-            {show &&
-              <RichTextEditor
-                autoFocus
-                toolbarConfig={{ display: [] }}
-                value={body}
-                onChange={onChange}
-                placeholder={hasKnots ? "Add another note..." : "Add a note..."}
-              />
-            }
+            <RichTextEditor
+              autoFocus
+              toolbarConfig={{ display: [] }}
+              value={body}
+              onChange={onChange}
+              placeholder={hasKnots ? "Add another note..." : "Add a note..."}
+            />
           </div>
         </div>
       </div>

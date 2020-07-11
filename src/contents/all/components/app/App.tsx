@@ -234,7 +234,6 @@ const App = () => {
                 <ContentPreview content={content} user={user} />
 
                 <Knots
-                  show={show}
                   loading={loading}
                   log={log}
                   knots={log ? log.knots : []}

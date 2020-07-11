@@ -13,7 +13,6 @@ import './Knots.scss';
 interface Props {
   log: Log
   knots: any[]
-  show: boolean
   loading: boolean
   primersHeight: number
   createKnot: (bodyHtml: string, bodyText: string) => void
@@ -28,7 +27,6 @@ const Knots = (props: Props) => {
       className={`knots ${props.log ? "show" : ""}`}
     >
       <KnotInput
-        show={props.show}
         createKnot={props.createKnot}
         hasKnots={hasKnots}
       />

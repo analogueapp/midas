@@ -71,7 +71,6 @@ const Knot = props => {
     <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
       <KnotInput
         knot={props.knot.body}
-        show={true}
         createKnot={props.createKnot}
         editKnot={editKnot}
       />
