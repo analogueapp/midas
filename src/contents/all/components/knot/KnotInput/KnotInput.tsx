@@ -10,7 +10,7 @@ import "../Knot/Knot.scss"
 import "./KnotInput.scss";
 
 interface Props {
-  knot?: string
+  knot?: Knot
   createKnot: (bodyHtml: string, bodyText: string) => void
   editKnot?: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
@@ -22,22 +22,21 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
 
   const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
-  const [body, setBody] = useState(RichTextEditor.createEmptyValue())
+  const [body, setBody] = useState(knot ? RichTextEditor.createValueFromString(knot.body, 'html') : RichTextEditor.createEmptyValue())
 
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const targetIsRef = knotEditor.hasOwnProperty("current")
     const currentTarget = targetIsRef ? knotEditor.current : knotEditor;
-    if (knot) {
-      setBody(knot)
-    }
+
     if (currentTarget)
       currentTarget.addEventListener("keydown", onKeyDown)
+
     return () => {
       if (currentTarget)
         currentTarget.removeEventListener("keydown", onKeyDown)
-    };
+    }
   }, [])
 
   const onKeyDown = (e) => {
@@ -74,9 +73,9 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
         body.toString("html"),
         body.getEditorState().getCurrentContent().getPlainText()
       )
+      setBody(RichTextEditor.createEmptyValue())
     }
     setSubmit(false)
-    setBody(RichTextEditor.createEmptyValue())
   }
 
   return (

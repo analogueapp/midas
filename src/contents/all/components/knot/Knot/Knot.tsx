@@ -44,6 +44,9 @@ interface Props {
 const Knot = props => {
 
   const [loading, setLoading] = useState(false)
+  const [edited, setEdited] = useState(false)
+
+  const onClickKnot = () => setEdited(true)
 
   const editKnot = (bodyHtml, bodyText) => {
     setLoading(true)
@@ -67,13 +70,20 @@ const Knot = props => {
   }
 
   return (
-    
+
     <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
-      <KnotInput
-        knot={props.knot.body}
-        createKnot={props.createKnot}
-        editKnot={editKnot}
-      />
+      <div className={`knotCard ${props.knot.private ? "private" : ""}`} onClick={onClickKnot}>
+        {edited
+          ? (
+            <KnotInput
+              knot={props.knot}
+              createKnot={props.createKnot}
+              editKnot={editKnot}
+            />
+          )
+          : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
+        }
+      </div>
       <div className="knotMeta">
         <Moment
           filter={(value) =>
