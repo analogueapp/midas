@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import { Timeline, Popconfirm, DatePicker, Tooltip } from 'antd';
 
@@ -42,6 +42,12 @@ const Knot = props => {
   const [loading, setLoading] = useState(false)
   const [edited, setEdited] = useState(false)
   const [hover, setHover] = useState(false)
+  const [knot, setKnot] = useState(props.knot)
+
+  useEffect(() => {
+    setKnot(props.knot)
+  }, [props.knot])
+
 
   const deleteKnot = (knot) => {
     setLoading(true)
@@ -66,11 +72,13 @@ const Knot = props => {
         {edited
           ? (
             <KnotInput
+              setEdited={setEdited}
+              setKnot={setKnot}
               knot={props.knot}
               createKnot={props.createKnot}
             />
           )
-          : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
+          : <div className="trix-content" dangerouslySetInnerHTML={{__html: knot.body}} />
         }
       </div>
       <div className="knotMeta">

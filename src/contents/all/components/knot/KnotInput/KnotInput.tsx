@@ -13,15 +13,16 @@ interface Props {
   knot?: Knot
   createKnot: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
+  setEdited?: React.Dispatch<React.SetStateAction<boolean>>
+  setKnot?: React.Dispatch<React.SetStateAction<Knot>>
 }
 
-const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
+const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
 
   const knotEditor = useRef(null)
 
   const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
-  const [edited, setEdited] = useState(true)
   const [body, setBody] = useState(knot ? RichTextEditor.createValueFromString(knot.body, 'html') : RichTextEditor.createEmptyValue())
 
   const [loading, setLoading] = useState(false)
@@ -79,14 +80,18 @@ const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
   }
 
   const onSubmit = () => {
+    const newBody = body.toString("html")
+
     if (knot) {
       updateKnot(
-        body.toString("html"),
+        newBody,
         body.getEditorState().getCurrentContent().getPlainText()
       )
+      setEdited(false)
+      setKnot({ ...knot, body: newBody })
     } else {
       createKnot(
-        body.toString("html"),
+        newBody,
         body.getEditorState().getCurrentContent().getPlainText()
       )
       setBody(RichTextEditor.createEmptyValue())

@@ -142,6 +142,21 @@ const App = () => {
         knots: log.knots.filter(knot => knot.id !== request.body.id)
       })
     }
+
+    if (request.message === "edit_knot_response") {
+      setLog({
+        ...log,
+        knots: log.knots.map(knot => {
+          if (knot.id === request.body.id) {
+            return {
+              ...knot,
+              ...request.body
+            }
+          }
+          return knot;
+        })
+      })
+    }
   }
 
   return (
