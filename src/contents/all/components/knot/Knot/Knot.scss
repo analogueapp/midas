@@ -42,13 +42,13 @@
     font-size: 12px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 
     span.delete {
       transition: 0.21s ease all;
       opacity: 0;
-      margin-right: 8px;
       cursor: pointer;
+      margin-left: 10px;
 
       &.show {
         opacity: 1;
@@ -94,141 +94,6 @@
       -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
       box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
       border-radius: 8px;
-    }
-  }
-
-  .ant-popover-title {
-    border-bottom: none;
-  }
-
-  .ant-drawer-header {
-    .ant-drawer-title {
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-  }
-
-  .ant-drawer-right, .ant-drawer-right .ant-drawer-content-wrapper {
-    max-width: 100vw;
-  }
-
-  .noteCardFooter {
-    margin: 10px 0 0 10px;
-
-    span {
-      display: inline-block;
-      padding-right: 10px;
-      cursor: auto;
-      user-select: none;
-      color: #aaa;
-      font-size: 12px;
-      transition: all 0.3s ease;
-      > span {
-        padding-right: 0;
-      }
-
-      &.responseIcon {
-        svg {
-          margin-right: 3px;
-          vertical-align: middle;
-          margin-top: -2px;
-        }
-      }
-
-      &.knotsCount {
-        margin-top: 2px;
-        cursor: pointer;
-        float: right;
-
-        svg {
-          margin-right: 3px;
-          vertical-align: middle;
-          margin-top: -2px;
-        }
-
-        span {
-          cursor: pointer;
-
-          &:last-child {
-            margin-left: 3px;
-          }
-        }
-      }
-
-      &.edited {
-        padding-left: 5px;
-        font-size: 8px;
-        color: #aaa;
-      }
-
-      &.hasAction {
-        cursor: pointer;
-        &:hover {
-          color: #c7ac75;
-        }
-
-        &.hide {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        &.show {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        &.privacy {
-          margin-top: 2px;
-          margin-right: -1px;
-        }
-      }
-
-      &.likeBtn {
-        cursor: pointer;
-
-        &:hover {
-          color: inherit;
-        }
-
-        &.liked {
-          .anticon {
-            color: #c7ac75;
-          }
-        }
-
-        .anticon {
-          cursor: pointer;
-          font-size: 12px;
-          vertical-align: middle;
-          color: #aaa;
-          margin-top: -2px;
-
-          &:hover {
-            color: #c7ac75;
-          }
-        }
-
-        .likeCount {
-          color: #aaa;
-          font-size: 12px;
-          padding-left: 4px;
-          cursor: auto;
-          padding-right: 0;
-        }
-      }
-
-      input.ant-input.ant-calendar-picker-input,
-      .ant-calendar-picker-icon {
-        display: none;
-      }
-
-      &.ant-calendar-picker {
-        padding: 0;
-        width: auto !important;
-        min-width: 0 !important;
-        height: 10px;
-      }
     }
   }
 }
