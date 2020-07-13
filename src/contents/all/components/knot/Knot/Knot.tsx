@@ -82,18 +82,6 @@ const Knot = props => {
         }
       </div>
       <div className="knotMeta">
-        <Popconfirm
-          title="Delete note?"
-          okText="Delete"
-          okType="default"
-          overlayClassName="deleteConfirm"
-          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-          icon={null}
-          onConfirm={deleteKnot}
-        >
-          <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
-        </Popconfirm>
-
         <Moment
           filter={(value) =>
             value.replace(/^a few seconds ago/g, 'just now')
@@ -103,8 +91,20 @@ const Knot = props => {
           }
           fromNow
         >
-          {props.knot.postedAt}
+          {props.knot.updatedAt ? props.knot.updatedAt : props.knot.postedAt}
         </Moment>
+        <Popconfirm
+          title="Delete note?"
+          okText="Delete"
+          okType="default"
+          overlayClassName="deleteConfirm"
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+          icon={null}
+          onConfirm={deleteKnot}
+          placement="rightTop"
+        >
+          <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
+        </Popconfirm>
       </div>
     </Timeline.Item>
   )
