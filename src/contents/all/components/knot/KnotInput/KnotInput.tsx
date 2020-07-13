@@ -108,6 +108,7 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
             toolbarConfig={{ display: [] }}
             value={body}
             onChange={onChange}
+            onBlur={setEdited ? onSubmit : null}
             placeholder={hasKnots ? "Add another note..." : "Add a note..."}
           />
         </div>
