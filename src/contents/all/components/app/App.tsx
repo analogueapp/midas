@@ -135,6 +135,14 @@ const App = () => {
         knots: [request.body, ...log.knots]
       })
     }
+
+    if (request.message === "delete_knot_response") {
+      setLoading(false)
+      setLog({
+        ...log,
+        knots: [request.body, ...log.knots]
+      })
+    }
   }
 
   return (
@@ -223,6 +231,7 @@ const App = () => {
 
                 <Knots
                   loading={loading}
+                  setLoading={setLoading}
                   log={log}
                   knots={log ? log.knots : []}
                   primersHeight={primersHeight}

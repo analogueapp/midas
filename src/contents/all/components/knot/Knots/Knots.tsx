@@ -14,17 +14,16 @@ interface Props {
   log: Log
   knots: any[]
   loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
   primersHeight: number
 }
 
 const Knots = (props: Props) => {
 
-  const [loading, setLoading] = useState(false)
-
   const hasKnots = props.knots && props.knots.length > 0
 
   const createKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
+    props.setLoading(true)
     chrome.runtime.sendMessage({
       message: "create_knot",
       log: props.log,
@@ -33,7 +32,6 @@ const Knots = (props: Props) => {
         bodyText: bodyText
       }
     })
-    setLoading(false)
   }
 
   return (
