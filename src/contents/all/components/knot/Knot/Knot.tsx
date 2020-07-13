@@ -54,57 +54,53 @@ const Knot = props => {
   }
 
   return (
-    <div>
-      {show &&
-        <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
-          <div
-            className={`knotCard ${props.knot.private ? "private" : ""}`}
-            onClick={() => setEdited(true)}
-          >
-            {edited
-              ? (
-                <KnotInput
-                  knot={props.knot}
-                  createKnot={props.createKnot}
-                />
-              )
-              : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
-            }
-          </div>
-          <div className="knotMeta">
-            <Moment
-              filter={(value) =>
-                value.replace(/^a few seconds ago/g, 'just now')
-                .replace(/^a /g, '1 ')
-                .replace(/^an /g, '1 ')
-                .replace("minute", 'min')
-              }
-              fromNow
-            >
-              {props.knot.postedAt}
-            </Moment>
-          </div>
-          <div
-            className='noteCardFooter'
-            onMouseOver={() => setHover(true)}
-            onMouseOut={() => setHover(false)}
-          >
-            <Popconfirm
-              title="Delete note?"
-              okText="Delete"
-              okType="default"
-              overlayClassName="deleteConfirm"
-              icon={null}
-              onConfirm={deleteKnot}
-            >
-              <span className={`hasAction "show" `}>
-                Delete
-              </span>
-            </Popconfirm>
-          </div>
-        </Timeline.Item>
-      }
-    </div>
+    <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
+      <div
+        className={`knotCard ${props.knot.private ? "private" : ""}`}
+        onClick={() => setEdited(true)}
+      >
+        {edited
+          ? (
+            <KnotInput
+              knot={props.knot}
+              createKnot={props.createKnot}
+            />
+          )
+          : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
+        }
+      </div>
+      <div className="knotMeta">
+        <Moment
+          filter={(value) =>
+            value.replace(/^a few seconds ago/g, 'just now')
+            .replace(/^a /g, '1 ')
+            .replace(/^an /g, '1 ')
+            .replace("minute", 'min')
+          }
+          fromNow
+        >
+          {props.knot.postedAt}
+        </Moment>
+      </div>
+      <div
+        className='noteCardFooter'
+        onMouseOver={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
+      >
+        <Popconfirm
+          title="Delete note?"
+          okText="Delete"
+          okType="default"
+          overlayClassName="deleteConfirm"
+          icon={null}
+          onConfirm={deleteKnot}
+        >
+          <span className={`hasAction "show" `}>
+            Delete
+          </span>
+        </Popconfirm>
+      </div>
+    </Timeline.Item>
   )
 }
 
