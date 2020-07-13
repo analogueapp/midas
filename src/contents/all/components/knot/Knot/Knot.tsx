@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Moment from 'react-moment';
 import { Timeline, Popconfirm, DatePicker, Tooltip } from 'antd';
 
-import { Log } from '../../../global/types';
+import { Log, Knot as KnotType } from '../../../global/types';
 
 import KnotInput from '../KnotInput/KnotInput';
 
@@ -26,7 +26,7 @@ import '../Trix.scss';
 interface Props {
   log: Log
   key: number
-  knot: Knot
+  knot: KnotType
   index: number
   totalKnots: number
   isLast: boolean
