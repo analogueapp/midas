@@ -85,18 +85,6 @@ const App = () => {
     }
   }
 
-  const createKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
-    chrome.runtime.sendMessage({
-      message: "create_knot",
-      log: log,
-      knot: {
-        body: bodyHtml,
-        bodyText: bodyText
-      }
-    })
-  }
-
   const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
 
@@ -237,7 +225,6 @@ const App = () => {
                   loading={loading}
                   log={log}
                   knots={log ? log.knots : []}
-                  createKnot={createKnot}
                   primersHeight={primersHeight}
                 />
 

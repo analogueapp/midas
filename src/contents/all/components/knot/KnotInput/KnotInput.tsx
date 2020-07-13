@@ -78,9 +78,9 @@ const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
 
   const onSubmit = () => {
     if (knot) {
-      editKnot(
-        knot.body,
-        knot.bodyText
+      updateKnot(
+        body.toString("html"),
+        body.getEditorState().getCurrentContent().getPlainText()
       )
     } else {
       createKnot(

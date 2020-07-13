@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Knot from '../Knot/Knot';
 import KnotInput from '../KnotInput/KnotInput';
@@ -15,11 +15,26 @@ interface Props {
   knots: any[]
   loading: boolean
   primersHeight: number
-  createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
 const Knots = (props: Props) => {
+
+  const [loading, setLoading] = useState(false)
+
   const hasKnots = props.knots && props.knots.length > 0
+
+  const createKnot = (bodyHtml, bodyText) => {
+    setLoading(true)
+    chrome.runtime.sendMessage({
+      message: "create_knot",
+      log: props.log,
+      knot: {
+        body: bodyHtml,
+        bodyText: bodyText
+      }
+    })
+    setLoading(false)
+  }
 
   return (
     <div
@@ -45,7 +60,7 @@ const Knots = (props: Props) => {
             index={index}
             totalKnots={props.knots.length}
             isLast={props.knots.length-1 === index}
-            createKnot={props.createKnot}
+            createKnot={createKnot}
           />
         )
       }

@@ -266,9 +266,10 @@ const messageListener = (request) => {
   if (request.message === "delete_knot") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
+      console.log(request)
 
       // Send a message to the active tab
-      agent.Knots.delete(request.id).then(response => {
+      agent.Knots.del(request.knot.id).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "delete_knot_response", body: response });
 
         window.analytics.track('Knot Deleted', {
