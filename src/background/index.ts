@@ -284,7 +284,7 @@ const messageListener = (request) => {
       const activeTab = tabs[0]
 
       // Send a message to the active tab
-      agent.Knots.edit(request.id).then(response => {
+      agent.Knots.update(request.knot).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "edit_knot_response", body: response });
 
         window.analytics.track('Knot Edited', {

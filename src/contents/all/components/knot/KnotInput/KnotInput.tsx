@@ -12,11 +12,10 @@ import "./KnotInput.scss";
 interface Props {
   knot?: Knot
   createKnot: (bodyHtml: string, bodyText: string) => void
-  editKnot?: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
 }
 
-const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
+const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
 
   const knotEditor = useRef(null)
 
@@ -25,6 +24,21 @@ const KnotInput = ({knot, createKnot, editKnot, hasKnots}: Props) => {
   const [body, setBody] = useState(knot ? RichTextEditor.createValueFromString(knot.body, 'html') : RichTextEditor.createEmptyValue())
 
   const [loading, setLoading] = useState(false)
+
+  const updateKnot = (bodyHtml, bodyText) => {
+    setLoading(true)
+    const newKnot = {
+      ...knot,
+      body: bodyHtml,
+      bodyText: bodyText
+    }
+    chrome.runtime.sendMessage({
+      message: "edit_knot",
+      knot: newKnot
+    })
+    setLoading(false)
+    setShowFooter(false)
+  }
 
   useEffect(() => {
     const targetIsRef = knotEditor.hasOwnProperty("current")
