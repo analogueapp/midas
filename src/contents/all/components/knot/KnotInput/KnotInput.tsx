@@ -21,6 +21,7 @@ const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
 
   const [submit, setSubmit] = useState(false)
   const [showFooter, setShowFooter] = useState(false)
+  const [edited, setEdited] = useState(true)
   const [body, setBody] = useState(knot ? RichTextEditor.createValueFromString(knot.body, 'html') : RichTextEditor.createEmptyValue())
 
   const [loading, setLoading] = useState(false)
@@ -37,6 +38,7 @@ const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
       knot: newKnot
     })
     setLoading(false)
+    setEdited(false)
     setShowFooter(false)
   }
 
@@ -91,26 +93,28 @@ const KnotInput = ({knot, createKnot, hasKnots}: Props) => {
     }
     setSubmit(false)
   }
-
+  //console.log("BODY", body)
   return (
-    <Timeline.Item className={`knot ${hasKnots ? "" : "ant-timeline-item-last"}`}>
-      <div className="knotCard">
-        <div className="knotEditorWrapper">
-          <div className="knotEditor" ref={knotEditor}>
-            <RichTextEditor
-              autoFocus
-              toolbarConfig={{ display: [] }}
-              value={body}
-              onChange={onChange}
-              placeholder={hasKnots ? "Add another note..." : "Add a note..."}
-            />
-          </div>
+    <div>
+      <div className="knotEditorWrapper">
+        <div className="knotEditor" ref={knotEditor}>
+          <RichTextEditor
+            autoFocus
+            toolbarConfig={{ display: [] }}
+            value={body}
+            onChange={onChange}
+            placeholder={hasKnots ? "Add another note..." : "Add a note..."}
+          />
         </div>
       </div>
       <div className="knotCardFooter">
-        {showFooter && <KeyboardShortcut onClick={onSubmit} text="Save" keys={['CMD', 'ENTER']} /> }
+          {showFooter &&
+            <KeyboardShortcut
+              onClick={onSubmit} text="Save" keys={['CMD', 'ENTER']}
+            />
+          }
       </div>
-    </Timeline.Item>
+    </div>
   )
 }
 

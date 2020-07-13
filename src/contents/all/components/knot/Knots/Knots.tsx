@@ -41,10 +41,14 @@ const Knots = (props: Props) => {
       style={props.primersHeight ? { maxHeight: `calc(100vh - ${275 + props.primersHeight}px)` } : {}}
       className={`knots ${props.log ? "show" : ""}`}
     >
-      <KnotInput
-        createKnot={props.createKnot}
-        hasKnots={hasKnots}
-      />
+    <Timeline.Item className={`knot ${hasKnots ? "" : "ant-timeline-item-last"}`}>
+      <div className="knotCard">
+        <KnotInput
+          createKnot={createKnot}
+          hasKnots={hasKnots}
+        />
+      </div>
+    </Timeline.Item>
       {props.loading &&
         <Timeline.Item
           dot={<LoadingOutlined />}
