@@ -137,10 +137,9 @@ const App = () => {
     }
 
     if (request.message === "delete_knot_response") {
-      setLoading(false)
       setLog({
         ...log,
-        knots: [request.body, ...log.knots]
+        knots: log.knots.filter(knot => knot.id !== request.body.id)
       })
     }
   }
