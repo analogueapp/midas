@@ -92,6 +92,7 @@ const Knot = props => {
           okText="Delete"
           okType="default"
           overlayClassName="deleteConfirm"
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
           icon={null}
           onConfirm={deleteKnot}
         >
