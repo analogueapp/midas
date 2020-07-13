@@ -43,6 +43,21 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    span.delete {
+      transition: 0.21s ease all;
+      opacity: 0;
+      margin-right: 8px;
+      cursor: pointer;
+
+      &.show {
+        opacity: 1;
+      }
+
+      &:hover {
+        color: #c7ac75;
+      }
+    }
   }
 
   .ant-popover {

@@ -54,7 +54,11 @@ const Knot = props => {
   }
 
   return (
-    <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
+    <Timeline.Item
+      className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}
+    >
       <div
         className={`knotCard ${props.knot.private ? "private" : ""}`}
         onClick={() => setEdited(true)}
@@ -70,6 +74,18 @@ const Knot = props => {
         }
       </div>
       <div className="knotMeta">
+        <Popconfirm
+          title="Delete note?"
+          okText="Delete"
+          okType="default"
+          overlayClassName="deleteConfirm"
+          getPopupContainer={(triggerNode) => triggerNode.parentNode}
+          icon={null}
+          onConfirm={deleteKnot}
+        >
+          <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
+        </Popconfirm>
+
         <Moment
           filter={(value) =>
             value.replace(/^a few seconds ago/g, 'just now')
@@ -81,25 +97,6 @@ const Knot = props => {
         >
           {props.knot.postedAt}
         </Moment>
-      </div>
-      <div
-        className='noteCardFooter'
-        onMouseOver={() => setHover(true)}
-        onMouseOut={() => setHover(false)}
-      >
-        <Popconfirm
-          title="Delete note?"
-          okText="Delete"
-          okType="default"
-          overlayClassName="deleteConfirm"
-          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-          icon={null}
-          onConfirm={deleteKnot}
-        >
-          <span className={`hasAction "show" `}>
-            Delete
-          </span>
-        </Popconfirm>
       </div>
     </Timeline.Item>
   )
