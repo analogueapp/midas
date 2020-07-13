@@ -81,26 +81,25 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
 
   const onSubmit = () => {
     const newBody = body.toString("html")
+    const newBodyText = body.getEditorState().getCurrentContent().getPlainText()
 
-    if (knot) {
-      updateKnot(
-        newBody,
-        body.getEditorState().getCurrentContent().getPlainText()
-      )
-      setEdited(false)
-      setKnot({ ...knot, body: newBody })
-    } else {
-      createKnot(
-        newBody,
-        body.getEditorState().getCurrentContent().getPlainText()
-      )
-      setBody(RichTextEditor.createEmptyValue())
+    if (newBodyText !== '') {
+      if (knot) {
+        if (knot.body !== newBody) {
+          updateKnot(newBody, newBodyText)
+          setKnot({ ...knot, body: newBody })
+        }
+        setEdited(false)
+      } else {
+        createKnot(newBody, newBodyText)
+        setBody(RichTextEditor.createEmptyValue())
+      }
+      setSubmit(false)
     }
-    setSubmit(false)
   }
   //console.log("BODY", body)
   return (
-    <div>
+    <>
       <div className="knotEditorWrapper">
         <div className="knotEditor" ref={knotEditor}>
           <RichTextEditor
@@ -120,7 +119,7 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
             />
           }
       </div>
-    </div>
+    </>
   )
 }
 
