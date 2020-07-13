@@ -23,10 +23,6 @@ import '../Trix.scss';
 //   </div>
 // </div>
 
-// <span className={`hasAction ${noteHover || isMobile ? "show" : "hide"}`}>
-//   {deleteLoading ? <Icon type='loading' /> : 'Delete'}
-// </span>
-
 interface Props {
   log: Log
   key: number
@@ -42,26 +38,14 @@ interface Props {
 // </div>
 
 const Knot = props => {
-
+  const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(false)
   const [edited, setEdited] = useState(false)
-
-  const onClickKnot = () => setEdited(true)
-
-  const editKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
-    chrome.runtime.sendMessage({
-      message: "edit_knot",
-      log: props.log,
-      knot: {
-        body: bodyHtml,
-        bodyText: bodyText
-      }
-    })
-  }
+  const [hover, setHover] = useState(false)
 
   const deleteKnot = (knot) => {
     setLoading(true)
+    setShow(false)
     chrome.runtime.sendMessage({
       message: "delete_knot",
       log: props.log,
@@ -70,43 +54,57 @@ const Knot = props => {
   }
 
   return (
-
-    <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
-      <div className={`knotCard ${props.knot.private ? "private" : ""}`} onClick={onClickKnot}>
-        {edited
-          ? (
-            <KnotInput
-              knot={props.knot}
-              createKnot={props.createKnot}
-              editKnot={editKnot}
-            />
-          )
-          : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
-        }
-      </div>
-      <div className="knotMeta">
-        <Moment
-          filter={(value) =>
-            value.replace(/^a few seconds ago/g, 'just now')
-            .replace(/^a /g, '1 ')
-            .replace(/^an /g, '1 ')
-            .replace("minute", 'min')
-          }
-          fromNow
-        >
-          {props.knot.postedAt}
-        </Moment>
-        <Popconfirm
-          title="Delete note?"
-          okText="Delete"
-          okType="default"
-          overlayClassName="deleteConfirm"
-          icon={null}
-          onConfirm={deleteKnot}
-        >
-        </Popconfirm>
-      </div>
-    </Timeline.Item>
+    <div>
+      {show &&
+        <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
+          <div
+            className={`knotCard ${props.knot.private ? "private" : ""}`}
+            onClick={() => setEdited(true)}
+          >
+            {edited
+              ? (
+                <KnotInput
+                  knot={props.knot}
+                  createKnot={props.createKnot}
+                />
+              )
+              : <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
+            }
+          </div>
+          <div className="knotMeta">
+            <Moment
+              filter={(value) =>
+                value.replace(/^a few seconds ago/g, 'just now')
+                .replace(/^a /g, '1 ')
+                .replace(/^an /g, '1 ')
+                .replace("minute", 'min')
+              }
+              fromNow
+            >
+              {props.knot.postedAt}
+            </Moment>
+          </div>
+          <div
+            className='noteCardFooter'
+            onMouseOver={() => setHover(true)}
+            onMouseOut={() => setHover(false)}
+          >
+            <Popconfirm
+              title="Delete note?"
+              okText="Delete"
+              okType="default"
+              overlayClassName="deleteConfirm"
+              icon={null}
+              onConfirm={deleteKnot}
+            >
+              <span className={`hasAction "show" `}>
+                Delete
+              </span>
+            </Popconfirm>
+          </div>
+        </Timeline.Item>
+      }
+    </div>
   )
 }
 
