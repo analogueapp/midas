@@ -97,7 +97,7 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
       setSubmit(false)
     }
   }
-  //console.log("BODY", body)
+  
   return (
     <>
       <div className="knotEditorWrapper">
