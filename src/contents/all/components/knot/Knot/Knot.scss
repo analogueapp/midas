@@ -95,15 +95,21 @@
         font-size: 12px;
       }
       .ant-popover-buttons {
-        .ant-btn:first-child {
-          margin-left: 0;
-          border: none;
-          background: transparent;
-          color: #aaa;
-          padding: 4px;
-          box-shadow: none;
-          &:active, &:focus {
+
+        .ant-btn {
+          font-size: 10px;
+
+          &:first-child {
+            margin-left: 0;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            padding: 4px;
             box-shadow: none;
+
+            &:active, &:focus {
+              box-shadow: none;
+            }
           }
         }
       }

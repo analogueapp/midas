@@ -95,11 +95,12 @@ const Knot = props => {
           title="Delete note?"
           okText="Delete"
           okType="default"
+          arrowPointAtCenter
           overlayClassName="deleteConfirm"
           getPopupContainer={(triggerNode) => triggerNode.parentNode}
           icon={null}
           onConfirm={deleteKnot}
-          placement="rightTop"
+          placement="top"
         >
           <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
         </Popconfirm>
