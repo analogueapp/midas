@@ -29,6 +29,7 @@ const App = () => {
 
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
+  const [knots, setKnots] = useState(null)
 
   const [message, setMessage] = useState("Loading...");
 
@@ -128,34 +129,29 @@ const App = () => {
     //   setLog(request.body.log)
     // }
 
+    if (request.message === "get_knots_response") {
+      setKnots(request.body.knots)
+    }
+
     if (request.message === "create_knot_response") {
       setLoading(false)
-      setLog({
-        ...log,
-        knots: [request.body, ...log.knots]
-      })
+      setKnots([request.body, ...knots])
     }
 
     if (request.message === "delete_knot_response") {
-      setLog({
-        ...log,
-        knots: log.knots.filter(knot => knot.id !== request.body.id)
-      })
+      setKnots(knots.filter(knot => knot.id !== request.body.id))
     }
 
     if (request.message === "edit_knot_response") {
-      setLog({
-        ...log,
-        knots: log.knots.map(knot => {
-          if (knot.id === request.body.id) {
-            return {
-              ...knot,
-              ...request.body
-            }
+      setKnots(knots.map(knot => {
+        if (knot.id === request.body.id) {
+          return {
+            ...knot,
+            ...request.body
           }
-          return knot;
-        })
-      })
+        }
+        return knot;
+      }))
     }
   }
 
@@ -242,12 +238,12 @@ const App = () => {
                 </div>
 
                 <ContentPreview content={content} user={user} />
-
+                
                 <Knots
                   loading={loading}
                   setLoading={setLoading}
                   log={log}
-                  knots={log ? log.knots : []}
+                  knots={knots}
                   primersHeight={primersHeight}
                 />
 
