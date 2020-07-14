@@ -113,11 +113,12 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
         </div>
       </div>
       <div className="knotCardFooter">
-          {showFooter &&
-            <KeyboardShortcut
-              onClick={onSubmit} text="Save" keys={['CMD', 'ENTER']}
-            />
-          }
+        <KeyboardShortcut
+          show={showFooter}
+          onClick={onSubmit}
+          text={knot ? "Save" : "Post"}
+          keys={['CMD', 'ENTER']}
+        />
       </div>
     </>
   )

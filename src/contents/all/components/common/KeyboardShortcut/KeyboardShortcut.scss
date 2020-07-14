@@ -6,6 +6,14 @@ label.keyboardShorcut {
   flex-shrink: 0;
   animation: fadein 0.21s;
   user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transition: 0.21s ease;
+
+  &.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
 
   &.clickable {
     cursor: pointer;
