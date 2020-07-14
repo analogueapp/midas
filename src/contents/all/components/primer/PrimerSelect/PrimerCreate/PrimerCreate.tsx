@@ -89,8 +89,8 @@ const PrimerCreate = (props: Props) => {
               onKeyDown={onKeyDown}
               placeholder="Name your collection"
             />
-            <KeyboardShortcut onClick={onPressEnter} className="fadeIn" text="Create" keys={['ENTER']} />
-            <KeyboardShortcut onClick={handleInputClose} text="Cancel" keys={['ESC']} />
+            <KeyboardShortcut show onClick={onPressEnter} className="fadeIn" text="Create" keys={['ENTER']} />
+            <KeyboardShortcut show onClick={handleInputClose} text="Cancel" keys={['ESC']} />
           </>
         )
         : (

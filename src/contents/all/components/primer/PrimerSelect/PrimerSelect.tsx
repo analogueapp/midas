@@ -81,7 +81,7 @@ const PrimerSelect = (props: Props) => {
   return (
     <div className="primerSelect">
       <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
-        <PrimerItem collection={props.content.collection} />
+        {props.content && <PrimerItem collection={props.content.collection} /> }
         {currentPrimerTitles.length > 1
           ? <p>+ {currentPrimerTitles.length} collections</p>
           : currentPrimerTitles.length > 0

@@ -107,6 +107,10 @@
             padding: 4px;
             box-shadow: none;
 
+            &:after {
+              animation: unset;
+            }
+
             &:active, &:focus {
               box-shadow: none;
             }

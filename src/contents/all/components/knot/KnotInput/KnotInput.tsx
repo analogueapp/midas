@@ -11,7 +11,7 @@ import "./KnotInput.scss";
 
 interface Props {
   knot?: Knot
-  createKnot: (bodyHtml: string, bodyText: string) => void
+  createKnot?: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
   setEdited?: React.Dispatch<React.SetStateAction<boolean>>
   setKnot?: React.Dispatch<React.SetStateAction<Knot>>
@@ -97,7 +97,7 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
       setSubmit(false)
     }
   }
-  
+
   return (
     <>
       <div className="knotEditorWrapper">
@@ -107,17 +107,18 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
             toolbarConfig={{ display: [] }}
             value={body}
             onChange={onChange}
-            onBlur={setEdited ? onSubmit : null}
+            onBlur={setEdited ? onSubmit : () => setShowFooter(false)}
             placeholder={hasKnots ? "Add another note..." : "Add a note..."}
           />
         </div>
       </div>
       <div className="knotCardFooter">
-          {showFooter &&
-            <KeyboardShortcut
-              onClick={onSubmit} text="Save" keys={['CMD', 'ENTER']}
-            />
-          }
+        <KeyboardShortcut
+          show={showFooter}
+          onClick={onSubmit}
+          text={knot ? "Save" : "Post"}
+          keys={['CMD', 'ENTER']}
+        />
       </div>
     </>
   )
