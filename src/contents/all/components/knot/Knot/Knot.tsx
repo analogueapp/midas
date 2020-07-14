@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
 import { Timeline, Popconfirm, DatePicker, Tooltip } from 'antd';
 
@@ -23,6 +23,8 @@ const Knot = ({ log, knot, isLast }: Props) => {
   const [hover, setHover] = useState(false)
   const [currentKnot, setCurrentKnot] = useState(knot)
 
+  const knotRef = useRef(null)
+
   useEffect(() => {
     setCurrentKnot(knot)
   }, [knot])
@@ -40,6 +42,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
   return (
     <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
+        ref={knotRef}
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
@@ -92,7 +95,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
             okType="default"
             arrowPointAtCenter
             overlayClassName="deleteConfirm"
-            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+            getPopupContainer={() => knotRef.current}
             icon={null}
             onConfirm={deleteKnot}
             placement="top"
