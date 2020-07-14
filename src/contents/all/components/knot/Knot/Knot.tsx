@@ -9,20 +9,6 @@ import KnotInput from '../KnotInput/KnotInput';
 import './Knot.scss';
 import '../Trix.scss';
 
-// <div className="knotEditorWrapper">
-//   <div className="knotEditor" ref={knotEditor}>
-//     {show &&
-//       <RichTextEditor
-//         autoFocus
-//         toolbarConfig={{ display: [] }}
-//         value={body}
-//         onChange={onChange}
-//         placeholder={hasKnots ? "Add another note..." : "Add a note..."}
-//       />
-//     }
-//   </div>
-// </div>
-
 interface Props {
   log: Log
   key: number
@@ -32,10 +18,6 @@ interface Props {
   isLast: boolean
   createKnot: (bodyHtml: string, bodyText: string) => void
 }
-
-// <div className={`knotCard ${props.knot.private ? "private" : ""}`}>
-//   <div className="trix-content" dangerouslySetInnerHTML={{__html: props.knot.body}} />
-// </div>
 
 const Knot = props => {
   const [show, setShow] = useState(true)
@@ -58,6 +40,8 @@ const Knot = props => {
       knot: props.knot
     })
   }
+
+  console.log(props.knot)
 
   return (
     <Timeline.Item
