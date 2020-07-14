@@ -18,15 +18,15 @@ interface Props {
   primersHeight: number
 }
 
-const Knots = (props: Props) => {
+const Knots = ({log, knots, loading, setLoading, primersHeight}: Props) => {
 
-  const hasKnots = props.knots && props.knots.length > 0
+  const hasKnots = knots && knots.length > 0
 
   const createKnot = (bodyHtml, bodyText) => {
-    props.setLoading(true)
+    setLoading(true)
     chrome.runtime.sendMessage({
       message: "create_knot",
-      log: props.log,
+      log: log,
       knot: {
         body: bodyHtml,
         bodyText: bodyText
@@ -36,8 +36,8 @@ const Knots = (props: Props) => {
 
   return (
     <div
-      style={props.primersHeight ? { maxHeight: `calc(100vh - ${275 + props.primersHeight}px)` } : {}}
-      className={`knots ${props.log ? "show" : ""}`}
+      style={primersHeight ? { maxHeight: `calc(100vh - ${275 + primersHeight}px)` } : {}}
+      className={`knots ${log ? "show" : ""}`}
     >
     <Timeline.Item className={`knot ${hasKnots ? "" : "ant-timeline-item-last"}`}>
       <div className="knotCard">
@@ -47,21 +47,21 @@ const Knots = (props: Props) => {
         />
       </div>
     </Timeline.Item>
-      {props.loading &&
+      {loading &&
         <Timeline.Item
           dot={<LoadingOutlined />}
           className={`knotLoading ${hasKnots ? "" : "ant-timeline-item-last"}`}
         />
       }
       {hasKnots &&
-        props.knots.map((knot, index) =>
+        knots.map((knot, index) =>
           <Knot
-            log={props.log}
+            log={log}
             key={knot.id}
             knot={knot}
             index={index}
-            totalKnots={props.knots.length}
-            isLast={props.knots.length-1 === index}
+            totalKnots={knots.length}
+            isLast={knots.length-1 === index}
             createKnot={createKnot}
           />
         )
