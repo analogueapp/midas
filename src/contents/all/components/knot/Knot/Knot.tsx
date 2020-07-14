@@ -17,8 +17,6 @@ interface Props {
 
 const Knot = ({ log, knot, isLast }: Props) => {
 
-  const [show, setShow] = useState(true)
-  const [loading, setLoading] = useState(false)
   const [edited, setEdited] = useState(false)
   const [hover, setHover] = useState(false)
   const [currentKnot, setCurrentKnot] = useState(knot)
@@ -30,8 +28,6 @@ const Knot = ({ log, knot, isLast }: Props) => {
   }, [knot])
 
   const deleteKnot = (knot) => {
-    setLoading(true)
-    setShow(false)
     chrome.runtime.sendMessage({
       message: "delete_knot",
       log: log,
@@ -90,6 +86,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
             </span>
           }
           <Popconfirm
+            placement="top"
             title="Delete note?"
             okText="Delete"
             okType="default"
@@ -98,7 +95,6 @@ const Knot = ({ log, knot, isLast }: Props) => {
             getPopupContainer={() => knotRef.current}
             icon={null}
             onConfirm={deleteKnot}
-            placement="top"
           >
             <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
           </Popconfirm>
