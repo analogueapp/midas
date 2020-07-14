@@ -58,7 +58,7 @@ const App = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [user, content, log])
+  }, [user, content, log, knots])
 
 
   useEffect(() => {
@@ -238,7 +238,7 @@ const App = () => {
                 </div>
 
                 <ContentPreview content={content} user={user} />
-                
+
                 <Knots
                   loading={loading}
                   setLoading={setLoading}

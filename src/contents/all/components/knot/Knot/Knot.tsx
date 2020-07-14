@@ -41,8 +41,6 @@ const Knot = props => {
     })
   }
 
-  console.log(props.knot)
-
   return (
     <Timeline.Item
       className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}
