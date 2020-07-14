@@ -76,7 +76,20 @@ const Knot = props => {
           {props.knot.postedAt}
         </Moment>
         {props.knot.updatedAt != props.knot.postedAt &&
-          <span className="edited">edited</span>
+          <span className="edited">
+            edited{' '}
+            <Moment
+              filter={(value) =>
+                value.replace(/^a few seconds ago/g, 'just now')
+                .replace(/^a /g, '1 ')
+                .replace(/^an /g, '1 ')
+                .replace("minute", 'min')
+              }
+              fromNow
+            >
+              {props.knot.updatedAt}
+            </Moment>
+          </span>
         }
         <Popconfirm
           title="Delete note?"
