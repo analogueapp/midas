@@ -247,6 +247,17 @@ const messageListener = (request) => {
     })
   }
 
+  if (request.message === "get_knots") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.all(request.log).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "get_knots_response", body: response });
+      })
+    })
+  }
+
   if (request.message === "create_knot") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
