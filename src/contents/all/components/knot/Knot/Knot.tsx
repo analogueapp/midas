@@ -27,7 +27,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
     setCurrentKnot(knot)
   }, [knot])
 
-  const deleteKnot = (knot) => {
+  const deleteKnot = () => {
     chrome.runtime.sendMessage({
       message: "delete_knot",
       log: log,
