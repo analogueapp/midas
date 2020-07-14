@@ -91,8 +91,11 @@ const Knot = props => {
           }
           fromNow
         >
-          {props.knot.updatedAt ? props.knot.updatedAt : props.knot.postedAt}
+          {props.knot.postedAt}
         </Moment>
+        {props.knot.updatedAt != props.knot.postedAt &&
+          <span className="edited">edited</span>
+        }
         <Popconfirm
           title="Delete note?"
           okText="Delete"
