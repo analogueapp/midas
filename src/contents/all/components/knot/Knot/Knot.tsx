@@ -16,7 +16,6 @@ interface Props {
   index: number
   totalKnots: number
   isLast: boolean
-  createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
 const Knot = props => {
@@ -57,7 +56,6 @@ const Knot = props => {
               setEdited={setEdited}
               setKnot={setKnot}
               knot={props.knot}
-              createKnot={props.createKnot}
             />
           )
           : <div className="trix-content" dangerouslySetInnerHTML={{__html: knot.body}} />

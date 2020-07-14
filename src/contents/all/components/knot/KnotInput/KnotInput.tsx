@@ -11,7 +11,7 @@ import "./KnotInput.scss";
 
 interface Props {
   knot?: Knot
-  createKnot: (bodyHtml: string, bodyText: string) => void
+  createKnot?: (bodyHtml: string, bodyText: string) => void
   hasKnots?: boolean
   setEdited?: React.Dispatch<React.SetStateAction<boolean>>
   setKnot?: React.Dispatch<React.SetStateAction<Knot>>
@@ -97,7 +97,7 @@ const KnotInput = ({knot, createKnot, hasKnots, setEdited, setKnot}: Props) => {
       setSubmit(false)
     }
   }
-  
+
   return (
     <>
       <div className="knotEditorWrapper">

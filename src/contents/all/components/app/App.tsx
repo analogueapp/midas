@@ -86,6 +86,18 @@ const App = () => {
     }
   }
 
+  const createKnot = (bodyHtml, bodyText) => {
+    setLoading(true)
+    chrome.runtime.sendMessage({
+      message: "create_knot",
+      log: log,
+      knot: {
+        body: bodyHtml,
+        bodyText: bodyText
+      }
+    })
+  }
+
   const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
 
@@ -108,10 +120,7 @@ const App = () => {
     }
 
     if (request.message === "selection_to_knot") {
-      createKnot(
-        request.text.toString("html"),
-        request.text
-      )
+      createKnot(request.text.toString("html"), request.text)
     }
 
     if (request.message === "parse_content_response") {
@@ -248,10 +257,10 @@ const App = () => {
 
                 <Knots
                   loading={loading}
-                  setLoading={setLoading}
                   log={log}
                   knots={knots}
                   primersHeight={primersHeight}
+                  createKnot={createKnot}
                 />
 
                 {log &&

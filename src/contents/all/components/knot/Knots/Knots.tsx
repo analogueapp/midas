@@ -14,30 +14,17 @@ interface Props {
   log: Log
   knots: any
   loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
   primersHeight: number
+  createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
-const Knots = ({log, knots, loading, setLoading, primersHeight}: Props) => {
-
-  const createKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
-    chrome.runtime.sendMessage({
-      message: "create_knot",
-      log: log,
-      knot: {
-        body: bodyHtml,
-        bodyText: bodyText
-      }
-    })
-  }
+const Knots = ({log, knots, loading, primersHeight, createKnot }: Props) => {
 
   useEffect(() => {
     if (log && !knots) {
       chrome.runtime.sendMessage({ message: "get_knots", log: log })
     }
   }, [log])
-
 
   const hasKnots = knots && knots.length > 0;
 
@@ -71,7 +58,6 @@ const Knots = ({log, knots, loading, setLoading, primersHeight}: Props) => {
             index={index}
             totalKnots={knots.length}
             isLast={knots.length-1 === index}
-            createKnot={createKnot}
           />
         )}
       </div>
