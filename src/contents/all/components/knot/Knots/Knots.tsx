@@ -18,7 +18,13 @@ interface Props {
   createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
-const Knots = ({log, knots, loading, primersHeight, createKnot }: Props) => {
+const Knots = ({
+  log,
+  knots,
+  loading,
+  primersHeight,
+  createKnot
+}: Props) => {
 
   useEffect(() => {
     if (log && !knots) {
@@ -52,11 +58,9 @@ const Knots = ({log, knots, loading, primersHeight, createKnot }: Props) => {
 
         {knots && knots.map((knot, index) =>
           <Knot
-            log={log}
             key={knot.id}
+            log={log}
             knot={knot}
-            index={index}
-            totalKnots={knots.length}
             isLast={knots.length-1 === index}
           />
         )}

@@ -11,53 +11,51 @@ import '../Trix.scss';
 
 interface Props {
   log: Log
-  key: number
   knot: KnotType
-  index: number
-  totalKnots: number
   isLast: boolean
 }
 
-const Knot = props => {
+const Knot = ({ log, knot, isLast }: Props) => {
+
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(false)
   const [edited, setEdited] = useState(false)
   const [hover, setHover] = useState(false)
-  const [knot, setKnot] = useState(props.knot)
+  const [currentKnot, setCurrentKnot] = useState(knot)
 
   useEffect(() => {
-    setKnot(props.knot)
-  }, [props.knot])
+    setCurrentKnot(knot)
+  }, [knot])
 
   const deleteKnot = (knot) => {
     setLoading(true)
     setShow(false)
     chrome.runtime.sendMessage({
       message: "delete_knot",
-      log: props.log,
-      knot: props.knot
+      log: log,
+      knot: knot
     })
   }
 
   return (
-    <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
+    <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
         <div
-          className={`knotCard ${props.knot.private ? "private" : ""}`}
+          className={`knotCard ${knot.private ? "private" : ""}`}
           onClick={() => setEdited(true)}
         >
           {edited
             ? (
               <KnotInput
                 setEdited={setEdited}
-                setKnot={setKnot}
-                knot={props.knot}
+                setKnot={setCurrentKnot}
+                knot={knot}
               />
             )
-            : <div className="trix-content" dangerouslySetInnerHTML={{__html: knot.body}} />
+            : <div className="trix-content" dangerouslySetInnerHTML={{__html: currentKnot.body}} />
           }
         </div>
         <div className="knotMeta">
@@ -70,9 +68,9 @@ const Knot = props => {
             }
             fromNow
           >
-            {props.knot.postedAt}
+            {knot.postedAt}
           </Moment>
-          {props.knot.updatedAt != props.knot.postedAt &&
+          {knot.updatedAt != knot.postedAt &&
             <span className="edited">
               edited{' '}
               <Moment
@@ -84,7 +82,7 @@ const Knot = props => {
                 }
                 fromNow
               >
-                {props.knot.updatedAt}
+                {knot.updatedAt}
               </Moment>
             </span>
           }
