@@ -29,7 +29,6 @@ const Knot = props => {
     setKnot(props.knot)
   }, [props.knot])
 
-
   const deleteKnot = (knot) => {
     setLoading(true)
     setShow(false)
@@ -41,67 +40,68 @@ const Knot = props => {
   }
 
   return (
-    <Timeline.Item
-      className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}
-      onMouseOver={() => setHover(true)}
-      onMouseOut={() => setHover(false)}
-    >
+    <Timeline.Item className={`knot ${props.isLast ? "ant-timeline-item-last" : ""}`}>
       <div
-        className={`knotCard ${props.knot.private ? "private" : ""}`}
-        onClick={() => setEdited(true)}
+        onMouseOver={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
       >
-        {edited
-          ? (
-            <KnotInput
-              setEdited={setEdited}
-              setKnot={setKnot}
-              knot={props.knot}
-            />
-          )
-          : <div className="trix-content" dangerouslySetInnerHTML={{__html: knot.body}} />
-        }
-      </div>
-      <div className="knotMeta">
-        <Moment
-          filter={(value) =>
-            value.replace(/^a few seconds ago/g, 'just now')
-            .replace(/^a /g, '1 ')
-            .replace(/^an /g, '1 ')
-            .replace("minute", 'min')
+        <div
+          className={`knotCard ${props.knot.private ? "private" : ""}`}
+          onClick={() => setEdited(true)}
+        >
+          {edited
+            ? (
+              <KnotInput
+                setEdited={setEdited}
+                setKnot={setKnot}
+                knot={props.knot}
+              />
+            )
+            : <div className="trix-content" dangerouslySetInnerHTML={{__html: knot.body}} />
           }
-          fromNow
-        >
-          {props.knot.postedAt}
-        </Moment>
-        {props.knot.updatedAt != props.knot.postedAt &&
-          <span className="edited">
-            edited{' '}
-            <Moment
-              filter={(value) =>
-                value.replace(/^a few seconds ago/g, 'just now')
-                .replace(/^a /g, '1 ')
-                .replace(/^an /g, '1 ')
-                .replace("minute", 'min')
-              }
-              fromNow
-            >
-              {props.knot.updatedAt}
-            </Moment>
-          </span>
-        }
-        <Popconfirm
-          title="Delete note?"
-          okText="Delete"
-          okType="default"
-          arrowPointAtCenter
-          overlayClassName="deleteConfirm"
-          getPopupContainer={(triggerNode) => triggerNode.parentNode}
-          icon={null}
-          onConfirm={deleteKnot}
-          placement="top"
-        >
-          <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
-        </Popconfirm>
+        </div>
+        <div className="knotMeta">
+          <Moment
+            filter={(value) =>
+              value.replace(/^a few seconds ago/g, 'just now')
+              .replace(/^a /g, '1 ')
+              .replace(/^an /g, '1 ')
+              .replace("minute", 'min')
+            }
+            fromNow
+          >
+            {props.knot.postedAt}
+          </Moment>
+          {props.knot.updatedAt != props.knot.postedAt &&
+            <span className="edited">
+              edited{' '}
+              <Moment
+                filter={(value) =>
+                  value.replace(/^a few seconds ago/g, 'just now')
+                  .replace(/^a /g, '1 ')
+                  .replace(/^an /g, '1 ')
+                  .replace("minute", 'min')
+                }
+                fromNow
+              >
+                {props.knot.updatedAt}
+              </Moment>
+            </span>
+          }
+          <Popconfirm
+            title="Delete note?"
+            okText="Delete"
+            okType="default"
+            arrowPointAtCenter
+            overlayClassName="deleteConfirm"
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+            icon={null}
+            onConfirm={deleteKnot}
+            placement="top"
+          >
+            <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
+          </Popconfirm>
+        </div>
       </div>
     </Timeline.Item>
   )
