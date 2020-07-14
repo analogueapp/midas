@@ -46,8 +46,14 @@ const Logs = {
 }
 
 const Knots = {
+  all: log =>
+    requests.get(`/knots?log_id=${log.id}&preview=true`),
   create: (knot, log) =>
     requests.post(`/knots`, { knot: knot, log_id: log.id }),
+  update: knot =>
+    requests.put(`/knots/${knot.id}`, { knot }),
+  del: id =>
+    requests.del(`/knots/${id}`),
 }
 
 const Primers = {

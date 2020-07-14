@@ -15,3 +15,10 @@
     animation: fadein 0.7s;
   }
 }
+
+.loadingKnots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -25px;
+}

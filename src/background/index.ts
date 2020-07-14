@@ -296,6 +296,17 @@ const messageListener = (request) => {
     })
   }
 
+  if (request.message === "get_knots") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.all(request.log).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "get_knots_response", body: response });
+      })
+    })
+  }
+
   if (request.message === "create_knot") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
@@ -305,6 +316,38 @@ const messageListener = (request) => {
         chrome.tabs.sendMessage(activeTab.id, {message: "create_knot_response", body: response });
 
         window.analytics.track('Knot Created', {
+          id: response.id,
+          logId: response.logId
+        })
+      })
+    })
+  }
+
+  if (request.message === "delete_knot") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.del(request.knot.id).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "delete_knot_response", body: response });
+
+        window.analytics.track('Knot Deleted', {
+          id: response.id,
+          logId: response.logId
+        })
+      })
+    })
+  }
+
+  if (request.message === "edit_knot") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Knots.update(request.knot).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "edit_knot_response", body: response });
+
+        window.analytics.track('Knot Edited', {
           id: response.id,
           logId: response.logId
         })

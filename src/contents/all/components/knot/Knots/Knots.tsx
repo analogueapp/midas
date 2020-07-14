@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Knot from '../Knot/Knot';
 import KnotInput from '../KnotInput/KnotInput';
@@ -12,44 +12,71 @@ import './Knots.scss';
 
 interface Props {
   log: Log
-  knots: any[]
-  show: boolean
+  knots: any
   loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
   primersHeight: number
-  createKnot: (bodyHtml: string, bodyText: string) => void
 }
 
-const Knots = (props: Props) => {
-  const hasKnots = props.knots && props.knots.length > 0
+const Knots = ({log, knots, loading, setLoading, primersHeight}: Props) => {
+
+  const createKnot = (bodyHtml, bodyText) => {
+    setLoading(true)
+    chrome.runtime.sendMessage({
+      message: "create_knot",
+      log: log,
+      knot: {
+        body: bodyHtml,
+        bodyText: bodyText
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (log && !knots) {
+      chrome.runtime.sendMessage({ message: "get_knots", log: log })
+    }
+  }, [log])
+
+
+  const hasKnots = knots && knots.length > 0;
 
   return (
-    <div
-      style={props.primersHeight ? { maxHeight: `calc(100vh - ${275 + props.primersHeight}px)` } : {}}
-      className={`knots ${props.log ? "show" : ""}`}
-    >
-      <KnotInput
-        show={props.show}
-        createKnot={props.createKnot}
-        hasKnots={hasKnots}
-      />
-      {props.loading &&
-        <Timeline.Item
-          dot={<LoadingOutlined />}
-          className={`knotLoading ${hasKnots ? "" : "ant-timeline-item-last"}`}
-        />
-      }
-      {hasKnots &&
-        props.knots.map((knot, index) =>
+    <>
+      <div
+        style={primersHeight ? { maxHeight: `calc(100vh - ${275 + primersHeight}px)` } : {}}
+        className={`knots ${log ? "show" : ""}`}
+      >
+        <Timeline.Item className={`knot ${hasKnots ? "" : "ant-timeline-item-last"}`}>
+          <div className="knotCard">
+            <KnotInput
+              createKnot={createKnot}
+              hasKnots={hasKnots}
+            />
+          </div>
+        </Timeline.Item>
+
+        {loading &&
+          <Timeline.Item
+            dot={<LoadingOutlined />}
+            className={`knotLoading ${hasKnots ? "" : "ant-timeline-item-last"}`}
+          />
+        }
+
+        {knots && knots.map((knot, index) =>
           <Knot
+            log={log}
             key={knot.id}
             knot={knot}
             index={index}
-            totalKnots={props.knots.length}
-            isLast={props.knots.length-1 === index}
+            totalKnots={knots.length}
+            isLast={knots.length-1 === index}
+            createKnot={createKnot}
           />
-        )
-      }
-    </div>
+        )}
+      </div>
+      {!knots && log && <div className='loadingKnots'><LoadingOutlined /></div> }
+    </>
   )
 }
 

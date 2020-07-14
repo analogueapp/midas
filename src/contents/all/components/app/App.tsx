@@ -29,6 +29,7 @@ const App = () => {
 
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
+  const [knots, setKnots] = useState(null)
 
   const [message, setMessage] = useState("Loading...");
 
@@ -57,7 +58,7 @@ const App = () => {
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [user, content, log])
+  }, [user, content, log, knots])
 
 
   useEffect(() => {
@@ -83,18 +84,6 @@ const App = () => {
       setMessage(statusMessage[target.key])
       chrome.runtime.sendMessage({ message: "log_update", log: newLog })
     }
-  }
-
-  const createKnot = (bodyHtml, bodyText) => {
-    setLoading(true)
-    chrome.runtime.sendMessage({
-      message: "create_knot",
-      log: log,
-      knot: {
-        body: bodyHtml,
-        bodyText: bodyText
-      }
-    })
   }
 
   const messageListener = (request, sender, sendResponse) => {
@@ -147,12 +136,29 @@ const App = () => {
     //   setLog(request.body.log)
     // }
 
+    if (request.message === "get_knots_response") {
+      setKnots(request.body.knots)
+    }
+
     if (request.message === "create_knot_response") {
       setLoading(false)
-      setLog({
-        ...log,
-        knots: [request.body, ...log.knots]
-      })
+      setKnots([request.body, ...knots])
+    }
+
+    if (request.message === "delete_knot_response") {
+      setKnots(knots.filter(knot => knot.id !== request.body.id))
+    }
+
+    if (request.message === "edit_knot_response") {
+      setKnots(knots.map(knot => {
+        if (knot.id === request.body.id) {
+          return {
+            ...knot,
+            ...request.body
+          }
+        }
+        return knot;
+      }))
     }
   }
 
@@ -241,11 +247,10 @@ const App = () => {
                 <ContentPreview content={content} user={user} />
 
                 <Knots
-                  show={show}
                   loading={loading}
+                  setLoading={setLoading}
                   log={log}
-                  knots={log ? log.knots : []}
-                  createKnot={createKnot}
+                  knots={knots}
                   primersHeight={primersHeight}
                 />
 

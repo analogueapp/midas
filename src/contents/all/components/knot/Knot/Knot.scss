@@ -34,14 +34,91 @@
       font-size: 16px;
       margin-bottom: 0;
     }
+
+    li {
+      margin-left: 20px;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-left: 5px;
+    }
+
   }
 
   .knotMeta {
     margin: 10px 5px 0;
     color: #777;
-    font-size: 12px;
+    font-size: 11px;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: baseline;
+    justify-content: flex-start;
+
+    span.delete {
+      transition: 0.21s ease all;
+      opacity: 0;
+      cursor: pointer;
+      margin-left: 10px;
+
+      &.show {
+        opacity: 1;
+      }
+
+      &:hover {
+        color: #c7ac75;
+      }
+    }
+
+    .edited {
+      margin-left: 5px;
+      font-size: 7px;
+      color: #777;
+    }
+  }
+
+  .ant-popover {
+    p {
+      font-size: 14px;
+    }
+
+    &.deleteConfirm {
+      .ant-popover-inner-content {
+        padding: 10px;
+      }
+      .ant-popover-message-title {
+        text-align: center;
+        padding: 0;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+      .ant-popover-buttons {
+
+        .ant-btn {
+          font-size: 10px;
+
+          &:first-child {
+            margin-left: 0;
+            border: none;
+            background: transparent;
+            color: #aaa;
+            padding: 4px;
+            box-shadow: none;
+
+            &:active, &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-popover-inner {
+      -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
+      box-shadow: rgba(0, 0, 0, 0.5) 0 16px 70px;
+      border-radius: 8px;
+    }
   }
 }
