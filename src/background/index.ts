@@ -121,7 +121,7 @@ const authListener = (request) => {
       user.streamToken,
       user.streamId,
     );
-    
+
     Segment.identify(user.id.toString(), {
       name: user.name,
       email: user.email,
@@ -234,23 +234,6 @@ const messageListener = (request) => {
       // Send a message to the active tab with server response
       agent.Contents.parse(activeTab.url).then(response => {
         chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
-
-        //Selected text to knot: https://stackoverflow.com/a/41707359/13710099
-        getSelectedText(activeTab.id, function(text) {
-          localStorage.selectedText = text;
-          if (text) {
-            text = '"' + text + '"'
-            const selKnot = {body: text.toString("html"), bodytext: text}
-            agent.Knots.create(selKnot, response.log).then(response => {
-              chrome.tabs.sendMessage(activeTab.id, {message: "create_knot_response", body: response });
-
-              window.analytics.track('Knot Created', {
-                id: response.id,
-                logId: response.logId
-              })
-            })
-          }
-        })
 
         if (response.newlyCreated) {
           window.analytics.track('Log Created', {
