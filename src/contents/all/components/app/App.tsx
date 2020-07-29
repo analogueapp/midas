@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/browser';
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots/Knots';
 import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
+import LoginForm from './LoginForm';
 
 import { Menu, Dropdown } from 'antd';
 import { CloseOutlined, DownOutlined } from '@ant-design/icons';
@@ -26,6 +27,7 @@ const App = () => {
 
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [login, setLogin] = useState(false)
 
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
@@ -115,7 +117,7 @@ const App = () => {
           setShow(true)
         }, 111)
       } else {
-        window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
+        setLogin(true)
       }
     }
 
@@ -199,78 +201,92 @@ const App = () => {
          ({document, window}) => {
             // Render Children
             return (
-              <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
-                e.stopPropagation()
-              }}>
+              <>
+                <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
+                  e.stopPropagation()
+                }}>
+                  {login
+                    ? (
+                      <>
+                        <div className="analogueModalHeader" id='login'>
+                        </div>
+                        <LoginForm />
+                      </>
+                    )
+                    : (
+                      <>
+                        <div className="analogueModalHeader" id='analogueHeader'>
 
-                <div className="analogueModalHeader" id='analogueHeader'>
+                          <img src={logo} className="logo" alt="Analogue Icon" />
 
-                  <img src={logo} className="logo" alt="Analogue Icon" />
+                          <Dropdown
+                            disabled={!log}
+                            align={{offset: [-14, 15]}}
+                            overlayClassName="dropdownStatusOverlay"
+                            getPopupContainer={() => document.getElementById("analogueHeader")}
+                            overlay={
+                              <Menu onClick={updateLogStatus}>
+                                {log && log.status !== "pub" &&
+                                  <Menu.Item key="pub">
+                                    Add to library
+                                  </Menu.Item>
+                                }
+                                {log && log.status !== "saved" &&
+                                  <Menu.Item key="saved">
+                                    Save for later
+                                  </Menu.Item>
+                                }
+                                {log && log.status !== "priv" &&
+                                  <Menu.Item key="priv">
+                                    Add privately
+                                  </Menu.Item>
+                                }
+                                {log &&
+                                  <Menu.Item key="delete">
+                                    Delete
+                                  </Menu.Item>
+                                }
+                              </Menu>
+                            }
+                          >
+                            <div className="dropdownStatus">
+                              {message}
+                              {log && <DownOutlined /> }
+                            </div>
+                          </Dropdown>
 
-                  <Dropdown
-                    disabled={!log}
-                    align={{offset: [-14, 15]}}
-                    overlayClassName="dropdownStatusOverlay"
-                    getPopupContainer={() => document.getElementById("analogueHeader")}
-                    overlay={
-                      <Menu onClick={updateLogStatus}>
-                        {log && log.status !== "pub" &&
-                          <Menu.Item key="pub">
-                            Add to library
-                          </Menu.Item>
-                        }
-                        {log && log.status !== "saved" &&
-                          <Menu.Item key="saved">
-                            Save for later
-                          </Menu.Item>
-                        }
-                        {log && log.status !== "priv" &&
-                          <Menu.Item key="priv">
-                            Add privately
-                          </Menu.Item>
-                        }
+                          <CloseOutlined
+                            className="closeBtn"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              setShow(false)
+                            }}
+                          />
+                        </div>
+
+                        <ContentPreview content={content} user={user} />
+
+                        <Knots
+                          loading={loading}
+                          log={log}
+                          knots={knots}
+                          primersHeight={primersHeight}
+                          createKnot={createKnot}
+                        />
+
                         {log &&
-                          <Menu.Item key="delete">
-                            Delete
-                          </Menu.Item>
+                          <PrimerSelect
+                            log={log}
+                            content={content}
+                            updatePrimersHeight={updatePrimersHeight}
+                          />
                         }
-                      </Menu>
-                    }
-                  >
-                    <div className="dropdownStatus">
-                      {message}
-                      {log && <DownOutlined /> }
-                    </div>
-                  </Dropdown>
-
-                  <CloseOutlined
-                    className="closeBtn"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      setShow(false)
-                    }}
-                  />
+                      </>
+                    )
+                  }
                 </div>
-
-                <ContentPreview content={content} user={user} />
-
-                <Knots
-                  loading={loading}
-                  log={log}
-                  knots={knots}
-                  primersHeight={primersHeight}
-                  createKnot={createKnot}
-                />
-
-                {log &&
-                  <PrimerSelect
-                    log={log}
-                    content={content}
-                    updatePrimersHeight={updatePrimersHeight}
-                  />
-                }
-              </div>
+              </>
             )
           }
         }

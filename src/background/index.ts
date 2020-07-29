@@ -121,7 +121,7 @@ const authListener = (request) => {
       user.streamToken,
       user.streamId,
     );
-    
+
     Segment.identify(user.id.toString(), {
       name: user.name,
       email: user.email,
@@ -224,6 +224,41 @@ function getSelectedText(tabId, cb) {
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
+
+  if (request.message === "auth_user") {
+    agent.Auth.login(request.user).then(response => {
+      if (response.error) {console.log("Incorrect login")}
+      else {
+        const user = response.user
+        agent.setToken(user.token)
+        sessionStorage.setItem("analogue-jwt", user.token)
+        // connect to realtime updates via stream
+        const client = stream.connect(
+          user.streamKey,
+          user.streamToken,
+          user.streamId,
+        );
+
+        Segment.identify(user.id.toString(), {
+          name: user.name,
+          email: user.email,
+          username: user.username,
+          type: user.type
+        })
+
+        const notificationFeed = client.feed('notification', user.id.toString())
+        notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
+
+        // Send a message to the active tab to trigger redux store of token
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          const activeTab = tabs[0]
+          // must use openerTabId to get original tab that opened analogue login
+          chrome.tabs.sendMessage(activeTab.openerTabId, request);
+        })
+      }
+    })
+  }
+
   if (request.message === "parse_content") {
     agent.setToken(sessionStorage.getItem("analogue-jwt"))
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {

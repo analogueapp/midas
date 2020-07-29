@@ -28,6 +28,8 @@ const requests = {
 const Auth = {
   primers: () =>
     requests.get("/user/primers"),
+  login: user =>
+    requests.post('/users/login', { user }),
 }
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
