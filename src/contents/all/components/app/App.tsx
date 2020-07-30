@@ -209,11 +209,13 @@ const App = () => {
 
                 <div className="analogueModalHeader" id='analogueHeader'>
 
-                  <img src={logo} className="logo" alt="Analogue Icon"
-                  onClick={() => {
-                    window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank")
-                  }}/>
-
+                  <a
+                    target="_blank"
+                    href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
+                  >
+                    <img src={logo} className="logo" alt="Analogue Icon"/>
+                  </a>
+                  
                   <Dropdown
                     disabled={!log}
                     align={{offset: [-14, 15]}}
