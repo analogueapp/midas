@@ -69,7 +69,7 @@ chrome.contextMenus.create({
   onclick: function(info, tab) {
     injectContentScript({ message: "clicked_browser_action" })
 
-    const quote = '"' + info.selectionText + '"'
+    const quote = info.selectionText
     injectContentScript({ text: quote, message: "selection_to_knot" })
   }
 })
@@ -86,7 +86,6 @@ chrome.commands.onCommand.addListener(function(command) {
       localStorage.selectedText = text
       if (text) {
         injectContentScript({ message: "clicked_browser_action", selText: true })
-        text = '"' + text + '"'
         injectContentScript({ text: text, message: "selection_to_knot" })
       }
       else {

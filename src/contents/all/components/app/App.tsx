@@ -125,7 +125,7 @@ const App = () => {
     }
 
     if (request.message === "selection_to_knot") {
-      createKnot(request.text.toString("html"), request.text)
+      createKnot(("<blockquote>" + request.text.toString("html") + "</blockquote>"), request.text)
     }
 
     if (request.message === "parse_content_response") {
