@@ -171,10 +171,6 @@ const App = () => {
     }
   }
 
-  const imageClick = () => {
-    console.log('Click');
-  }
-
   return (
     <div
       style={{
@@ -215,7 +211,7 @@ const App = () => {
                   >
                     <img src={logo} className="logo" alt="Analogue Icon"/>
                   </a>
-                  
+
                   <Dropdown
                     disabled={!log}
                     align={{offset: [-14, 15]}}
