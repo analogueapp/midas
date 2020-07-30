@@ -171,6 +171,10 @@ const App = () => {
     }
   }
 
+  const imageClick = () => {
+    console.log('Click');
+  }
+
   return (
     <div
       style={{
@@ -205,7 +209,10 @@ const App = () => {
 
                 <div className="analogueModalHeader" id='analogueHeader'>
 
-                  <img src={logo} className="logo" alt="Analogue Icon" />
+                  <img src={logo} className="logo" alt="Analogue Icon"
+                  onClick={() => {
+                    window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank")
+                  }}/>
 
                   <Dropdown
                     disabled={!log}
