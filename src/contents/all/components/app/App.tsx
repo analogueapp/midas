@@ -205,7 +205,12 @@ const App = () => {
 
                 <div className="analogueModalHeader" id='analogueHeader'>
 
-                  <img src={logo} className="logo" alt="Analogue Icon" />
+                  <a
+                    target="_blank"
+                    href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
+                  >
+                    <img src={logo} className="logo" alt="Analogue Icon"/>
+                  </a>
 
                   <Dropdown
                     disabled={!log}
