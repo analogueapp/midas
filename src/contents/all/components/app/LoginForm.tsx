@@ -9,9 +9,7 @@ import * as Sentry from '@sentry/browser';
 
 import { Form, Icon, Input, Button, message, notification } from 'antd';
 
-import './App.scss';
-
-//import './LoginForm.scss'
+import './LoginForm.scss'
 
 interface Props {
   form: any
@@ -19,9 +17,7 @@ interface Props {
 
 const FormItem = Form.Item;
 
-const LoginForm = () => {
-
-  const {error, inProgress} = useSelector(state => ({ ...state.auth, ...state.common}))
+const LoginForm = ({form}: Props) => {
 
   const submitForm = ev => {
     ev.preventDefault();
@@ -38,22 +34,10 @@ const LoginForm = () => {
     })
   }
 
-  useEffect(()=>{
-    if (error) {
-      if (error instanceof String) {
-        message.error(error)
-      } else {
-        for (const [ key, value ] of Object.entries(error)) {
-          message.error(`${key.charAt(0).toUpperCase()}${key.slice(1)} ${value}`)
-        }
-      }
-    }
-  },[inProgress])
-
   const { getFieldDecorator } = form;
 
   return (
-    <div className="loginPage">
+    <>
       <div className="loginForm">
         <Form onSubmit={submitForm}>
           <FormItem>
@@ -86,7 +70,7 @@ const LoginForm = () => {
             )}
           </FormItem>
           <FormItem>
-            <Button htmlType="submit" loading={inProgress}>
+            <Button htmlType="submit">
               Log in
             </Button>
           </FormItem>
@@ -94,8 +78,8 @@ const LoginForm = () => {
       </div>
       <p className="formFooter formLink"><Link to="/password/reset" className="">Forgot your password?</Link></p>
       <p className="formFooter">New to Analogue? <Link to="/signup">Sign Up</Link></p>
-    </div>
+    </>
   )
 }
 
-export default LoginForm;
+export default Form.create<Props>()(LoginForm);

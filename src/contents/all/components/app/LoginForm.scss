@@ -1,0 +1,211 @@
+.loginForm {
+  width: 100%;
+  max-width: 333px;
+  padding: 20px;
+  // -webkit-box-shadow: 0 2px 7px rgba(0,0,0,0.33);
+  // box-shadow: 0 2px 7px rgba(0,0,0,0.33);
+  border-radius: 4px;
+  -webkit-transition: all .21s ease;
+  -o-transition: all .21s ease;
+  transition: all .21s ease;
+  -webkit-animation: fadein 0.7s;
+  animation: fadein 0.7s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  margin: 30px auto 20px;
+
+  .ant-input-affix-wrapper .ant-input-prefix {
+    color: #aaa;
+  }
+
+  .ant-form-item.borderTop {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 20px;
+  }
+
+  .ant-form-item.name {
+
+    .ant-input-affix-wrapper {
+      width: calc(50% - 7px);
+      display: inline-block;
+      input.ant-input {
+        width: 100%;
+        float: none;
+      }
+
+      .ant-input-prefix {
+        color: #aaa;
+      }
+    }
+    input.ant-input {
+      width: calc(50% - 7px);
+      float: right;
+    }
+  }
+
+  .stickyBottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #2a2a2a;
+    padding: 10px 16px;
+    text-align: right;
+    left: 0;
+    z-index: 9;
+    background: #1a1a1a;
+
+    .ant-btn {
+      float: right;
+      width: auto;
+    }
+
+    .link {
+      margin: 7px 12px 0 10px;
+      float: left;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      text-transform: uppercase;
+      cursor: pointer;
+      &:hover {
+        color: #c7ac75;
+      }
+    }
+  }
+
+  .ant-form-item:last-child {
+    margin-bottom: 10px;
+  }
+  .anticon-check {
+    color: #aaa !important;
+  }
+  .ant-btn {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    .anticon {
+      color: #c7ac75 !important;
+    }
+  }
+
+  .textAreaGroup {
+    position: relative;
+    .iconCol {
+      position: absolute;
+      left: 11px;
+      top: 10px;
+    }
+
+    .textAreaCol {
+      padding-left: 27px;
+      -webkit-transition: ease .2s all;
+    }
+  }
+
+  label {
+    font-size: 16px;
+    color: #aaa;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-left: 12px;
+    font-family: "Montserrat", sans-serif;
+
+    .anticon.anticon-solution {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+
+  textarea.ant-input, input.ant-input {
+    font-size: 18px !important;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    resize: none;
+
+    &:active, &:focus, &:hover {
+      border: none;
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 33px;
+  }
+
+  .has-error .ant-form-explain {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    padding-left: 12px;
+  }
+  .has-error .ant-input-affix-wrapper .ant-input:focus {
+    border: none;
+    box-shadow: none;
+  }
+
+  .ant-alert {
+    border: none;
+    width: 100%;
+    position: absolute;
+    bottom: auto;
+    left: 0;
+    top: -50px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    animation: slidein 0.4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  }
+}
+
+.formFooter {
+  -webkit-animation: fadein 0.7s;
+  animation: fadein 0.7s;
+  opacity: 0;
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 16px;
+  color: #aaa;
+
+  &.formLink {
+    -webkit-animation-delay: unset;
+    animation-delay: unset;
+    margin-top: -40px;
+    a {
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
+
+  a {
+    font-variant: small-caps;
+  }
+
+  p.link {
+    margin: 0;
+    display: inline-block;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.errorPage {
+  text-align: center;
+  .ant-btn {
+    margin-top: 15px;
+  }
+}
+
+
+@media (max-width:500px) {
+  .loginPage {
+    max-width: unset;
+  }
+}

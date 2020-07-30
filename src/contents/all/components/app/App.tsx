@@ -114,10 +114,12 @@ const App = () => {
     if (request.message === "clicked_browser_action") {
       if (user) {
         setTimeout(() => {
+          setLogin(false)
           setShow(true)
         }, 111)
       } else {
         setLogin(true)
+        setShow(true)
       }
     }
 
@@ -208,7 +210,7 @@ const App = () => {
                   {login
                     ? (
                       <>
-                        <div className="analogueModalHeader" id='login'>
+                        <div className="analogueModalHeader">
                         </div>
                         <LoginForm />
                       </>
