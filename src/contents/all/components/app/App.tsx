@@ -110,7 +110,7 @@ const App = () => {
     }
 
     if (request.message === "clicked_browser_action") {
-      if (show) {
+      if (show && !request.selText) {
         setShow(false)
       }
       else {

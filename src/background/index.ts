@@ -79,15 +79,18 @@ chrome.browserAction.onClicked.addListener(function() {
 })
 
 chrome.commands.onCommand.addListener(function(command) {
-  injectContentScript({ message: "clicked_browser_action" })
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0]
 
     getSelectedText(activeTab.id, function(text) {
       localStorage.selectedText = text
       if (text) {
+        injectContentScript({ message: "clicked_browser_action", selText: true })
         text = '"' + text + '"'
         injectContentScript({ text: text, message: "selection_to_knot" })
+      }
+      else {
+        injectContentScript({ message: "clicked_browser_action", selText: false })
       }
     })
   })
@@ -121,7 +124,7 @@ const authListener = (request) => {
       user.streamToken,
       user.streamId,
     );
-    
+
     Segment.identify(user.id.toString(), {
       name: user.name,
       email: user.email,
