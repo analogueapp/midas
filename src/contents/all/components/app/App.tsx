@@ -15,6 +15,7 @@ import { Menu, Dropdown } from 'antd';
 import { CloseOutlined, DownOutlined } from '@ant-design/icons';
 
 import logo from '../../assets/img/logo_icon.png';
+import logo_long from '../../assets/img/logo_long.png';
 import './App.scss';
 
 const statusMessage = {
@@ -210,9 +211,27 @@ const App = () => {
                   {login
                     ? (
                       <>
-                        <div className="analogueModalHeader">
+                        <div className="analogueLoginHeader">
+
+                        <a
+                          target="_blank"
+                          href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
+                        >
+                          <img src={logo_long} className="logo" alt="Analogue Logo"/>
+                        </a>
+
+                          <CloseOutlined
+                            className="closeBtn"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              setShow(false)
+                            }}
+                          />
                         </div>
-                        <LoginForm />
+                        <div className="loginForm">
+                          <LoginForm />
+                        </div>
                       </>
                     )
                     : (
