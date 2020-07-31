@@ -21,6 +21,7 @@ const FormItem = Form.Item;
 const LoginForm = () => {
 
   const submitForm = values => {
+    console.log(values)
     chrome.runtime.sendMessage({
       message: "auth_user",
       user: {
@@ -30,50 +31,41 @@ const LoginForm = () => {
     })
   }
 
-  const { getFieldDecorator } = form;
-
   return (
     <>
-      <div className="loginForm">
-        <Form onSubmit={submitForm}>
-          <FormItem>
-            {getFieldDecorator('email', {
-              rules: [
-                { required: true, message: 'Please enter your email' },
-                { type: 'email', message: 'Not a valid email' }
-              ],
-              validateTrigger: "onBlur"
-            })(
-              <Input
-                size="large"
-                prefix={<Icon type="mail" />}
-                placeholder="Email"
-              />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('password', {
-              rules: [
-                { required: true, message: 'Please enter your password' }
-              ],
-              validateTrigger: "onBlur"
-            })(
-              <Input.Password
-                size="large"
-                prefix={<Icon type="lock" />}
-                placeholder="Password"
-              />
-            )}
-          </FormItem>
-          <FormItem>
-            <Button htmlType="submit">
-              Log in
-            </Button>
-          </FormItem>
-        </Form>
-      </div>
-      <p className="formFooter formLink"><Link to="/password/reset" className="">Forgot your password?</Link></p>
-      <p className="formFooter">New to Analogue? <Link to="/signup">Sign Up</Link></p>
+      <Form
+        wrapperCol={{ span: 14 }}
+        name="login"
+        initialValues={{ remember: true }}
+        onFinish={submitForm}
+      >
+        <FormItem
+          name="email"
+          rules={[{ required: true, message: 'Please enter your email'}]}
+        >
+          <Input
+            id = "login_email"
+            prefix={<MailOutlined />}
+            placeholder="Email"
+          />
+        </FormItem>
+        <FormItem
+          name="email"
+          rules={[{ required: true, message: 'Please enter your password'}]}
+        >
+          <Input.Password
+            id = "login_password"
+            prefix={<LockOutlined />}
+            placeholder="Password"
+          />
+        </FormItem>
+        <FormItem>
+          <Button htmlType="submit" block>
+            Log in
+          </Button>
+        </FormItem>
+        <p className="formFooter">New to Analogue? <a target="_blank" href="https://analogue.app/signup">Sign up</a></p>
+      </Form>
     </>
   )
 }
