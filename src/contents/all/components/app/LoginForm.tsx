@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 import * as Sentry from '@sentry/browser';
 
-import { Form, Icon, Input, Button, message, notification } from 'antd';
 import { Form, Input, Button, message, notification } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 
@@ -19,19 +18,14 @@ interface Props {
 
 const FormItem = Form.Item;
 
-const LoginForm = ({form}: Props) => {
+const LoginForm = () => {
 
-  const submitForm = ev => {
-    ev.preventDefault();
-    form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        chrome.runtime.sendMessage({
-          message: "auth_user",
-          user: {
-            email: values.email,
-            password: values.password
-          }
-        })
+  const submitForm = values => {
+    chrome.runtime.sendMessage({
+      message: "auth_user",
+      user: {
+        email: values.email,
+        password: values.password
       }
     })
   }
@@ -84,4 +78,4 @@ const LoginForm = ({form}: Props) => {
   )
 }
 
-export default Form.create<Props>()(LoginForm);
+export default LoginForm;
