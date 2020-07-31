@@ -1,6 +1,23 @@
+#login > div:nth-child(2) > div > div > div > span {
+  border: none;
+}
+
+#login > div:nth-child(1) > div > div > div > span {
+  border: none;
+}
+
+#login_email {
+  padding-left: 5px;
+}
+
+#login > div:nth-child(3) > div > div > div > button {
+  color: #E3E3E3;
+  font-size: 11px;
+}
+
 .loginForm {
   width: 100%;
-  max-width: 333px;
+  max-width: 300px;
   padding: 20px;
   // -webkit-box-shadow: 0 2px 7px rgba(0,0,0,0.33);
   // box-shadow: 0 2px 7px rgba(0,0,0,0.33);
@@ -15,6 +32,8 @@
   margin: 30px auto 20px;
 
   .ant-input-affix-wrapper .ant-input-prefix {
+    padding-left: 5px;
+    border: none !important;
     color: #aaa;
   }
 
@@ -26,6 +45,7 @@
   .ant-form-item.name {
 
     .ant-input-affix-wrapper {
+      border: none !important;
       width: calc(50% - 7px);
       display: inline-block;
       input.ant-input {
@@ -82,6 +102,7 @@
     display: block;
     width: 100%;
     font-weight: 400;
+    font-size: 13px;
     .anticon {
       color: #c7ac75 !important;
     }
@@ -116,9 +137,8 @@
   }
 
   textarea.ant-input, input.ant-input {
-    font-size: 18px !important;
     border: none;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif !important;;
     font-weight: 300;
     resize: none;
 
@@ -129,17 +149,13 @@
     }
   }
 
-  .ant-input-affix-wrapper .ant-input:not(:first-child) {
-    padding-left: 33px;
-  }
-
   .has-error .ant-form-explain {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     padding-left: 12px;
   }
   .has-error .ant-input-affix-wrapper .ant-input:focus {
-    border: none;
+    border: none !important;
     box-shadow: none;
   }
 
@@ -167,9 +183,10 @@
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 16px;
+  margin: 30px;
+  font-size: 13px;
   color: #aaa;
+  font-family: "Montserrat", sans-serif;
 
   &.formLink {
     -webkit-animation-delay: unset;
