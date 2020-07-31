@@ -8,6 +8,8 @@ import { hot } from 'react-hot-loader/root';
 import * as Sentry from '@sentry/browser';
 
 import { Form, Icon, Input, Button, message, notification } from 'antd';
+import { Form, Input, Button, message, notification } from 'antd';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 
 import './LoginForm.scss'
 
