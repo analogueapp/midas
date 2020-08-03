@@ -226,6 +226,7 @@ function getSelectedText(tabId, cb) {
 const messageListener = (request) => {
 
   if (request.message === "auth_user") {
+    console.log(request)
     agent.Auth.login(request.user).then(response => {
       if (response.error) {console.log("Incorrect login")}
       else {
