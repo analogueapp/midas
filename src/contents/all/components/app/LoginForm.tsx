@@ -44,17 +44,15 @@ const LoginForm = () => {
           rules={[{ required: true, message: 'Please enter your email'}]}
         >
           <Input
-            id = "login_email"
             prefix={<MailOutlined />}
             placeholder="Email"
           />
         </FormItem>
         <FormItem
-          name="email"
+          name="password"
           rules={[{ required: true, message: 'Please enter your password'}]}
         >
           <Input.Password
-            id = "login_password"
             prefix={<LockOutlined />}
             placeholder="Password"
           />
