@@ -145,15 +145,22 @@ body,
       border-bottom-width: 1px;
       border-bottom-style: solid;
       border-bottom-color: rgb(42, 42, 42);
+      justify-content: center;
+
+      .closeBtn.anticon.anticon-close {
+        position: absolute;
+        right: 20px;
+        line-height: 1em;
+      }
     }
 
     .logo {
       height: 31px;
-      margin: 10px 15px;
       object-fit: contain;
 
       .icon {
         width: 31px;
+        margin: 10px 15px;
       }
     }
 
