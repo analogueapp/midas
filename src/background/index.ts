@@ -225,8 +225,9 @@ function getSelectedText(tabId, cb) {
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
-
+  console.log("MESSAGE LISTENER")
   if (request.message === "auth_user") {
+    console.log("HIT AUTH USER")
     console.log(request)
     agent.Auth.login(request.user).then(response => {
       if (response.error) {console.log("Incorrect login")}

@@ -139,11 +139,29 @@ body,
     align-items: center;
     padding: 20px 20px 10px;
 
+    &.login {
+      padding: 20px;
+      border-bottom: 1px solid #2a2a2a;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(42, 42, 42);
+      justify-content: center;
+
+      .closeBtn.anticon.anticon-close {
+        position: absolute;
+        right: 20px;
+        line-height: 1em;
+      }
+    }
+
     .logo {
-      width: 31px;
       height: 31px;
-      margin: 10px 15px;
       object-fit: contain;
+
+      .icon {
+        width: 31px;
+        margin: 10px 15px;
+      }
     }
 
     .closeBtn.anticon.anticon-close {
@@ -190,34 +208,6 @@ body,
       &.slide-up-enter.slide-up-enter-active {
         animation: none;
         opacity: 1 !important;
-      }
-    }
-  }
-
-  .analogueLoginHeader {
-    display: flex;
-    align-items: center;
-    padding: 20px 20px;
-    border-bottom: 1px solid #2a2a2a;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: rgb(42, 42, 42);
-
-    .logo_long {
-      width: 315px;
-      height: 31px;
-      margin: 5px 30px 5px 50px;
-      object-fit: contain;
-    }
-
-    .closeBtn.anticon.anticon-close {
-      color: #aaa;
-      font-size: 21px;
-      transition: 0.21s ease all;
-      cursor: pointer;
-
-      &:hover {
-        color: #e3e3e3;
       }
     }
   }

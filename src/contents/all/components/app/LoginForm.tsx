@@ -24,10 +24,7 @@ const LoginForm = () => {
     console.log(values)
     chrome.runtime.sendMessage({
       message: "auth_user",
-      user: {
-        email: values.email,
-        password: values.password
-      }
+      user: { ...values }
     })
   }
 

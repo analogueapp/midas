@@ -14,8 +14,8 @@ import LoginForm from './LoginForm';
 import { Menu, Dropdown } from 'antd';
 import { CloseOutlined, DownOutlined } from '@ant-design/icons';
 
-import logo from '../../assets/img/logo_icon.png';
-import logo_long from '../../assets/img/logo_long.png';
+import logo from '../../assets/img/logo.png';
+import logoIcon from '../../assets/img/logo_icon.png';
 import './App.scss';
 
 const statusMessage = {
@@ -211,13 +211,13 @@ const App = () => {
                   {login
                     ? (
                       <>
-                        <div className="analogueLoginHeader">
+                        <div className="analogueModalHeader login">
 
                         <a
                           target="_blank"
                           href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
                         >
-                          <img src={logo_long} className="logo_long" alt="Analogue Logo"/>
+                          <img src={logo} className="logo" alt="Analogue"/>
                         </a>
 
                           <CloseOutlined
@@ -238,7 +238,7 @@ const App = () => {
                       <>
                         <div className="analogueModalHeader" id='analogueHeader'>
 
-                          <img src={logo} className="logo" alt="Analogue Icon" />
+                          <img src={logoIcon} className="logo icon" alt="Analogue" />
 
                           <Dropdown
                             disabled={!log}
