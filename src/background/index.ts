@@ -9,6 +9,7 @@ import agent from './agent';
 import { verbWords, objectWords, getDataUri } from './utils/activity';
 
 import * as logo from './assets/img/logo_icon.png';
+import * as logo_long from './assets/img/logo_long.png';
 
 declare global {
   interface Window { analytics: any }
