@@ -217,7 +217,7 @@ const App = () => {
                           target="_blank"
                           href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
                         >
-                          <img src={logo_long} className="logo" alt="Analogue Logo"/>
+                          <img src={logo_long} className="logo_long" alt="Analogue Logo"/>
                         </a>
 
                           <CloseOutlined
