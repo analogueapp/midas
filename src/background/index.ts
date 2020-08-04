@@ -111,9 +111,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
-const authListener = (request) => {
+const configureAuth = response => {
   if (!sessionStorage.getItem("analogue-jwt")) {
-    const user = request.user
+    const user = response.user
     agent.setToken(user.token)
     sessionStorage.setItem("analogue-jwt", user.token)
     // connect to realtime updates via stream
@@ -133,17 +133,13 @@ const authListener = (request) => {
     const notificationFeed = client.feed('notification', user.id.toString())
     notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
 
-    // Send a message to the active tab to trigger redux store of token
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
-      // must use openerTabId to get original tab that opened analogue login
-      chrome.tabs.sendMessage(activeTab.openerTabId, request);
+      chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response });
     })
   }
   injectContentScript({ message: "clicked_browser_action" })
 }
-
-chrome.runtime.onMessageExternal.addListener(authListener)
 
 const streamCallback = (data) => {
   // only make data call on new notifications, not delete
@@ -229,7 +225,7 @@ const messageListener = (request) => {
   if (request.message === "auth_user") {
     agent.Auth.login(request.user).then(response => {
       if (response.error) {console.log("Incorrect login")}
-      else {authListener(response)}
+      else { configureAuth(response) }
     })
   }
 
