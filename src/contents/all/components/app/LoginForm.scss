@@ -15,6 +15,13 @@
   font-size: 11px;
 }
 
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300;
+  src: url('chrome-extension://mialbooafpmjhjajlhgnhcdmeilcpphi/src/contents/all/assets/Montserrat Regular.woff2') format('woff2');
+}
+
 .loginForm {
   width: 100%;
   max-width: 300px;
