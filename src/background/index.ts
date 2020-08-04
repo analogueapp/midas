@@ -114,7 +114,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 const authListener = (request) => {
   if (!sessionStorage.getItem("analogue-jwt")) {
     const user = request.user
-    agent.setToken(request.user.token)
+    agent.setToken(user.token)
     sessionStorage.setItem("analogue-jwt", user.token)
     // connect to realtime updates via stream
     const client = stream.connect(
