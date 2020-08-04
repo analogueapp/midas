@@ -108,14 +108,15 @@ const App = () => {
       sendResponse({ status: true }) // respond to background page
     }
 
-    if (request.message === "auth_user") {
-      dispatch({ type: 'SET_USER', user: request.user })
+    if (request.message === "auth_user_response") {
+      dispatch({ type: 'SET_USER', user: request.body.user })
+      setLogin(false)
+      chrome.runtime.sendMessage({ message: "parse_content" })
     }
 
     if (request.message === "clicked_browser_action") {
       if (user) {
         setTimeout(() => {
-          setLogin(false)
           setShow(true)
         }, 111)
       } else {
