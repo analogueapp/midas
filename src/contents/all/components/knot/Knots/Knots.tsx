@@ -34,6 +34,13 @@ const Knots = ({
 
   const hasKnots = knots && knots.length > 0;
 
+  if (hasKnots) {
+    knots = knots.sort(function(a,b){
+      if (a.postedAt < b.postedAt) {return 1}
+      else {return -1}
+    })
+  }
+
   return (
     <>
       <div
