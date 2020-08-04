@@ -20,7 +20,7 @@ const store = createStore(rootReducer, {})
 
 var stream = require('getstream');
 
-window.analytics.load('5misG1vVKILgvkxtM7suBhUouTZBxbJ5')
+Segment.load('5misG1vVKILgvkxtM7suBhUouTZBxbJ5')
 
 const injectContentScript = (message = null) => {
   // first, query to see if content script already exists in active tab
