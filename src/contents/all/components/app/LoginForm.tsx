@@ -21,7 +21,6 @@ const FormItem = Form.Item;
 const LoginForm = () => {
 
   const submitForm = values => {
-    console.log(values)
     chrome.runtime.sendMessage({
       message: "auth_user",
       user: { ...values }
