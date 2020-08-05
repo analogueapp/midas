@@ -122,7 +122,6 @@ const authListener = (request) => {
       user.streamId,
     );
 
-    Segment.identify(user.id.toString(), {
     window.analytics.identify(user.id.toString(), {
       name: user.name,
       email: user.email,
