@@ -15,6 +15,9 @@
   font-size: 11px;
 }
 
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400);
+$montserrat: 'Montserrat', sans-serif;
+
 .loginForm {
   width: 100%;
   max-width: 300px;
@@ -128,7 +131,7 @@
     text-transform: uppercase;
     font-weight: 300;
     margin-left: 12px;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
 
     .anticon.anticon-solution {
       vertical-align: middle;
@@ -186,7 +189,7 @@
   margin: 30px;
   font-size: 13px;
   color: #aaa;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 
   &.formLink {
     -webkit-animation-delay: unset;
