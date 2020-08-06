@@ -1,10 +1,15 @@
-const token = sessionStorage.getItem("analogue-jwt")
-const initialState = token ? { token: token } : null
+let initialState = null
+chrome.storage.local.get("analogue-jwt", function(token) {
+  if (Object.keys(token).length !== 0) { setState(token) }
+})
+
+function setState(token) {
+  initialState = { token: token}
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
-      sessionStorage.setItem("analogue-jwt", action.user.token)
       chrome.storage.local.set({"analogue-jwt": action.user.token})
       return {
         ...state,
