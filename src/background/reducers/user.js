@@ -5,6 +5,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
       sessionStorage.setItem("analogue-jwt", action.user.token)
+      chrome.storage.local.set({"analogue-jwt": action.user.token})
       return {
         ...state,
         ...action.user,

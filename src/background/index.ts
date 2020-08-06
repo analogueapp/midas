@@ -112,32 +112,34 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const configureAuth = response => {
-  if (!sessionStorage.getItem("analogue-jwt")) {
-    const user = response.user
-    agent.setToken(user.token)
-    sessionStorage.setItem("analogue-jwt", user.token)
-    // connect to realtime updates via stream
-    const client = stream.connect(
-      user.streamKey,
-      user.streamToken,
-      user.streamId,
-    );
+  chrome.storage.local.get("analogue-jwt", function(token) {
+    if (Object.keys(token).length === 0) {
+      const user = response.user
+      agent.setToken(user.token)
+      chrome.storage.local.set({"analogue-jwt": user.token})
+      // connect to realtime updates via stream
+      const client = stream.connect(
+        user.streamKey,
+        user.streamToken,
+        user.streamId,
+      );
 
-    Segment.identify(user.id.toString(), {
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      type: user.type
-    })
+      Segment.identify(user.id.toString(), {
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        type: user.type
+      })
 
-    const notificationFeed = client.feed('notification', user.id.toString())
-    notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
+      const notificationFeed = client.feed('notification', user.id.toString())
+      notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0]
-      chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response });
-    })
-  }
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response });
+      })
+    }
+  })
   injectContentScript({ message: "clicked_browser_action" })
 }
 
@@ -230,7 +232,7 @@ const messageListener = (request) => {
   }
 
   if (request.message === "parse_content") {
-    agent.setToken(sessionStorage.getItem("analogue-jwt"))
+    chrome.storage.local.get("analogue-jwt", function(result) {agent.setToken(result)})
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 
