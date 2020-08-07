@@ -20,6 +20,23 @@ const FormItem = Form.Item;
 
 const LoginForm = () => {
 
+  const [password, setPassword] = useState(true)
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(messageListener)
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener)
+    }
+  }, [])
+
+  const messageListener = (request, sender, sendResponse) => {
+    if (request.message === "incorrect_password") {
+      setPassword(false)
+      console.log("we here", password)
+    }
+  }
+
   const submitForm = values => {
     chrome.runtime.sendMessage({
       message: "auth_user",
@@ -46,7 +63,13 @@ const LoginForm = () => {
         </FormItem>
         <FormItem
           name="password"
-          rules={[{ required: true, message: 'Please enter your password'}]}
+          rules={[
+            { required: true, message: 'Please enter your password'},
+            { validator(rule, value) {
+              if (password) {return Promise.resolve();}
+              else {return Promise.reject('Incorrect');}
+            }}
+          ]}
         >
           <Input.Password
             prefix={<LockOutlined />}

@@ -224,7 +224,11 @@ function getSelectedText(tabId, cb) {
 const messageListener = (request) => {
   if (request.message === "auth_user") {
     agent.Auth.login(request.user).then(response => {
-      if (response.error) {console.log("Incorrect login")}
+      console.log(response)
+      if (response.error) {
+        injectContentScript({ message: "incorrect_password" })
+        console.log("incorrect")
+      }
       else { configureAuth(response) }
     })
   }
