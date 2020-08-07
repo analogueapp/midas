@@ -1,16 +1,13 @@
-let initialState = null
-chrome.storage.local.get("analogue-jwt", function(token) {
-  if (Object.keys(token).length !== 0) { setState(token) }
+var initialState = null
+chrome.storage.local.get("analogueJWT", function(token) {
+  initialState = (Object.keys(token).length !== 0) ? { token: token} : null
 })
-
-function setState(token) {
-  initialState = { token: token}
-}
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
-      chrome.storage.local.set({"analogue-jwt": action.user.token})
+      chrome.storage.local.set({"analogueJWT": action.user.token}, function() {
+      })
       return {
         ...state,
         ...action.user,

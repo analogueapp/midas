@@ -112,11 +112,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
 const configureAuth = response => {
-  chrome.storage.local.get("analogue-jwt", function(token) {
+  chrome.storage.local.get("analogueJWT", function(token) {
     if (Object.keys(token).length === 0) {
       const user = response.user
       agent.setToken(user.token)
-      chrome.storage.local.set({"analogue-jwt": user.token})
       // connect to realtime updates via stream
       const client = stream.connect(
         user.streamKey,
@@ -232,7 +231,6 @@ const messageListener = (request) => {
   }
 
   if (request.message === "parse_content") {
-    chrome.storage.local.get("analogue-jwt", function(result) {agent.setToken(result)})
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 

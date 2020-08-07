@@ -115,14 +115,20 @@ const App = () => {
     }
 
     if (request.message === "clicked_browser_action") {
-      if (user) {
-        setTimeout(() => {
+      chrome.storage.local.get("analogueJWT", function(token) {
+        if (!user && Object.keys(token).length !== 0) {
+          agent.setToken(token.analogueJWT)
+          //dispatch({ type: 'SET_USER', user: **GET USER FROM TOKEN** })
+        }
+        if (user) {
+          setTimeout(() => {
+            setShow(true)
+          }, 111)
+        } else {
+          setLogin(true)
           setShow(true)
-        }, 111)
-      } else {
-        setLogin(true)
-        setShow(true)
-      }
+        }
+      })
     }
 
     if (request.message === "selection_to_knot") {
