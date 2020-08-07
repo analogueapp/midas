@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 import * as Sentry from '@sentry/browser';
 
+import agent from '../../../../background/agent';
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots/Knots';
 import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
