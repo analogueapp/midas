@@ -20,7 +20,7 @@ const FormItem = Form.Item;
 
 const LoginForm = () => {
 
-  const [password, setPassword] = useState(true)
+  const [incorrect, setIncorrect] = useState(false)
 
   useEffect(() => {
     chrome.runtime.onMessage.addListener(messageListener)
@@ -32,8 +32,7 @@ const LoginForm = () => {
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "incorrect_password") {
-      setPassword(false)
-      console.log("we here", password)
+      setIncorrect(true)
     }
   }
 
@@ -66,8 +65,8 @@ const LoginForm = () => {
           rules={[
             { required: true, message: 'Please enter your password'},
             { validator(rule, value) {
-              if (password) {return Promise.resolve();}
-              else {return Promise.reject('Incorrect');}
+              if (incorrect) {return Promise.reject('Username and password do not match');}
+              else {return Promise.resolve();}
             }}
           ]}
         >
