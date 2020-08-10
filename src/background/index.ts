@@ -223,14 +223,15 @@ function getSelectedText(tabId, cb) {
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
   if (request.message === "auth_user") {
-    agent.Auth.login(request.user).then(response => {
-      console.log(response)
-      if (response.error) {
+    agent.Auth.login(request.user).then(
+      response => {
+        configureAuth(response)
+      },
+      error => {
+        console.log("error")
         injectContentScript({ message: "incorrect_password" })
-        console.log("incorrect")
       }
-      else { configureAuth(response) }
-    })
+    )
   }
 
   if (request.message === "parse_content") {
