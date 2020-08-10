@@ -230,6 +230,16 @@ const messageListener = (request) => {
     })
   }
 
+  if (request.message === "get_current_user") {
+    agent.setToken(request.token)
+    agent.Auth.current().then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response })
+      })
+    })
+  }
+
   if (request.message === "parse_content") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]

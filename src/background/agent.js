@@ -26,6 +26,8 @@ const requests = {
 };
 
 const Auth = {
+  current: () =>
+    requests.get('/user'),
   primers: () =>
     requests.get("/user/primers"),
   login: user =>
