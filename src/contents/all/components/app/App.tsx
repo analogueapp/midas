@@ -72,7 +72,7 @@ const App = () => {
     if (!show && content) {
       setContent(null)
     }
-  }, [show])
+  }, [show, user])
 
 
   const updateLogStatus = target => {
@@ -118,18 +118,18 @@ const App = () => {
     if (request.message === "clicked_browser_action") {
       chrome.storage.local.get("analogueJWT", function(token) {
         if (!user && Object.keys(token).length !== 0) {
-          agent.setToken(token.analogueJWT)
-          //dispatch({ type: 'SET_USER', user: **GET USER FROM TOKEN** })
+          chrome.runtime.sendMessage({ message: "get_current_user", token: token.analogueJWT })
         }
+      })
+      setTimeout(() => {
         if (user) {
-          setTimeout(() => {
+            setLogin(false)
             setShow(true)
-          }, 111)
         } else {
           setLogin(true)
           setShow(true)
         }
-      })
+      }, 500)
     }
 
     if (request.message === "selection_to_knot") {
