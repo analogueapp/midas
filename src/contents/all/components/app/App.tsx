@@ -20,7 +20,7 @@ import './App.scss';
 
 const statusMessage = {
   pub: "Added",
-  saved: "Saved for later",
+  queued: "Queued",
   priv: "Added privately"
 }
 
@@ -253,9 +253,9 @@ const App = () => {
                                     Add to library
                                   </Menu.Item>
                                 }
-                                {log && log.status !== "saved" &&
-                                  <Menu.Item key="saved">
-                                    Save for later
+                                {log && log.status !== "queued" &&
+                                  <Menu.Item key="queued">
+                                    Queue
                                   </Menu.Item>
                                 }
                                 {log && log.status !== "priv" &&
