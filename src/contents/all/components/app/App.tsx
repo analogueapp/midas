@@ -249,7 +249,6 @@ const App = () => {
                       </div>
                       <div className="loginForm">
                         <LoginForm
-                          setUserLoading={setUserLoading}
                         />
                       </div>
                     </>
