@@ -36,6 +36,13 @@ const Knot = ({ log, knot, isLast }: Props) => {
     })
   }
 
+  const changePrivacy = () => {
+    chrome.runtime.sendMessage({
+      message: "edit_knot",
+      knot: {...knot, private: !knot.private}
+    })
+  }
+
   return (
     <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
