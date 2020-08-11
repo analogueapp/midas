@@ -50,6 +50,7 @@ const LoginForm = () => {
         name="login"
         initialValues={{ remember: true }}
         onFinish={submitForm}
+        onValuesChange={() => {setIncorrect(false)} }
       >
         <FormItem
           name="email"
@@ -61,13 +62,11 @@ const LoginForm = () => {
           />
         </FormItem>
         <FormItem
+          validateStatus={incorrect ? "error" : ""}
+          help={incorrect ? 'Please enter your password' : ""}
           name="password"
           rules={[
-            { required: true, message: 'Please enter your password'},
-            { validator(rule, value) {
-              if (incorrect) {return Promise.reject('Username and password do not match');}
-              else {return Promise.resolve();}
-            }}
+            { required: true, message: 'Please enter your password'}
           ]}
         >
           <Input.Password
