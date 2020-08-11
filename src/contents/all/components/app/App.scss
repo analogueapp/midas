@@ -154,6 +154,10 @@ body,
       }
     }
 
+    &.loading {
+      padding-bottom: 115px;
+    }
+
     .logo {
       height: 31px;
       object-fit: contain;
