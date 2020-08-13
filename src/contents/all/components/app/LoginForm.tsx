@@ -12,10 +12,6 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 
 import './LoginForm.scss'
 
-interface Props {
-  form: any
-}
-
 const FormItem = Form.Item;
 
 const LoginForm = () => {
