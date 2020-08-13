@@ -59,7 +59,7 @@ const LoginForm = () => {
         </FormItem>
         <FormItem
           validateStatus={incorrect ? "error" : ""}
-          help={incorrect ? 'Please enter your password' : ""}
+          help={incorrect ? 'Incorrect email or password' : ""}
           name="password"
           rules={[
             { required: true, message: 'Please enter your password'}
