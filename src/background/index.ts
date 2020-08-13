@@ -125,8 +125,6 @@ const authListener = (request) => {
     );
 
     window.analytics.identify(user.id.toString(), {
-      
-      
       name: user.name,
       email: user.email,
       username: user.username,
