@@ -1,5 +1,5 @@
 // Google Fonts
-@import url(http://fonts.googleapis.com/css?family=Montserrat:300,400);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400);
 $montserrat: 'Montserrat', sans-serif;
 
 // reset and normalize
@@ -139,11 +139,33 @@ body,
     align-items: center;
     padding: 20px 20px 10px;
 
+    &.login {
+      padding: 20px;
+      border-bottom: 1px solid #2a2a2a;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(42, 42, 42);
+      justify-content: center;
+
+      .closeBtn.anticon.anticon-close {
+        position: absolute;
+        right: 20px;
+        line-height: 1em;
+      }
+    }
+
+    &.loading {
+      padding-bottom: 115px;
+    }
+
     .logo {
-      width: 31px;
       height: 31px;
-      margin: 0 15px;
       object-fit: contain;
+
+      .icon {
+        width: 31px;
+        margin: 10px 15px;
+      }
     }
 
     .closeBtn.anticon.anticon-close {

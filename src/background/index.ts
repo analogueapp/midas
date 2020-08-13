@@ -9,6 +9,7 @@ import agent from './agent';
 import { verbWords, objectWords, getDataUri } from './utils/activity';
 
 import * as logo from './assets/img/logo_icon.png';
+import * as logo_long from './assets/img/logo_long.png';
 
 declare global {
   interface Window { analytics: any }
@@ -112,38 +113,36 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
 
 // middleware, can only listen for external messages in background page:
 // https://stackoverflow.com/questions/18835452/chrome-extension-onmessageexternal-undefined
-const authListener = (request) => {
-  if (!sessionStorage.getItem("analogue-jwt")) {
-    const user = request.user
-    agent.setToken(request.user.token)
-    sessionStorage.setItem("analogue-jwt", user.token)
-    // connect to realtime updates via stream
-    const client = stream.connect(
-      user.streamKey,
-      user.streamToken,
-      user.streamId,
-    );
+const configureAuth = response => {
+  chrome.storage.local.get("analogueJWT", function(token) {
+    if (Object.keys(token).length === 0) {
+      const user = response.user
+      agent.setToken(user.token)
+      // connect to realtime updates via stream
+      const client = stream.connect(
+        user.streamKey,
+        user.streamToken,
+        user.streamId,
+      );
 
-    window.analytics.identify(user.id.toString(), {
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      type: user.type
-    })
+      window.analytics.identify(user.id.toString(), {
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        type: user.type
+      })
 
-    const notificationFeed = client.feed('notification', user.id.toString())
-    notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
+      const notificationFeed = client.feed('notification', user.id.toString())
+      notificationFeed.subscribe(streamCallback).then(streamSuccessCallback, streamFailCallback)
 
-    // Send a message to the active tab to trigger redux store of token
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0]
-      // must use openerTabId to get original tab that opened analogue login
-      chrome.tabs.sendMessage(activeTab.openerTabId, request);
-    })
-  }
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response });
+      })
+    }
+  })
+  injectContentScript({ message: "clicked_browser_action" })
 }
-
-chrome.runtime.onMessageExternal.addListener(authListener)
 
 const streamCallback = (data) => {
   // only make data call on new notifications, not delete
@@ -226,8 +225,29 @@ function getSelectedText(tabId, cb) {
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
+  if (request.message === "auth_user") {
+    agent.Auth.login(request.user).then(
+      response => {
+        configureAuth(response)
+      },
+      error => {
+        console.log("error")
+        injectContentScript({ message: "incorrect_password" })
+      }
+    )
+  }
+
+  if (request.message === "get_current_user") {
+    agent.setToken(request.token)
+    agent.Auth.current().then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response })
+      })
+    })
+  }
+
   if (request.message === "parse_content") {
-    agent.setToken(sessionStorage.getItem("analogue-jwt"))
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 

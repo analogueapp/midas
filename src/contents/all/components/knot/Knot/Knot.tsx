@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
-import { Timeline, Popconfirm, DatePicker, Tooltip } from 'antd';
+import { Timeline, Button, Popconfirm, DatePicker, Tooltip } from 'antd';
+import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
 
 import { Log, Knot as KnotType } from '../../../global/types';
 
@@ -35,6 +36,13 @@ const Knot = ({ log, knot, isLast }: Props) => {
     })
   }
 
+  const changePrivacy = () => {
+    chrome.runtime.sendMessage({
+      message: "edit_knot",
+      knot: {...knot, private: !knot.private}
+    })
+  }
+
   return (
     <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
@@ -58,6 +66,9 @@ const Knot = ({ log, knot, isLast }: Props) => {
           }
         </div>
         <div className="knotMeta">
+          <Button icon={knot.private ? <LockOutlined /> : <UnlockOutlined />}
+          onClick={() => changePrivacy()}
+          size={"small"} />
           <Moment
             filter={(value) =>
               value.replace(/^a few seconds ago/g, 'just now')

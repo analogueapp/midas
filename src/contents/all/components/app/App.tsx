@@ -6,19 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { hot } from 'react-hot-loader/root';
 import * as Sentry from '@sentry/browser';
 
+import agent from '../../../../background/agent';
 import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots/Knots';
 import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
+import LoginForm from './LoginForm';
 
 import { Menu, Dropdown } from 'antd';
 import { CloseOutlined, DownOutlined } from '@ant-design/icons';
 
-import logo from '../../assets/img/logo_icon.png';
+import logo from '../../assets/img/logo.png';
+import logoIcon from '../../assets/img/logo_icon.png';
 import './App.scss';
 
 const statusMessage = {
   pub: "Added",
-  saved: "Saved for later",
+  queued: "Queued",
   priv: "Added privately"
 }
 
@@ -26,6 +29,8 @@ const App = () => {
 
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [login, setLogin] = useState(false)
+  const [userLoading, setUserLoading] = useState(false)
 
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
@@ -68,7 +73,7 @@ const App = () => {
     if (!show && content) {
       setContent(null)
     }
-  }, [show])
+  }, [show, user])
 
 
   const updateLogStatus = target => {
@@ -105,22 +110,33 @@ const App = () => {
       sendResponse({ status: true }) // respond to background page
     }
 
-    if (request.message === "auth_user") {
-      dispatch({ type: 'SET_USER', user: request.user })
+    if (request.message === "auth_user_response") {
+      setUserLoading(true)
+      dispatch({ type: 'SET_USER', user: request.body.user })
+      setUserLoading(false)
+      setLogin(false)
+      chrome.runtime.sendMessage({ message: "parse_content" })
     }
 
     if (request.message === "clicked_browser_action") {
+      chrome.storage.local.get("analogueJWT", function(token) {
+        if (!user && Object.keys(token).length !== 0) {
+          setUserLoading(true)
+          chrome.runtime.sendMessage({ message: "get_current_user", token: token.analogueJWT })
+        }
+      })
+
+      if (user) {
+        setUserLoading(false)
+        setLogin(false)
+        setShow(true)
+      } else {
+        if (!userLoading) setLogin(true)
+        setShow(true)
+      }
+      
       if (show && !request.selText) {
         setShow(false)
-      }
-      else {
-        if (user) {
-          setTimeout(() => {
-            setShow(true)
-          }, 111)
-        } else {
-          window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
-        }
       }
     }
 
@@ -207,78 +223,113 @@ const App = () => {
               <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
                 e.stopPropagation()
               }}>
+                
+                {userLoading &&
+                  <div className="analogueModalHeader loading">
+                    
+                    <img src={logoIcon} className="logo icon" alt="Analogue" />
+                    
+                    <div className="dropdownStatus"> Loading... </div>
+                  </div>
+                }
 
-                <div className="analogueModalHeader" id='analogueHeader'>
+                {login && !userLoading &&
+                  <>
+                    <div className="analogueModalHeader login">
 
-                  <a
-                    target="_blank"
-                    href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
-                  >
-                    <img src={logo} className="logo" alt="Analogue Icon"/>
-                  </a>
+                    <a
+                      target="_blank"
+                      href={`${process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'}`}
+                    >
+                      <img src={logo} className="logo" alt="Analogue"/>
+                    </a>
 
-                  <Dropdown
-                    disabled={!log}
-                    align={{offset: [-14, 15]}}
-                    overlayClassName="dropdownStatusOverlay"
-                    getPopupContainer={() => document.getElementById("analogueHeader")}
-                    overlay={
-                      <Menu onClick={updateLogStatus}>
-                        {log && log.status !== "pub" &&
-                          <Menu.Item key="pub">
-                            Add to library
-                          </Menu.Item>
-                        }
-                        {log && log.status !== "saved" &&
-                          <Menu.Item key="saved">
-                            Save for later
-                          </Menu.Item>
-                        }
-                        {log && log.status !== "priv" &&
-                          <Menu.Item key="priv">
-                            Add privately
-                          </Menu.Item>
-                        }
-                        {log &&
-                          <Menu.Item key="delete">
-                            Delete
-                          </Menu.Item>
-                        }
-                      </Menu>
-                    }
-                  >
-                    <div className="dropdownStatus">
-                      {message}
-                      {log && <DownOutlined /> }
+                      <CloseOutlined
+                        className="closeBtn"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShow(false)
+                        }}
+                      />
                     </div>
-                  </Dropdown>
+                    <div className="loginForm">
+                      <LoginForm
+                      />
+                    </div>
+                  </>
+                }
 
-                  <CloseOutlined
-                    className="closeBtn"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      setShow(false)
-                    }}
-                  />
-                </div>
+                {show && !login && !userLoading &&
+                  <>
+                    <div className="analogueModalHeader" id='analogueHeader'>
 
-                <ContentPreview content={content} user={user} />
+                      <img src={logoIcon} className="logo icon" alt="Analogue" />
 
-                <Knots
-                  loading={loading}
-                  log={log}
-                  knots={knots}
-                  primersHeight={primersHeight}
-                  createKnot={createKnot}
-                />
+                      <Dropdown
+                        disabled={!log}
+                        align={{offset: [-14, 15]}}
+                        overlayClassName="dropdownStatusOverlay"
+                        getPopupContainer={() => document.getElementById("analogueHeader")}
+                        overlay={
+                          <Menu onClick={updateLogStatus}>
+                            {log && log.status !== "pub" &&
+                              <Menu.Item key="pub">
+                                Add to library
+                              </Menu.Item>
+                            }
+                            {log && log.status !== "queued" &&
+                              <Menu.Item key="queued">
+                                Queue
+                              </Menu.Item>
+                            }
+                            {log && log.status !== "priv" &&
+                              <Menu.Item key="priv">
+                                Add privately
+                              </Menu.Item>
+                            }
+                            {log &&
+                              <Menu.Item key="delete">
+                                Delete
+                              </Menu.Item>
+                            }
+                          </Menu>
+                        }
+                      >
+                        <div className="dropdownStatus">
+                          {message}
+                          {log && <DownOutlined /> }
+                        </div>
+                      </Dropdown>
 
-                {log &&
-                  <PrimerSelect
-                    log={log}
-                    content={content}
-                    updatePrimersHeight={updatePrimersHeight}
-                  />
+                      <CloseOutlined
+                        className="closeBtn"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShow(false)
+                        }}
+                      />
+                    </div>
+
+                    <ContentPreview content={content} user={user} />
+
+                    <Knots
+                      loading={loading}
+                      log={log}
+                      knots={knots}
+                      primersHeight={primersHeight}
+                      createKnot={createKnot}
+                    />
+
+                    {log &&
+                      <PrimerSelect
+                        log={log}
+                        content={content}
+                        updatePrimersHeight={updatePrimersHeight}
+                      />
+                    }
+                  </>
                 }
               </div>
             )
