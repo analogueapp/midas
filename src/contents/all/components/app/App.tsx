@@ -216,7 +216,6 @@ const App = () => {
          ({document, window}) => {
             // Render Children
             return (
-              <>
                 <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
                   e.stopPropagation()
                 }}>
@@ -272,9 +271,9 @@ const App = () => {
                                   Add to library
                                 </Menu.Item>
                               }
-                              {log && log.status !== "saved" &&
-                                <Menu.Item key="saved">
-                                  Save for later
+                              {log && log.status !== "queued" &&
+                                <Menu.Item key="queued">
+                                  Queue
                                 </Menu.Item>
                               }
                               {log && log.status !== "priv" &&
@@ -290,83 +289,19 @@ const App = () => {
                             </Menu>
                           }
                         >
-                          <img src={logo} className="logo" alt="Analogue"/>
-                        </a>
+                          <div className="dropdownStatus">
+                            {message}
+                            {log && <DownOutlined /> }
+                          </div>
+                        </Dropdown>
 
-                          <CloseOutlined
-                            className="closeBtn"
-                            onClick={(e) => {
-                              e.preventDefault()
-                              e.stopPropagation()
-                              setShow(false)
-                            }}
-                          />
-                        </div>
-                        <div className="loginForm">
-                          <LoginForm />
-                        </div>
-                      </>
-                    )
-                    : (
-                      <>
-                        <div className="analogueModalHeader" id='analogueHeader'>
-
-                          <img src={logoIcon} className="logo icon" alt="Analogue" />
-
-                          <Dropdown
-                            disabled={!log}
-                            align={{offset: [-14, 15]}}
-                            overlayClassName="dropdownStatusOverlay"
-                            getPopupContainer={() => document.getElementById("analogueHeader")}
-                            overlay={
-                              <Menu onClick={updateLogStatus}>
-                                {log && log.status !== "pub" &&
-                                  <Menu.Item key="pub">
-                                    Add to library
-                                  </Menu.Item>
-                                }
-                                {log && log.status !== "queued" &&
-                                  <Menu.Item key="queued">
-                                    Queue
-                                  </Menu.Item>
-                                }
-                                {log && log.status !== "priv" &&
-                                  <Menu.Item key="priv">
-                                    Add privately
-                                  </Menu.Item>
-                                }
-                                {log &&
-                                  <Menu.Item key="delete">
-                                    Delete
-                                  </Menu.Item>
-                                }
-                              </Menu>
-                            }
-                          >
-                            <div className="dropdownStatus">
-                              {message}
-                              {log && <DownOutlined /> }
-                            </div>
-                          </Dropdown>
-
-                          <CloseOutlined
-                            className="closeBtn"
-                            onClick={(e) => {
-                              e.preventDefault()
-                              e.stopPropagation()
-                              setShow(false)
-                            }}
-                          />
-                        </div>
-
-                        <ContentPreview content={content} user={user} />
-
-                        <Knots
-                          loading={loading}
-                          log={log}
-                          knots={knots}
-                          primersHeight={primersHeight}
-                          createKnot={createKnot}
+                        <CloseOutlined
+                          className="closeBtn"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            setShow(false)
+                          }}
                         />
                       </div>
 
@@ -387,10 +322,9 @@ const App = () => {
                           updatePrimersHeight={updatePrimersHeight}
                         />
                       }
-                    </>
-                  }
-                </div>
-              </>
+                  </>
+                }
+              </div>
             )
           }
         }
