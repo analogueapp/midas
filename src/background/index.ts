@@ -69,7 +69,7 @@ chrome.contextMenus.create({
   onclick: function(info, tab) {
     injectContentScript({ message: "clicked_browser_action" })
 
-    const quote = '"' + info.selectionText + '"'
+    const quote = info.selectionText
     injectContentScript({ text: quote, message: "selection_to_knot" })
   }
 })
@@ -79,15 +79,17 @@ chrome.browserAction.onClicked.addListener(function() {
 })
 
 chrome.commands.onCommand.addListener(function(command) {
-  injectContentScript({ message: "clicked_browser_action" })
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0]
 
     getSelectedText(activeTab.id, function(text) {
       localStorage.selectedText = text
       if (text) {
-        text = '"' + text + '"'
+        injectContentScript({ message: "clicked_browser_action", selText: true })
         injectContentScript({ text: text, message: "selection_to_knot" })
+      }
+      else {
+        injectContentScript({ message: "clicked_browser_action", selText: false })
       }
     })
   })

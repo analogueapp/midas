@@ -110,17 +110,22 @@ const App = () => {
     }
 
     if (request.message === "clicked_browser_action") {
-      if (user) {
-        setTimeout(() => {
-          setShow(true)
-        }, 111)
-      } else {
-        window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
+      if (show && !request.selText) {
+        setShow(false)
+      }
+      else {
+        if (user) {
+          setTimeout(() => {
+            setShow(true)
+          }, 111)
+        } else {
+          window.open(process.env.NODE_ENV === 'production' ? 'https://www.analogue.app/login' : 'http://localhost:3000/login', "_blank");
+        }
       }
     }
 
     if (request.message === "selection_to_knot") {
-      createKnot(request.text.toString("html"), request.text)
+      createKnot(("<blockquote>" + request.text.toString("html") + "</blockquote>"), request.text)
     }
 
     if (request.message === "parse_content_response") {
