@@ -222,6 +222,21 @@ function getSelectedText(tabId, cb) {
   });
 }
 
+// function testYoutube() {
+//   console.log(document)
+//   consooe.log(document.getElementById('movie_player'))
+//   console.log(document.getElementById('movie_player').getCurrentTime())
+// }
+
+function getYtTime(tabId, cb) {
+  chrome.tabs.executeScript(tabId, {
+      file: "testYoutube.js"
+  }, function(ytTime) {
+      console.log(ytTime)
+      cb(ytTime[0]);
+  });
+}
+
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
