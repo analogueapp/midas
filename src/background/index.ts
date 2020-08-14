@@ -222,17 +222,10 @@ function getSelectedText(tabId, cb) {
   });
 }
 
-// function testYoutube() {
-//   console.log(document)
-//   consooe.log(document.getElementById('movie_player'))
-//   console.log(document.getElementById('movie_player').getCurrentTime())
-// }
-
 function getYtTime(tabId, cb) {
   chrome.tabs.executeScript(tabId, {
       code: "document.getElementsByClassName('video-stream')[0].currentTime"
   }, function(ytTime) {
-      console.log(ytTime)
       cb(ytTime[0]);
   });
 }
@@ -246,7 +239,6 @@ const messageListener = (request) => {
         configureAuth(response)
       },
       error => {
-        console.log("error")
         injectContentScript({ message: "incorrect_password" })
       }
     )
