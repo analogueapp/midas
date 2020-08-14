@@ -141,7 +141,12 @@ const App = () => {
     }
 
     if (request.message === "selection_to_knot") {
-      createKnot(("<blockquote>" + request.text.toString("html") + "</blockquote>"), request.text)
+      if (request.blockquote) {
+        createKnot(("<blockquote>" + request.text.toString("html") + "</blockquote>"), request.text)
+      }
+      else {
+        createKnot(("<a target='_blank' href=" + request.url + ">" + request.text.toString("html") + "</a>"), request.text)
+      }
     }
 
     if (request.message === "parse_content_response") {

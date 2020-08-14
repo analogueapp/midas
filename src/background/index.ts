@@ -87,10 +87,25 @@ chrome.commands.onCommand.addListener(function(command) {
       localStorage.selectedText = text
       if (text) {
         injectContentScript({ message: "clicked_browser_action", selText: true })
-        injectContentScript({ text: text, message: "selection_to_knot" })
+        injectContentScript({ text: text, message: "selection_to_knot", blockquote: true  })
+      }
+      else if (activeTab.url.includes("youtube.com/")) {
+        injectContentScript({ message: "clicked_browser_action", selText: true })
+        getYtTime(activeTab.id, function(time) {
+          const minutes = Math.floor(time / 60)
+          const seconds = Math.floor(time % 60)
+          const timestamp = `${minutes}:${seconds} - `
+          const timeLink = `${activeTab.url}&t=${minutes}m${seconds}s`
+          injectContentScript({
+            text: timestamp,
+            message: "selection_to_knot",
+            blockquote: false ,
+            url: timeLink
+          })
+        })
       }
       else {
-        injectContentScript({ message: "clicked_browser_action", selText: false })
+        injectContentScript({ message: "clicked_browser_action"})
       }
     })
   })
@@ -222,6 +237,14 @@ function getSelectedText(tabId, cb) {
   });
 }
 
+function getYtTime(tabId, cb) {
+  chrome.tabs.executeScript(tabId, {
+      code: "document.getElementsByClassName('video-stream')[0].currentTime"
+  }, function(ytTime) {
+      cb(ytTime[0]);
+  });
+}
+
 // for avoid CORB call, use background and communicate with content script
 // https://stackoverflow.com/questions/54786635/how-to-avoid-cross-origin-read-blockingcorb-in-a-chrome-web-extension
 const messageListener = (request) => {
@@ -231,7 +254,6 @@ const messageListener = (request) => {
         configureAuth(response)
       },
       error => {
-        console.log("error")
         injectContentScript({ message: "incorrect_password" })
       }
     )
