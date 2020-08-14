@@ -230,7 +230,7 @@ function getSelectedText(tabId, cb) {
 
 function getYtTime(tabId, cb) {
   chrome.tabs.executeScript(tabId, {
-      file: "testYoutube.js"
+      code: "document.getElementsByClassName('video-stream')[0].currentTime"
   }, function(ytTime) {
       console.log(ytTime)
       cb(ytTime[0]);
