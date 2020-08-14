@@ -87,10 +87,25 @@ chrome.commands.onCommand.addListener(function(command) {
       localStorage.selectedText = text
       if (text) {
         injectContentScript({ message: "clicked_browser_action", selText: true })
-        injectContentScript({ text: text, message: "selection_to_knot" })
+        injectContentScript({ text: text, message: "selection_to_knot", blockquote: true  })
+      }
+      else if (activeTab.url.includes("youtube.com/")) {
+        injectContentScript({ message: "clicked_browser_action", selText: true })
+        getYtTime(activeTab.id, function(time) {
+          const minutes = Math.floor(time / 60)
+          const seconds = Math.floor(time % 60)
+          const timestamp = `${minutes}:${seconds} - `
+          const timeLink = `${activeTab.url}&t=${minutes}m${seconds}s`
+          injectContentScript({
+            text: timestamp,
+            message: "selection_to_knot",
+            blockquote: false ,
+            url: timeLink
+          })
+        })
       }
       else {
-        injectContentScript({ message: "clicked_browser_action", selText: false })
+        injectContentScript({ message: "clicked_browser_action"})
       }
     })
   })
