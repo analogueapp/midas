@@ -65,17 +65,6 @@ const App = () => {
     }
   }, [user, content, log, knots])
 
-
-  useEffect(() => {
-    if (user && show && !content) {
-      chrome.runtime.sendMessage({ message: "parse_content" })
-    }
-    if (!show && content) {
-      setContent(null)
-    }
-  }, [show, user])
-
-
   const updateLogStatus = target => {
     if (target.key == "delete") {
 	      chrome.runtime.sendMessage({ message: "delete_log", id: log.id })
@@ -146,6 +135,7 @@ const App = () => {
       //close extension if no text is highlighted on browser action
       if (show && !request.timestamp && !request.highlight) {
         setShow(false)
+        setContent(false)
       }
     }
 
@@ -255,6 +245,7 @@ const App = () => {
                           e.preventDefault()
                           e.stopPropagation()
                           setShow(false)
+                          setContent(false)
                         }}
                       />
                     </div>
@@ -313,6 +304,7 @@ const App = () => {
                           e.preventDefault()
                           e.stopPropagation()
                           setShow(false)
+                          setContent(false)
                         }}
                       />
                     </div>
