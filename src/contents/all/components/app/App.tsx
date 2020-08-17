@@ -134,18 +134,18 @@ const App = () => {
         if (!userLoading) setLogin(true)
         setShow(true)
       }
-      
-      if (show && !request.selText) {
-        setShow(false)
-      }
-    }
 
-    if (request.message === "selection_to_knot") {
-      if (request.blockquote) {
-        createKnot(("<blockquote>" + request.text.toString("html") + "</blockquote>"), request.text)
+      if (request.highlight) {
+        createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
       }
-      else {
-        createKnot(("<a target='_blank' href=" + request.url + ">" + request.text.toString("html") + "</a>"), request.text)
+
+      if (request.timestamp) {
+        createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
+      }
+
+      //close extension if no text is highlighted on browser action
+      if (show && !request.timestamp && !request.highlight) {
+        setShow(false)
       }
     }
 
@@ -228,12 +228,12 @@ const App = () => {
               <div className={`analogueModal ${content ? "loaded" : ""}`} onClick={(e) => {
                 e.stopPropagation()
               }}>
-                
+
                 {userLoading &&
                   <div className="analogueModalHeader loading">
-                    
+
                     <img src={logoIcon} className="logo icon" alt="Analogue" />
-                    
+
                     <div className="dropdownStatus"> Loading... </div>
                   </div>
                 }

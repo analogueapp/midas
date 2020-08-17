@@ -68,10 +68,8 @@ chrome.contextMenus.create({
   title: 'Make note from selection',
   contexts: ["selection"],
   onclick: function(info, tab) {
-    injectContentScript({ message: "clicked_browser_action" })
-
-    const quote = info.selectionText
-    injectContentScript({ text: quote, message: "selection_to_knot" })
+    const text = info.selectionText
+    injectContentScript({ message: "clicked_browser_action", highlight: text})
   }
 })
 
@@ -86,22 +84,15 @@ chrome.commands.onCommand.addListener(function(command) {
     getSelectedText(activeTab.id, function(text) {
       localStorage.selectedText = text
       if (text) {
-        injectContentScript({ message: "clicked_browser_action", selText: true })
-        injectContentScript({ text: text, message: "selection_to_knot", blockquote: true  })
+        injectContentScript({ message: "clicked_browser_action", highlight: text })
       }
       else if (activeTab.url.includes("youtube.com/")) {
-        injectContentScript({ message: "clicked_browser_action", selText: true })
         getYtTime(activeTab.id, function(time) {
           const minutes = Math.floor(time / 60)
           const seconds = Math.floor(time % 60)
           const timestamp = `${minutes}:${seconds} - `
           const timeLink = `${activeTab.url}&t=${minutes}m${seconds}s`
-          injectContentScript({
-            text: timestamp,
-            message: "selection_to_knot",
-            blockquote: false ,
-            url: timeLink
-          })
+          injectContentScript({ message: "clicked_browser_action", timestamp: timestamp, url: timeLink})
         })
       }
       else {
