@@ -128,6 +128,14 @@ const App = () => {
               youtube: { timestamp: request.timestamp, url: request.url }
             }
           })
+        } else {
+          if (request.highlight) {
+            createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
+          }
+          if (request.timestamp) {
+            console.log("YT")
+            createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
+          }
         }
       } else {
         if (!userLoading) setLogin(true)
