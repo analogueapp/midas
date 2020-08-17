@@ -119,17 +119,19 @@ const App = () => {
         setUserLoading(false)
         setLogin(false)
         setShow(true)
+
+        if (!content) {
+          chrome.runtime.sendMessage({
+            message: "parse_content",
+            goodies: {
+              highlight: request.highlight,
+              youtube: { timestamp: request.timestamp, url: request.url }
+            }
+          })
+        }
       } else {
         if (!userLoading) setLogin(true)
         setShow(true)
-      }
-
-      if (request.highlight) {
-        createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
-      }
-
-      if (request.timestamp) {
-        createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
       }
 
       //close extension if no text is highlighted on browser action
@@ -149,6 +151,15 @@ const App = () => {
         )
         setContent(request.body.content)
         setLog(request.body.log)
+        if (request.goodies) {
+          if (request.goodies.highlight) {
+            createKnot(("<blockquote>" + request.goodies.highlight.toString("html") + "</blockquote>"), request.goodies.highlight)
+          }
+
+          if (request.goodies.youtube) {
+            createKnot(("<a target='_blank' href=" + request.goodies.youtube.url + ">" + request.goodies.youtube.timestamp.toString("html") + "</a>"), request.goodies.youtube.timestamp)
+          }
+        }
       }
     }
 

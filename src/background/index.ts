@@ -268,7 +268,7 @@ const messageListener = (request) => {
 
       // Send a message to the active tab with server response
       agent.Contents.parse(activeTab.url).then(response => {
-        chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response });
+        chrome.tabs.sendMessage(activeTab.id, {message: "parse_content_response", body: response, goodies: request.goodies });
 
         if (response.newlyCreated) {
           window.analytics.track('Log Created', {
