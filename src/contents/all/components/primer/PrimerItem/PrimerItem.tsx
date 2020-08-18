@@ -19,25 +19,32 @@ interface Props {
   updateCurrentPrimers?: (primer: Primer, remove: boolean) => void
 }
 
-const PrimerItem = (props: Props) => {
+const PrimerItem = ({
+  log,
+  primer,
+  collection,
+  selectable,
+  select,
+  updateCurrentPrimers
+}: Props) => {
 
   const [selected, setSelected] = useState(select || false)
 
   const togglePrimer = (e) => {
-    props.updateCurrentPrimers(props.primer, selected)
+    updateCurrentPrimers(primer, selected)
     setSelected(!selected)
   }
 
-  if (props.collection) {
+  if (collection) {
     return (
-      <div className={`primerItem collection ${props.selectable ? "selectable selected" : ""}`}>
+      <div className={`primerItem collection ${selectable ? "selectable selected" : ""}`}>
         <div className="imgWrapper">
-          {mediumIcons[props.collection]}
+          {mediumIcons[collection]}
         </div>
 
-        <h5 className="title">{props.collection}</h5>
+        <h5 className="title">{collection}</h5>
 
-        {props.selectable &&
+        {selectable &&
           <div className="addBtn">
             <Button><CheckOutlined /></Button>
           </div>
@@ -58,16 +65,16 @@ const PrimerItem = (props: Props) => {
       }
       <div className="imgWrapper">
         <ProgressiveImage
-          src={props.primer.image}
+          src={primer.image}
           placeholder={placeholderImg}
         >
           {(src, loading) => (
-            <img src={src} alt={props.primer.title} />
+            <img src={src} alt={primer.title} />
           )}
         </ProgressiveImage>
       </div>
 
-      <h5 className="title">{props.primer.title}</h5>
+      <h5 className="title">{primer.title}</h5>
 
       {props.primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
       {props.primer.private && <LockOutlined className="infoIcon" /> }
