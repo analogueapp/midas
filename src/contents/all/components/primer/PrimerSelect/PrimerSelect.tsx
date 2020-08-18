@@ -97,7 +97,7 @@ const PrimerSelect = (props: Props) => {
             props.log.currentPrimers.map(primer =>
               <PrimerItem
                 key={primer.id}
-                selected
+                select
                 selectable
                 log={props.log}
                 primer={primer}
