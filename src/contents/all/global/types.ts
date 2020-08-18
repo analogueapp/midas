@@ -53,6 +53,7 @@ export interface Primer {
   users: User[]
   private: boolean
   logsCount: number
+  selected? : boolean
   shared: boolean
 }
 
