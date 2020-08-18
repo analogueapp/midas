@@ -173,6 +173,17 @@ const PrimerSelect = ({
       </div>
 
       <div className={`primerSelectList ${show ? "show" : ""}`} ref={_container}>
+        <div className="primerFilterSearch">
+          <Input
+            allowClear
+            ref={_input}
+            value={searchValue}
+            placeholder={inputPlaceholder}
+            onChange={onInputChange}
+            prefix={<SearchOutlined />}
+            disabled={iconPrefix === 'LoadingOutlined'}
+          />
+        </div>
         <div className="primerSelectListScroll">
           {log && log.currentPrimers &&  log.currentPrimers.length > 0 &&
             log.currentPrimers.map(primer =>
@@ -186,7 +197,19 @@ const PrimerSelect = ({
               />
             )
           }
-          {primers && primers.length > 0 &&
+          {filteredPrimers ?
+            (
+            filteredPrimers.map((primer: Primer) =>
+              <PrimerItem
+                key={primer.id}
+                selectable
+                log={log}
+                primer={primer}
+                updateCurrentPrimers={updateCurrentPrimers}
+              />)
+            )
+            :
+            (
             primers.map(primer =>
               <PrimerItem
                 key={primer.id}
@@ -194,7 +217,7 @@ const PrimerSelect = ({
                 log={log}
                 primer={primer}
                 updateCurrentPrimers={updateCurrentPrimers}
-              />
+              />)
             )
           }
         </div>
