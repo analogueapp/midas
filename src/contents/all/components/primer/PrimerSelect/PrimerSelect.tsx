@@ -72,10 +72,77 @@ const PrimerSelect = ({
         ? request.body.primers.filter(primer => !log.currentPrimers.map(current => current.id).includes(primer.id))
         : request.body.primers
       )
+      // const primersAfterFilter = filterCurrentPrimers(primers)
+      // setPrimers(primersAfterFilter)
+      // setFilteredPrimers(primersAfterFilter)
     }
     if (request.message === "create_primer_response") {
       setPrimers([request.body.primer, ...primers])
     }
+  }
+
+  const filterCurrentPrimers = (primersToFilter: Primer[]) => {
+    if (log && log.currentPrimers && log.currentPrimers.length > 0) {
+      // TODO: refactor - there's a better way to do this
+
+      // 1) add selected to each currentPrimer
+      const currentPrimers = log.currentPrimers.map((primer: Primer) => {
+        primer.selected = true
+        return primer
+      })
+
+      // 2) get ids of current primers (for comparison)
+      const currentPrimersIds = currentPrimers.map((primer: Primer) => primer.id)
+
+      // 3) filter full primer lists based on currentPrimers
+      const filteredPrimers = primersToFilter.filter((primer: Primer) => (
+        !currentPrimersIds.includes(primer.id)
+      ))
+
+      // 4) combine arrays with currentPrimers at front of list
+      return currentPrimers.concat(filteredPrimers)
+    } else {
+      return primersToFilter
+    }
+  }
+
+  const resetFilter = () => {
+    setSearchValue('')
+    setFilteredPrimers(primers)
+  }
+
+  const loadingInput = () => {
+    setIconPrefix('LoadingOutlined')
+    setInputPlaceholder('Loading')
+  }
+
+  const resetInput = () => {
+    setIconPrefix(defaultIconPrefix)
+    setInputPlaceholder(defaultPlaceholder)
+  }
+
+  const onInputChange = e => {
+    if (inputPlaceholder !== defaultPlaceholder) {
+      setInputPlaceholder(defaultPlaceholder)
+    }
+    if (e.clear) {
+      resetFilter()
+    } else {
+      const value = e.target.value;
+
+      if (value.length === 0) {
+        setIconPrefix(defaultIconPrefix)
+      }
+
+      setSearchValue(value)
+
+      if (primers && primers.length > 0) {
+        setFilteredPrimers(primers.filter((primer: Primer) =>
+          primer.title.toLowerCase().indexOf(value.toLowerCase()) !== -1
+        ))
+      }
+    }
+    // TODO handle enter press (add to first item in list or create collection + add)
   }
 
   const updateCurrentPrimers = (primer: Primer, remove: boolean) => {
