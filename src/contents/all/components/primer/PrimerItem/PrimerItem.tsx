@@ -65,12 +65,11 @@ const PrimerItem = ({
 
   return (
     <div
-      className={`primerItem ${props.selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
-      onClick={props.selectable ? togglePrimer : null}
+      className={`primerItem ${selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
     >
-      {props.selectable &&
-        <div className="addBtn">
-          <Button>{selected ? <CheckOutlined /> : "Add"}</Button>
+      {selectable &&
+        <div className="addBtn" onClick={selectable ? togglePrimer : null}>
+          <Button> {selected ? <CheckOutlined /> : "Add"}</Button>
         </div>
       }
       <div className="imgWrapper">
