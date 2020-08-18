@@ -6,7 +6,8 @@ import { Content, Log, Primer } from '../../../global/types';
 import PrimerItem from '../PrimerItem/PrimerItem';
 import PrimerCreate from './PrimerCreate/PrimerCreate';
 
-import { DownOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import { SearchOutlined, LoadingOutlined, DownOutlined } from '@ant-design/icons';
 import './PrimerSelect.scss';
 
 interface Props {
@@ -15,14 +16,18 @@ interface Props {
   updatePrimersHeight: (height: number) => void
 }
 
-const PrimerSelect = (props: Props) => {
+const PrimerSelect = ({
+  log,
+  content,
+  updatePrimersHeight
+}: Props) => {
 
   const [show, setShow] = useState(false)
   const toggleShow = () => {
     // _container.current.clientHeight doesn't calculate till after transition, so hard coding it
     const footerHeight = 71
     const primerItemHeight = 53
-    props.updatePrimersHeight(
+    updatePrimersHeight(
       show
       ? 0
       : primers.length < 5
@@ -32,10 +37,19 @@ const PrimerSelect = (props: Props) => {
     setShow(!show)
   }
 
+  const defaultIconPrefix = 'SearchOutlined';
+  const defaultPlaceholder = 'Search your collections';
+  const [iconPrefix, setIconPrefix] = useState<string>(defaultIconPrefix)
+  const [inputPlaceholder, setInputPlaceholder] = useState<string>(defaultPlaceholder)
+
+  const [searchValue, setSearchValue] = useState<string>('')
+
   const [primers, setPrimers] = useState([])
-  const [currentPrimerTitles, setCurrentPrimerTitles] = useState(props.log.currentPrimers.map((primer) => primer.title))
+  const [currentPrimerTitles, setCurrentPrimerTitles] = useState(log.currentPrimers.map((primer) => primer.title))
+  const [filteredPrimers, setFilteredPrimers] = useState<Primer[]>(null)
 
   const _container = useRef<HTMLInputElement>(null)
+  const _input = useRef<Input>(null)
 
   useEffect(() => {
     chrome.runtime.sendMessage({ message: "get_primers" })
@@ -54,8 +68,8 @@ const PrimerSelect = (props: Props) => {
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "get_primers_response") {
       setPrimers(
-        props.log.currentPrimers && props.log.currentPrimers.length > 0
-        ? request.body.primers.filter(primer => !props.log.currentPrimers.map(current => current.id).includes(primer.id))
+        log.currentPrimers && log.currentPrimers.length > 0
+        ? request.body.primers.filter(primer => !log.currentPrimers.map(current => current.id).includes(primer.id))
         : request.body.primers
       )
     }
@@ -68,7 +82,7 @@ const PrimerSelect = (props: Props) => {
     chrome.runtime.sendMessage({
       message: "update_primer",
       primer: primer,
-      log: props.log,
+      log: log,
       remove: remove
     })
     if (remove) {
@@ -81,7 +95,7 @@ const PrimerSelect = (props: Props) => {
   return (
     <div className="primerSelect">
       <div className={`primerSelectAction ${show ? "show" : ""}`} onClick={toggleShow}>
-        {props.content && <PrimerItem collection={props.content.collection} /> }
+        {content && <PrimerItem collection={content.collection} /> }
         {currentPrimerTitles.length > 1
           ? <p>+ {currentPrimerTitles.length} collections</p>
           : currentPrimerTitles.length > 0
@@ -93,13 +107,13 @@ const PrimerSelect = (props: Props) => {
 
       <div className={`primerSelectList ${show ? "show" : ""}`} ref={_container}>
         <div className="primerSelectListScroll">
-          {props.log && props.log.currentPrimers &&  props.log.currentPrimers.length > 0 &&
-            props.log.currentPrimers.map(primer =>
+          {log && log.currentPrimers &&  log.currentPrimers.length > 0 &&
+            log.currentPrimers.map(primer =>
               <PrimerItem
                 key={primer.id}
                 selected
                 selectable
-                log={props.log}
+                log={log}
                 primer={primer}
                 updateCurrentPrimers={updateCurrentPrimers}
               />
@@ -110,7 +124,7 @@ const PrimerSelect = (props: Props) => {
               <PrimerItem
                 key={primer.id}
                 selectable
-                log={props.log}
+                log={log}
                 primer={primer}
                 updateCurrentPrimers={updateCurrentPrimers}
               />
