@@ -189,7 +189,7 @@ const PrimerSelect = ({
             log.currentPrimers.map(primer =>
               <PrimerItem
                 key={primer.id}
-                selected
+                select
                 selectable
                 log={log}
                 primer={primer}

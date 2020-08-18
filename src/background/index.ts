@@ -407,25 +407,32 @@ const messageListener = (request) => {
       const activeTab = tabs[0]
 
       // Send a message to the active tab
-      agent.Primers.updateLogs(request.primer.slug, request.log.id, request.remove).then(response => {
-        chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
+      if (request.privacy) {
+        agent.Primers.update(request.primer).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
+        })
+      }
+      else {
+        agent.Primers.updateLogs(request.primer.slug, request.log.id, request.remove).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
 
-        if (response.removed) {
-          window.analytics.track('Log Removed', {
-            id: response.log_id,
-            contentId: response.content_id,
-            primerId: request.primer.id,
-            context: 'midas'
-          })
-        } else {
-          window.analytics.track('Log Added', {
-            id: response.log.id,
-            contentId: response.content.id,
-            primerId: response.log.currentPrimers[0].id,
-            context: 'midas'
-          })
-        }
-      })
+          if (response.removed) {
+            window.analytics.track('Log Removed', {
+              id: response.log_id,
+              contentId: response.content_id,
+              primerId: request.primer.id,
+              context: 'midas'
+            })
+          } else {
+            window.analytics.track('Log Added', {
+              id: response.log.id,
+              contentId: response.content.id,
+              primerId: response.log.currentPrimers[0].id,
+              context: 'midas'
+            })
+          }
+        })
+      }
     })
   }
 }

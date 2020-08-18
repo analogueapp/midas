@@ -6,7 +6,7 @@ import ProgressiveImage from 'react-progressive-image';
 import placeholderImg from '../../../assets/img/placeholders/placeholder_1x1.jpg';
 
 import { mediumIcons } from '../../content/ContentMedium/ContentMedium';
-import { LockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { LockOutlined, UnlockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
 import './PrimerItem.scss'
 
@@ -15,29 +15,46 @@ interface Props {
   primer?: Primer
   collection?: string
   selectable?: boolean
-  selected?: boolean
+  select?: boolean
   updateCurrentPrimers?: (primer: Primer, remove: boolean) => void
 }
 
-const PrimerItem = (props: Props) => {
+const PrimerItem = ({
+  log,
+  primer,
+  collection,
+  selectable,
+  select,
+  updateCurrentPrimers
+}: Props) => {
 
-  const [selected, setSelected] = useState(props.selected || false)
+  const [selected, setSelected] = useState(select || false)
+  const [priv, setPrivate] = useState(primer ? primer.private : false)
 
   const togglePrimer = (e) => {
-    props.updateCurrentPrimers(props.primer, selected)
+    updateCurrentPrimers(primer, selected)
     setSelected(!selected)
   }
 
-  if (props.collection) {
+  const changePrivacy = () => {
+    setPrivate(!priv)
+    chrome.runtime.sendMessage({
+      message: "update_primer",
+      primer: {...primer, private: !priv},
+      privacy: true
+    })
+  }
+
+  if (collection) {
     return (
-      <div className={`primerItem collection ${props.selectable ? "selectable selected" : ""}`}>
+      <div className={`primerItem collection ${selectable ? "selectable selected" : ""}`}>
         <div className="imgWrapper">
-          {mediumIcons[props.collection]}
+          {mediumIcons[collection]}
         </div>
 
-        <h5 className="title">{props.collection}</h5>
+        <h5 className="title">{collection}</h5>
 
-        {props.selectable &&
+        {selectable &&
           <div className="addBtn">
             <Button><CheckOutlined /></Button>
           </div>
@@ -48,29 +65,30 @@ const PrimerItem = (props: Props) => {
 
   return (
     <div
-      className={`primerItem ${props.selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
-      onClick={props.selectable ? togglePrimer : null}
+      className={`primerItem ${selectable ? "selectable" : ""} ${selected ? "selected" : ""}`}
     >
-      {props.selectable &&
-        <div className="addBtn">
-          <Button>{selected ? <CheckOutlined /> : "Add"}</Button>
+      {selectable &&
+        <div className="addBtn" onClick={selectable ? togglePrimer : null}>
+          <Button> {selected ? <CheckOutlined /> : "Add"}</Button>
         </div>
       }
       <div className="imgWrapper">
         <ProgressiveImage
-          src={props.primer.image}
+          src={primer.image}
           placeholder={placeholderImg}
         >
           {(src, loading) => (
-            <img src={src} alt={props.primer.title} />
+            <img src={src} alt={primer.title} />
           )}
         </ProgressiveImage>
       </div>
 
-      <h5 className="title">{props.primer.title}</h5>
+      <h5 className="title">{primer.title}</h5>
 
-      {props.primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
-      {props.primer.private && <LockOutlined className="infoIcon" /> }
+      {primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
+
+      <Button className="lockBtn" icon={priv ? <LockOutlined /> : <UnlockOutlined />}
+      onClick={() => changePrivacy()} size={"small"} />
     </div>
   )
 }

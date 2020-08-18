@@ -63,6 +63,8 @@ const Knots = {
 const Primers = {
   create: primer =>
     requests.post("/primers", { primer }),
+  update: (primer) =>
+    requests.put(`/primers/${primer.slug}`, { primer }),
   updateLogs: (slug, log_id, remove) => remove
     ? requests.del(`/primers/${slug}/remove/${log_id}`)
     : requests.put(`/primers/${slug}/add/${log_id}`)

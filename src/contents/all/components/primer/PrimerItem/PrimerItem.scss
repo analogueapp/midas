@@ -4,7 +4,6 @@
   border: none;
   border-radius: 7px;
   transition: all 0.21s ease;
-  cursor: pointer;
   user-select: none;
   display: flex;
   align-items: center;
@@ -37,11 +36,21 @@
         visibility: visible;
       }
 
+      .lockBtn {
+        opacity: 0.5;
+        background: #2f2f2f;
+        box-shadow: none;
+        .anticon-unlock {
+          visibility: visible;
+        }
+      }
+
       .infoIcon {
-        opacity: 0;
-        visibility: hidden;
+        opacity: 1;
+        visibility: visible;
       }
     }
+
   }
 
   &.selected {
@@ -56,6 +65,15 @@
         padding: 0;
         border: none;
         border-radius: 4px;
+        padding-right: 6px;
+      }
+    }
+
+    .lockBtn {
+      opacity: 0.5;
+      box-shadow: none;
+      .anticon-unlock {
+        visibility: hidden;
       }
     }
 
@@ -98,7 +116,6 @@
     overflow: hidden;
     font-size: 16px;
     font-weight: 400;
-    flex: 1;
     padding: 5px 0;
   }
 
@@ -141,6 +158,15 @@
           color: #c7ac75;
         }
       }
+    }
+  }
+
+  .lockBtn {
+    opacity: 0.5;
+    background-color: #222;
+    box-shadow: none;
+    .anticon-unlock {
+      visibility: hidden;
     }
   }
 }
