@@ -29,10 +29,20 @@ const PrimerItem = ({
 }: Props) => {
 
   const [selected, setSelected] = useState(select || false)
+  const [priv, setPrivate] = useState(primer ? primer.private : false)
 
   const togglePrimer = (e) => {
     updateCurrentPrimers(primer, selected)
     setSelected(!selected)
+  }
+
+  const changePrivacy = () => {
+    setPrivate(!priv)
+    chrome.runtime.sendMessage({
+      message: "update_primer",
+      primer: {...primer, private: !priv},
+      privacy: true
+    })
   }
 
   if (collection) {
@@ -76,8 +86,10 @@ const PrimerItem = ({
 
       <h5 className="title">{primer.title}</h5>
 
-      {props.primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
-      {props.primer.private && <LockOutlined className="infoIcon" /> }
+      {primer.shared && <UsergroupAddOutlined className="infoIcon" /> }
+
+      <Button className="lockBtn" icon={priv ? <LockOutlined /> : <UnlockOutlined />}
+      onClick={() => changePrivacy()} size={"small"} />
     </div>
   )
 }
