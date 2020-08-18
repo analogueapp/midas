@@ -410,7 +410,9 @@ const messageListener = (request) => {
       if (request.privacy) {
         agent.Primers.update(request.primer).then(response => {
           chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
-
+        })
+      }
+      else {
         agent.Primers.updateLogs(request.primer.slug, request.log.id, request.remove).then(response => {
           chrome.tabs.sendMessage(activeTab.id, {message: "update_primer_response", body: response });
 
