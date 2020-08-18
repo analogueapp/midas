@@ -6,7 +6,7 @@ import ProgressiveImage from 'react-progressive-image';
 import placeholderImg from '../../../assets/img/placeholders/placeholder_1x1.jpg';
 
 import { mediumIcons } from '../../content/ContentMedium/ContentMedium';
-import { LockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { LockOutlined, UnlockOutlined, CheckOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 
 import './PrimerItem.scss'
 
