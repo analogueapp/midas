@@ -58,6 +58,11 @@ const Knots = {
     requests.put(`/knots/${knot.id}`, { knot }),
   del: id =>
     requests.del(`/knots/${id}`),
+  unlike: (id, like_id)  =>
+    requests.del(`/knots/${id}/likes/${like_id}`),
+  like: id  =>
+    requests.post(`/knots/${id}/likes`),
+}
 }
 
 const Primers = {

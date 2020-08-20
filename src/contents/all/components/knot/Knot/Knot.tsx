@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
 import { Timeline, Button, Popconfirm, DatePicker, Tooltip } from 'antd';
-import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import { LockOutlined, UnlockOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
 
-import { Log, Knot as KnotType } from '../../../global/types';
+import { Log, Like, Knot as KnotType } from '../../../global/types';
 
 import KnotInput from '../KnotInput/KnotInput';
+import NumberCount from '../../common/NumberCount'
 
 import './Knot.scss';
 import '../Trix.scss';
@@ -21,6 +22,9 @@ const Knot = ({ log, knot, isLast }: Props) => {
   const [edited, setEdited] = useState(false)
   const [hover, setHover] = useState(false)
   const [currentKnot, setCurrentKnot] = useState(knot)
+  const [like, setLike] = useState<Like>(currentKnot.like)
+  const [liked, setLiked] = useState(currentKnot.like ? true : false)
+  const [likesCount, setLikesCount] = useState<number>(knot.likesCount)
 
   const knotRef = useRef(null)
 
@@ -28,6 +32,22 @@ const Knot = ({ log, knot, isLast }: Props) => {
     setCurrentKnot(knot)
   }, [knot])
 
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(messageListener)
+
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener)
+    }
+  }, [like, liked, likesCount])
+
+  const messageListener = (request, sender, sendResponse) => {
+    if (request.message === "update_knot_likes_response") {
+      console.log("response", request)
+      setLoading(false)
+      if (request.like) {setLike(request.body.like)}
+      else {setLike(null)}
+    }
+  }
   const deleteKnot = () => {
     chrome.runtime.sendMessage({
       message: "delete_knot",
@@ -43,6 +63,23 @@ const Knot = ({ log, knot, isLast }: Props) => {
     })
   }
 
+  const clickLike = () => {
+    setLoading(true)
+
+    if (like) {
+      setLiked(false)
+      setLikesCount(likesCount - 1)
+    } else {
+      setLiked(true)
+      setLikesCount(likesCount + 1)
+    }
+    chrome.runtime.sendMessage({
+      message: "update_knot_likes",
+      knot: knot,
+      like: like,
+      liked: !liked
+    })
+  }
   return (
     <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
@@ -69,6 +106,18 @@ const Knot = ({ log, knot, isLast }: Props) => {
           <Button icon={knot.private ? <LockOutlined /> : <UnlockOutlined />}
           onClick={() => changePrivacy()}
           size={"small"} />
+
+          <span className={`likeBtn ${liked ? "liked" : ""}`}>
+            <Button
+            icon={liked ? <HeartFilled /> : <HeartOutlined />}
+            onClick={() => clickLike()}
+            size={"small"}
+            />
+
+            {likesCount > 0 &&
+              <span className="likeCount"><NumberCount count={likesCount} /></span>
+            }
+          </span>
           <Moment
             filter={(value) =>
               value.replace(/^a few seconds ago/g, 'just now')
