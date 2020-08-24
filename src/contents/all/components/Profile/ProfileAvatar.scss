@@ -1,0 +1,79 @@
+.profileAvatarPopover {
+  min-width: 386px;
+
+  .ant-popover-inner-content {
+    padding: 0;
+
+    .loadingSpinner {
+      padding: 47px 0;
+    }
+  }
+
+  .profileCard {
+    margin-bottom: 0;
+  }
+}
+
+.profileAvatar {
+  a {
+    color: #e3e3e3;
+
+    &:hover {
+      color: #c7ac75;
+    }
+  }
+
+  &.listType {
+    a {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-radius: 7px;
+      transition: all 0.21s ease;
+      position: relative;
+
+      &:hover {
+        background: #212121;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 4px;
+      }
+
+      .profileImage {
+        margin-right: 15px;
+        border-radius: 10px;
+        img {
+          border-radius: 4px;
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .anchorButton {
+        position: absolute;
+        right: 0;
+        margin-right: 15px;
+      }
+
+      .profileName {
+        font-weight: 300;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+@media (max-width:400px) {
+
+  .profileAvatar.listType {
+    a:hover {
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .profileAvatarPopover {
+    min-width: 100vw;
+  }
+}
