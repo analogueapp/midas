@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
+import { FaRegComment } from "react-icons/fa";
 import { Timeline, Button, Popconfirm, DatePicker, Tooltip } from 'antd';
 import { LockOutlined, UnlockOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
 
@@ -7,6 +8,9 @@ import { Log, Like, Knot as KnotType } from '../../../global/types';
 
 import KnotInput from '../KnotInput/KnotInput';
 import NumberCount from '../../common/NumberCount'
+import Responses from '../Responses/Responses'
+import ResponseForm from '../Responses/ResponseForm'
+import ResponseInput from '../Responses/ResponseInput'
 
 import './Knot.scss';
 import '../Trix.scss';
@@ -20,8 +24,12 @@ interface Props {
 const Knot = ({ log, knot, isLast }: Props) => {
 
   const [edited, setEdited] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [hover, setHover] = useState(false)
   const [currentKnot, setCurrentKnot] = useState(knot)
+  const [replyOpen, setReplyOpen] = useState(false)
+  const [responseSubmitted, setResponseSubmitted] = useState(false)
+
   const [like, setLike] = useState<Like>(currentKnot.like)
   const [liked, setLiked] = useState(currentKnot.like ? true : false)
   const [likesCount, setLikesCount] = useState<number>(knot.likesCount)
@@ -50,7 +58,6 @@ const Knot = ({ log, knot, isLast }: Props) => {
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "update_knot_likes_response") {
-      console.log("response", request)
       setLoading(false)
       if (request.like) {setLike(request.body.like)}
       else {setLike(null)}
@@ -104,6 +111,14 @@ const Knot = ({ log, knot, isLast }: Props) => {
       liked: !liked
     })
   }
+
+  const submitResponse = () => {
+    setReplyOpen(false)
+    setResponseSubmitted(true)
+  }
+  const hideReply = () => setReplyOpen(false)
+  const toggleReply = () => setReplyOpen(!replyOpen)
+
   return (
     <Timeline.Item className={`knot ${isLast ? "ant-timeline-item-last" : ""}`}>
       <div
@@ -126,6 +141,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
             : <div className="trix-content" dangerouslySetInnerHTML={{__html: currentKnot.body}} />
           }
         </div>
+
         <div className="knotMeta">
           <Button icon={knot.private ? <LockOutlined /> : <UnlockOutlined />}
           onClick={() => changePrivacy()}
@@ -202,6 +218,17 @@ const Knot = ({ log, knot, isLast }: Props) => {
             <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
           </Popconfirm>
         </div>
+        {replyOpen &&
+        <ResponseInput
+          onClose={hideReply}
+          className="newResponse"
+          respondableId={knot.id}
+          first={true}
+        />
+        }
+        {knot.responses && knot.responses.length > 0 &&
+        <Responses responses={knot.responses} log={log} />
+        }
       </div>
     </Timeline.Item>
   )
