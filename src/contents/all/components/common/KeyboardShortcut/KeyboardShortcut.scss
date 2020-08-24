@@ -9,10 +9,12 @@ label.keyboardShorcut {
   opacity: 1;
   visibility: visible;
   transition: 0.21s ease;
+  cursor: pointer;
 
   &.hide {
     opacity: 0;
     visibility: hidden;
+    cursor: default;
   }
 
   &.clickable {

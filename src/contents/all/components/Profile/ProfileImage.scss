@@ -1,0 +1,29 @@
+.profileImage {
+  position: relative;
+
+  &.goldscale {
+    img {
+      filter: grayscale(100%) sepia(66%);
+    }
+  }
+
+  img {
+    -webkit-transition: all .21s ease;
+    transition: all .21s ease;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid #212121;
+  }
+
+  .avatarHalo {
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    top:-4px;
+    left:-4px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 100%;
+    border: 2px solid #c7ac75;
+  }
+
+}

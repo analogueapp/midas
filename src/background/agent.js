@@ -51,13 +51,30 @@ const Logs = {
 
 const Knots = {
   all: log =>
-    requests.get(`/knots?log_id=${log.id}&preview=true`),
+    requests.get(`/knots?log_id=${log.id}`),
   create: (knot, log) =>
     requests.post(`/knots`, { knot: knot, log_id: log.id }),
   update: knot =>
     requests.put(`/knots/${knot.id}`, { knot }),
   del: id =>
     requests.del(`/knots/${id}`),
+  unlike: (id, like_id)  =>
+    requests.del(`/knots/${id}/likes/${like_id}`),
+  like: id  =>
+    requests.post(`/knots/${id}/likes`),
+}
+
+const Responses = {
+  create: (id, response) =>
+    requests.post(`/knots/${id}/responses`, response),
+  update: response =>
+    requests.put(`/knots/${response.respondableId}/responses/${response.id}`, response),
+  del: response =>
+    requests.del(`/knots/${response.respondableId}/responses/${response.id}`),
+  unlike: (response, like_id)  =>
+    requests.del(`/responses/${response.id}/likes/${like_id}`),
+  like: response  =>
+    requests.post(`/responses/${response.id}/likes`),
 }
 
 const Primers = {
@@ -82,5 +99,6 @@ export default {
   Primers,
   Contents,
   Activity,
+  Responses,
   setToken: _token => { token = _token; }
 }

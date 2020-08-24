@@ -1,0 +1,24 @@
+.responses {
+  margin-left: 10px;
+
+  .hiddenResponses {
+    display: none;
+  }
+
+  .expandAllResponses {
+    color: #888;
+    font-size: 12px;
+    font-weight: 400;
+    user-select: none;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+    transition: color 0.3s;
+    &.hide {
+      display: none;
+    }
+
+    &:hover {
+      color: #ccc;
+    }
+  }
+}
