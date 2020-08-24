@@ -105,7 +105,6 @@ const ResponseInput = ({
       <div className="knotCardFooter">
         <KeyboardShortcut
           show={showFooter}
-          onClick={onSubmit}
           text={response ? "Save" : "Post"}
           keys={['CMD', 'ENTER']}
         />
