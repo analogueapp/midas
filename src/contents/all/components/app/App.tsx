@@ -133,7 +133,6 @@ const App = () => {
             createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
           }
           if (request.timestamp) {
-            console.log("YT")
             createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
           }
         }
