@@ -38,7 +38,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener)
     }
-  }, [like, liked, likesCount])
+  }, [like, liked, likesCount, replyOpen])
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "update_knot_likes_response") {
@@ -46,8 +46,24 @@ const Knot = ({ log, knot, isLast }: Props) => {
       setLoading(false)
       if (request.like) {setLike(request.body.like)}
       else {setLike(null)}
+      chrome.runtime.sendMessage({ message: "get_knots", log: log })
     }
+
+    if (request.message === "create_response_response") {
+      chrome.runtime.sendMessage({ message: "get_knots", log: log })
+      hideReply()
+    }
+
+
   }
+
+  const submitForm = values => {
+    chrome.runtime.sendMessage({
+      message: "auth_user",
+      user: { ...values }
+    })
+  }
+
   const deleteKnot = () => {
     chrome.runtime.sendMessage({
       message: "delete_knot",
