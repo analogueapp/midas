@@ -1,0 +1,235 @@
+.response {
+
+  &.ant-comment {
+    position: static;
+  }
+
+  .ant-comment-inner {
+    padding-bottom: 0;
+    padding-top: 12px;
+    margin-left: 17px;
+  }
+
+  &.justAdded {
+    .ant-comment-content {
+      animation: fadeincolor 2.1s;
+      margin: -5px 0 0 -8px;
+      padding: 5px 0 0 8px;
+      border-radius: 7px;
+    }
+  }
+
+  .expandResponses {
+    color: #888;
+    font-size: 12px;
+    font-weight: 400;
+    user-select: none;
+    cursor: pointer;
+    margin: 5px 0 0;
+    transition: color 0.3s;
+    display: table;
+    white-space: nowrap;
+
+    span.text {
+      display: inline-block;
+      padding-left: 12px;
+    }
+
+    &::before {
+      position: relative;
+      top: 50%;
+      display: table-cell;
+      width: 21px;
+      border-top: 1px solid #333;
+      transform: translateY(50%);
+      content: '';
+    }
+    &:hover {
+      color: #ccc;
+    }
+  }
+  .ant-comment-nested {
+    display: block;
+    margin-left: 30px;
+
+    .ant-comment-inner {
+      margin-left: 21px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+
+  .ant-comment-content {
+    margin-top: 1px;
+    a {
+      text-decoration: none;
+    }
+
+    .ant-comment-actions {
+      > li {
+        > span {
+          font-size: 10px;
+          padding-right: 5px;
+        }
+      }
+    }
+
+    .ant-comment-content-author {
+      float: left;
+      margin-bottom: 0;
+      > span {
+        font-size: 14px;
+        font-weight: bold;
+        height: auto;
+        margin-left: -33px;
+        line-height: inherit;
+
+        a {
+          color: #e3e3e3;
+          font-weight: 400;
+
+          &:hover {
+            color: #c7ac75;
+          }
+        }
+
+        .ant-avatar, .profileImage img, .profileImage {
+          width: 21px;
+          height: 21px;
+          line-height: 21px;
+          position: absolute;
+
+          .avatarHalo {
+            margin-top: 1px;
+          }
+        }
+
+        .profileName {
+          margin-left: 33px;
+        }
+      }
+    }
+
+    .ant-comment-actions {
+      margin: 0 0 0.5em;
+
+      > li {
+        color: #aaa;
+        > span {
+          color: #aaa;
+
+          &:hover {
+            color: #c7ac75;
+          }
+        }
+      }
+
+      .edited {
+        padding-left: 5px;
+        font-size: 9px;
+        color: #777;
+      }
+
+      .likeBtn {
+        cursor: auto;
+
+        .ant-btn {
+          box-shadow: none;
+        }
+
+        &:hover {
+          color: inherit;
+        }
+
+        &.liked {
+          .anticon {
+            color: #c7ac75;
+          }
+        }
+
+        .anticon {
+          cursor: pointer;
+          font-size: 12px;
+          vertical-align: middle;
+          margin-top: -2px;
+
+          &:hover {
+            color: #c7ac75;
+          }
+        }
+
+        .likeCount {
+          cursor: auto;
+        }
+      }
+
+      .ownerBtn {
+        opacity: 0;
+        transition: all 0.3s ease;
+
+        &.show {
+          opacity: 1;
+        }
+      }
+
+      .noHover {
+        cursor: auto;
+        &:hover {
+          color: inherit;
+        }
+      }
+    }
+
+    .ant-comment-content-detail {
+      color: #aaa;
+
+      .responseForm {
+
+        margin-top: 20px;
+
+        &.editResponse {
+          padding: 5px;
+        }
+      }
+      p {
+        color: #aaa;
+        font-size: 14px;
+        margin-bottom: 0;
+        padding-bottom: 0.5em;
+
+        &.deletedResponse {
+          font-style: italic;
+          color: #777;
+        }
+
+        &.truncate {
+          // multi line clamp
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+.ant-comment-avatar .ant-avatar {
+  width: 21px;
+  height: 21px;
+  line-height: 21px;
+
+  &.goldscale {
+    img {
+      filter: grayscale(100%) sepia(66%);
+    }
+  }
+
+  img {
+    width: 21px;
+    height: 21px;
+    object-fit: cover;
+  }
+}
