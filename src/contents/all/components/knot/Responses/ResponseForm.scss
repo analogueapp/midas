@@ -1,0 +1,64 @@
+.responseForm {
+  margin: 5px 0 15px -5px;
+  position: relative;
+  padding: 10px;
+  background-color: #242424 ;
+  border-radius: 4px;
+
+  &.newResponse {
+    margin: 10px 0 5px 10px;
+
+    .showFooter {
+      margin-bottom: 30px;
+    }
+
+  }
+
+  &.editResponse {
+    margin-top: 0px;
+  }
+
+  .ais-InstantSearch__root {
+    display: inline-block;
+    width: calc(100% - 55px);
+    margin-right: 5px;
+    vertical-align: bottom;
+  }
+
+  .ant-mentions {
+    border: none;
+    box-shadow: none;
+
+    textarea {
+      resize: none;
+      font-size: 14px;
+      font-weight: 300;
+      padding-top: 4px;
+      line-height: 1.58;
+      background: #212121;
+    }
+
+    &:hover, &.ant-mentions-active, &.ant-mentions-focused {
+      box-shadow: none;
+      border: none;
+    }
+  }
+
+  .submitButton {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transition: 0.21s ease all;
+    cursor: pointer;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    right: 4px;
+    bottom: -15px;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
