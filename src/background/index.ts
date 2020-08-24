@@ -88,10 +88,26 @@ chrome.commands.onCommand.addListener(function(command) {
       }
       else if (activeTab.url.includes("youtube.com/")) {
         getYtTime(activeTab.id, function(time) {
-          const minutes = Math.floor(time / 60)
-          const seconds = Math.floor(time % 60)
+          const minutes = ('0' + Math.floor(time / 60).toString()).slice(-2)
+          const seconds = ('0' + Math.floor(time % 60).toString()).slice(-2)
           const timestamp = `${minutes}:${seconds} - `
           const timeLink = `${activeTab.url}&t=${minutes}m${seconds}s`
+          injectContentScript({ message: "clicked_browser_action", timestamp: timestamp, url: timeLink})
+        })
+      }
+      else if (activeTab.url.includes("amazon.com/")) {
+        getAmazonTime(activeTab.id, function(timeStamp) {
+          const timeLink = `${activeTab.url}`
+          injectContentScript({ message: "clicked_browser_action", timestamp: timeStamp, url: timeLink})
+        })
+      }
+      else if (activeTab.url.includes("netflix.com/")) {
+        getNetflixTime(activeTab.id, function(time) {
+          const hours = Math.floor(time / 3600)
+          const minutes = ('0' + (Math.floor(time / 60) - 60*hours).toString()).slice(-2)
+          const seconds = ('0' + Math.floor(time % 60).toString()).slice(-2)
+          const timestamp = `${hours > 0 ? `${hours}:` : ""}${minutes}:${seconds} - `
+          const timeLink = `${activeTab.url}&t=${time}`
           injectContentScript({ message: "clicked_browser_action", timestamp: timestamp, url: timeLink})
         })
       }
@@ -233,6 +249,22 @@ function getYtTime(tabId, cb) {
       code: "document.getElementsByClassName('video-stream')[0].currentTime"
   }, function(ytTime) {
       cb(ytTime[0]);
+  });
+}
+
+function getAmazonTime(tabId, cb) {
+  chrome.tabs.executeScript(tabId, {
+      code: "document.getElementsByClassName('atvwebplayersdk-timeindicator-text fheif50 f989gul f1s55b4')[0].textContent.substring(0,7)"
+  }, function(amazonTime) {
+      cb(amazonTime[0]);
+  });
+}
+
+function getNetflixTime(tabId, cb) {
+  chrome.tabs.executeScript(tabId, {
+      code: `document.querySelectorAll('[aria-label^="Seek time scrubber"]')[0].ariaValueNow`
+  }, function(netflixTime) {
+      cb(netflixTime[0]);
   });
 }
 
