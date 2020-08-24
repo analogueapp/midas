@@ -63,6 +63,18 @@ const Knots = {
   like: id  =>
     requests.post(`/knots/${id}/likes`),
 }
+
+const Responses = {
+  create: (id, response) =>
+    requests.post(`/knots/${id}/responses`, response),
+  update: response =>
+    requests.put(`/knots/${response.respondableId}/responses/${response.id}`, response),
+  del: response =>
+    requests.del(`/knots/${response.respondableId}/responses/${response.id}`),
+  unlike: (response, like_id)  =>
+    requests.del(`/responses/${response.id}/likes/${like_id}`),
+  like: response  =>
+    requests.post(`/responses/${response.id}/likes`),
 }
 
 const Primers = {
@@ -87,5 +99,6 @@ export default {
   Primers,
   Contents,
   Activity,
+  Responses,
   setToken: _token => { token = _token; }
 }
