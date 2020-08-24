@@ -407,6 +407,51 @@ const messageListener = (request) => {
       }
     })
   }
+
+  if (request.message === "delete_response") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      agent.Responses.del(request.response).then(response => {
+        chrome.tabs.sendMessage(activeTab.id, {message: "delete_response_response", body: response });
+      })
+    })
+  }
+
+  if (request.message === "update_response") {
+    console.log(request)
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+      //delete response if body cleared
+      if (request.body == "") {
+        console.log("mmmhmm")
+        agent.Responses.del(request.response).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "delete_response_response", body: response });
+        })
+      }
+      else {
+        agent.Responses.update({...request.response, body: request.body }).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "update_response_response", body: response });
+        })
+      }
+    })
+  }
+
+  if (request.message === "create_response") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+      //handle empty body
+      if (request.response.body == "") {
+        chrome.tabs.sendMessage(activeTab.id, {message: "create_response_response"})
+      } else {
+        agent.Responses.create(request.respondableId, request.response).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "create_response_response", body: response });
+        })
+      }
+    })
+  }
+
   if (request.message === "get_primers") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
