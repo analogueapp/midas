@@ -389,6 +389,24 @@ const messageListener = (request) => {
       }
     })
   }
+
+  if (request.message === "update_response_likes") {
+    console.log("request", request)
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0]
+
+      // Send a message to the active tab
+      if (request.liked) {
+        agent.Responses.like(request.response).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "update_response_likes_response", body: response, like: true });
+        })
+      } else {
+        agent.Responses.unlike(request.response, request.like.id).then(response => {
+          chrome.tabs.sendMessage(activeTab.id, {message: "update_response_likes_response", body: response, like: false });
+        })
+      }
+    })
+  }
   if (request.message === "get_primers") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
