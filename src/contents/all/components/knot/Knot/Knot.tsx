@@ -25,11 +25,19 @@ const Knot = ({ log, knot, isLast }: Props) => {
   const [like, setLike] = useState<Like>(currentKnot.like)
   const [liked, setLiked] = useState(currentKnot.like ? true : false)
   const [likesCount, setLikesCount] = useState<number>(knot.likesCount)
+  const [replyCount, setReplyCount] = useState<number>(
+    knot.responses ?
+    knot.responses.filter(response => response.body != null).length
+    : 0
+  )
 
   const knotRef = useRef(null)
 
   useEffect(() => {
     setCurrentKnot(knot)
+    setReplyCount(knot.responses ?
+    knot.responses.filter(response => response.body != null).length
+    : 0)
   }, [knot])
 
   useEffect(() => {
@@ -134,6 +142,25 @@ const Knot = ({ log, knot, isLast }: Props) => {
               <span className="likeCount"><NumberCount count={likesCount} /></span>
             }
           </span>
+
+          {replyCount > 0 &&
+            <>
+              <span className="responseIcon">
+                <FaRegComment />
+              </span>
+              <NumberCount count={replyCount} />
+            </>
+          }
+
+
+          <span
+            className="reply"
+            onClick={toggleReply}
+          >
+            Reply
+          </span>
+
+
           <Moment
             filter={(value) =>
               value.replace(/^a few seconds ago/g, 'just now')
