@@ -254,18 +254,7 @@ const Response = ({
           onClose={hideReply}
         />
       }
-      {children &&
-        <>
-        {children.length > 1
-          ? (
-            <>
-              {children[0]}
-            </>
-          )
-          : children
-        }
-        </>
-      }
+      {children}
     </Comment>
   )
 }
