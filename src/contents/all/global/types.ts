@@ -9,6 +9,21 @@ export interface Creator {
   diedAt: string
 }
 
+export interface Response {
+  id: number
+  body: string
+  like?: Like
+  likesCount: number
+  createdAt: string
+  user: User
+  updatedAt?: string
+  parentId?: any
+  respondableId: 546
+  respondableType: string
+  responses?: Response[]
+  responsesCount?: number
+}
+
 export interface User {
   id: number
   username: string
@@ -22,6 +37,7 @@ export interface User {
   email: string
   bio: string
   image: string
+  followBack?: boolean
 }
 
 export interface Content {
