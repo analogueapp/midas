@@ -70,6 +70,7 @@
     .ant-comment-actions {
       > li {
         > span {
+          margin-right: 0px;
           font-size: 10px;
           padding-right: 5px;
         }
@@ -80,7 +81,7 @@
       float: left;
       margin-bottom: 0;
       > span {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: bold;
         height: auto;
         margin-left: -33px;
@@ -119,6 +120,7 @@
         color: #aaa;
         > span {
           color: #aaa;
+          margin-right: 0px;
 
           &:hover {
             color: #c7ac75;
@@ -195,7 +197,7 @@
       }
       p {
         color: #aaa;
-        font-size: 14px;
+        font-size: 12px;
         margin-bottom: 0;
         padding-bottom: 0.5em;
 
