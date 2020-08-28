@@ -28,6 +28,8 @@
     }
 
     .ant-input-affix-wrapper {
+      border: none;
+      border-radius: 5px;
       &:focus {
         background: #000;
       }
