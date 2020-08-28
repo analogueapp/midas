@@ -26,7 +26,6 @@ const Activity = () => {
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "get_activity_response") {
-      console.log("response", request)
       setLoading(false)
       setActivity(request.body)
     }
@@ -41,7 +40,6 @@ const Activity = () => {
   }
 
   if (!loading && activity != null) {
-    console.log("activity", activity)
     if (activity.activities) {
       if (activity.activities.length === 0) {
         return <p style={{ fontSize: '16px' }}>No recent activity</p>

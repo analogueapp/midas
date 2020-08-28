@@ -473,7 +473,6 @@ const messageListener = (request) => {
   }
 
   if (request.message === "update_response_likes") {
-    console.log("request", request)
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
 
