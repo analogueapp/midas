@@ -74,7 +74,7 @@ chrome.contextMenus.create({
 })
 
 chrome.browserAction.onClicked.addListener(function() {
-  injectContentScript({ message: "clicked_browser_action" })
+  injectContentScript({ message: "clicked_browser_action", activity: true })
 })
 
 chrome.commands.onCommand.addListener(function(command) {
@@ -163,7 +163,7 @@ const configureAuth = response => {
       })
     }
   })
-  injectContentScript({ message: "clicked_browser_action" })
+  injectContentScript({ message: "clicked_browser_action", activity: true })
 }
 
 const streamCallback = (data) => {
