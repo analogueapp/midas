@@ -58,6 +58,10 @@ body {
   text-transform: uppercase;
   color: #aaa;
 
+  .ant-dropdown-menu-item-danger {
+    color: #c7ac75;
+  }
+
   > .anticon:first-child {
     min-width: 16px;
     margin-right: 11px;

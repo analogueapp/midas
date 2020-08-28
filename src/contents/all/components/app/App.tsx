@@ -27,7 +27,8 @@ import '../Anchor/Anchor.scss'
 const statusMessage = {
   pub: "Added",
   saved: "Queued",
-  priv: "Added privately"
+  priv: "Added privately",
+  activity: "Activity"
 }
 
 const App = () => {
@@ -77,6 +78,12 @@ const App = () => {
       setShow(false)
       setLog(null)
       setContent(null)
+    }
+    else if (target.key == "activity") {
+      setActivity(true)
+    }
+    else if (activity) {
+      clickHint()
     }
     else {
       const newLog = { ...log, status: target.key }
@@ -312,6 +319,26 @@ const App = () => {
 
                       <img src={logoIcon} className="logo icon" alt="Analogue" />
 
+                      <Dropdown
+                        align={{offset: [-14, 15]}}
+                        overlayClassName="dropdownStatusOverlay"
+                        getPopupContainer={() => document.getElementById("analogueHeader")}
+                        overlay={
+                          <Menu onClick={updateLogStatus}>
+                            {activity &&
+                              <Menu.Item danger key="pub">
+                                Log Content
+                              </Menu.Item>
+                            }
+                          </Menu>
+                        }
+                      >
+                        <div className="dropdownStatus">
+                          Activity
+                          {<DownOutlined /> }
+                        </div>
+                      </Dropdown>
+
                       <CloseOutlined
                         className="closeBtn"
                         onClick={(e) => {
@@ -362,6 +389,11 @@ const App = () => {
                             {log &&
                               <Menu.Item key="delete">
                                 Delete
+                              </Menu.Item>
+                            }
+                            {log &&
+                              <Menu.Item danger key="activity">
+                                Activity
                               </Menu.Item>
                             }
                           </Menu>
