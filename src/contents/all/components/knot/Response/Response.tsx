@@ -57,7 +57,6 @@ const Response = ({
 
   const messageListener = (request, sender, sendResponse) => {
     if (request.message === "update_response_likes_response") {
-      console.log("response", request)
       setLoading(false)
       if (request.like) {setLike(request.body.like)}
       else {setLike(null)}

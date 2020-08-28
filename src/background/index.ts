@@ -502,12 +502,10 @@ const messageListener = (request) => {
   }
 
   if (request.message === "update_response") {
-    console.log(request)
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0]
       //delete response if body cleared
       if (request.body == "") {
-        console.log("mmmhmm")
         agent.Responses.del(request.response).then(response => {
           chrome.tabs.sendMessage(activeTab.id, {message: "delete_response_response", body: response });
         })
