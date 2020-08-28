@@ -1,0 +1,16 @@
+// making a div square with CSS
+// https://dev.to/tchaflich/a-width-responsive-perfect-square-in-pure-css-3dao
+// https://pagecrafter.com/maintain-aspect-ratio-for-html-element-using-only-css-in-a-responsive-design/
+.contentImage {
+  user-select: none;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  position: relative;
+
+  &:hover {
+    .contentImageMask {
+      opacity: 1;
+    }
+  }
+}

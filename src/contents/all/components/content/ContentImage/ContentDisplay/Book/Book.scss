@@ -1,0 +1,12 @@
+.book {
+  img {
+    position: absolute;
+    object-fit: contain;
+    width: auto;
+    height: calc(100% - 12px);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.21), 7px 7px 7px 0 rgba(0, 0, 0, 0.1);
+    left: calc(50% - 6px); // account for margin right 12px
+    transform: translateX(-50%);
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,69 @@
+.anchorButton {
+  cursor: pointer;
+  width: 31px;
+  height: 31px;
+  text-align: center;
+  box-shadow: 2px 3px 5px 2px rgba(0, 0, 0, 0.66), -1px 0 7px -2px rgba(255, 255, 255, 0.33);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ant-btn {
+    border-radius: 100%;
+  }
+
+  &.pressed, &:active {
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.33), inset -3px -3px 11px -8px rgba(255, 255, 255, 0.33), inset 5px 5px 10px 0 rgba(0, 0, 0, 0.66);
+  }
+
+  .anticon:not(.anticon-loading) {
+    svg {
+      animation: zoomin 0.21s;
+    }
+  }
+
+  :not(.anticon) {
+    svg {
+      animation: zoomin 0.21s;
+    }
+  }
+
+  svg {
+    color: #c7ac75;
+    margin-left: 1px;
+    font-size: 16px;
+  }
+
+  .anticon {
+    svg {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    &.anticon-plus {
+      svg { margin-left: 0; }
+    }
+
+    &.anticon-check {
+      svg { color: #c7ac75; }
+    }
+  }
+}
+
+.anchorPopover {
+  width: 100%;
+  max-width: 360px;
+  max-height: 400px;
+  min-height: 120px;
+
+  &.ant-popover {
+    .ant-popover-inner-content {
+      padding: 0;
+    }
+  }
+
+  .loadingSpinner {
+    padding: 40px 0;
+  }
+}

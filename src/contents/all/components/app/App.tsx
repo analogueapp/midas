@@ -11,13 +11,18 @@ import ContentPreview from '../content/ContentPreview/ContentPreview';
 import Knots from '../knot/Knots/Knots';
 import PrimerSelect from '../primer/PrimerSelect/PrimerSelect';
 import LoginForm from './LoginForm';
+import Activity from '../activity/Activity';
+import KeyboardShortcut from '../common/KeyboardShortcut/KeyboardShortcut';
+import BottomBar from '../navigation/BottomBar/BottomBar';
+import BottomBand from '../navigation/BottomBar/BottomBand';
 
-import { Menu, Dropdown } from 'antd';
-import { CloseOutlined, DownOutlined } from '@ant-design/icons';
+import { Menu, Dropdown, Button } from 'antd';
+import { CloseOutlined, DownOutlined, PlusOutlined, BellOutlined } from '@ant-design/icons';
 
 import logo from '../../assets/img/logo.png';
 import logoIcon from '../../assets/img/logo_icon.png';
 import './App.scss';
+import '../Anchor/Anchor.scss'
 
 const statusMessage = {
   pub: "Added",
@@ -31,6 +36,7 @@ const App = () => {
   const [loading, setLoading] = useState(false)
   const [login, setLogin] = useState(false)
   const [userLoading, setUserLoading] = useState(false)
+  const [activity, setActivity] = useState(false)
 
   const [content, setContent] = useState(null)
   const [log, setLog] = useState(null)
@@ -92,6 +98,13 @@ const App = () => {
     })
   }
 
+  const clickHint = () => {
+    setActivity(false)
+    chrome.runtime.sendMessage({
+      message: "parse_content",
+    })
+  }
+
   const messageListener = (request, sender, sendResponse) => {
     // sender.id is id of chrome extension
 
@@ -104,45 +117,64 @@ const App = () => {
       dispatch({ type: 'SET_USER', user: request.body.user })
       setUserLoading(false)
       setLogin(false)
-      chrome.runtime.sendMessage({ message: "parse_content" })
+      if (request.activity) {
+        setActivity(true)
+        chrome.runtime.sendMessage({message: "get_activity"})
+      }
+      else {chrome.runtime.sendMessage({ message: "parse_content" })}
     }
 
     if (request.message === "clicked_browser_action") {
       chrome.storage.local.get("analogueJWT", function(token) {
         if (!user && Object.keys(token).length !== 0) {
           setUserLoading(true)
-          chrome.runtime.sendMessage({ message: "get_current_user", token: token.analogueJWT })
+          chrome.runtime.sendMessage({
+            message: "get_current_user",
+            token: token.analogueJWT,
+            activity: request.activity
+          })
         }
       })
 
+      //show with user
       if (user) {
         setUserLoading(false)
         setLogin(false)
         setShow(true)
 
-        if (!content) {
-          chrome.runtime.sendMessage({
-            message: "parse_content",
-            goodies: {
-              highlight: request.highlight,
-              youtube: { timestamp: request.timestamp, url: request.url }
+        if (!request.activity) {
+          setActivity(false)
+          //parse if no content
+          if (!content) {
+            chrome.runtime.sendMessage({
+              message: "parse_content",
+              goodies: {
+                highlight: request.highlight,
+                youtube: { timestamp: request.timestamp, url: request.url }
+              }
+            })
+          } else {
+            //highlight to note
+            if (request.highlight) {
+              createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
             }
-          })
+            //youtube timestamp
+            if (request.timestamp) {
+              createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
+            }
+          }
+          //activity
         } else {
-          if (request.highlight) {
-            createKnot(("<blockquote>" + request.highlight.toString("html") + "</blockquote>"), request.highlight)
-          }
-          if (request.timestamp) {
-            createKnot(("<a target='_blank' href=" + request.url + ">" + request.timestamp.toString("html") + "</a>"), request.timestamp)
-          }
+          setActivity(true)
         }
+        //else, show login
       } else {
         if (!userLoading) setLogin(true)
         setShow(true)
       }
 
       //close extension if no text is highlighted on browser action
-      if (show && !request.timestamp && !request.highlight) {
+      if (show && !request.timestamp && !request.highlight && !activity && !request.activity) {
         setShow(false)
         setContent(false)
       }
@@ -274,7 +306,32 @@ const App = () => {
                   </>
                 }
 
-                {show && !login && !userLoading &&
+                {activity && !login && !userLoading &&
+                  <>
+                    <div className="analogueModalHeader activity" id='analogueHeader'>
+
+                      <img src={logoIcon} className="logo icon" alt="Analogue" />
+
+                      <CloseOutlined
+                        className="closeBtn"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setShow(false)
+                          setContent(false)
+                        }}
+                      />
+
+                    </div>
+                    <Activity />
+                    <BottomBand clickHint={clickHint} clickActivity={() => setActivity(true)} />
+
+                  </>
+
+
+                }
+
+                {show && !login && !userLoading && !activity &&
                   <>
                     <div className="analogueModalHeader" id='analogueHeader'>
 

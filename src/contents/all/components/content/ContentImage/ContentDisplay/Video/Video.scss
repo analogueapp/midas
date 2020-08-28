@@ -1,0 +1,77 @@
+.video {
+  &.film {
+    img {
+      width: auto;
+      object-fit: contain;
+      max-width: 100%;
+      height: calc(100% - 12px);
+      box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.21), 7px 7px 7px 0 rgba(0, 0, 0, 0.1);
+      padding: 0;
+      left: calc(50% - 6px); // account for margin right 12px
+      transform: translateX(-50%);
+    }
+  }
+
+  img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    padding: 0 12px 12px 0;
+    transition: 0.21s ease all;
+  }
+
+  &.previewModal {
+
+    &.ant-modal {
+      width: 75% !important;
+    }
+
+    .ant-modal-content {
+      background: transparent;
+    }
+
+    .ant-modal-body {
+      padding: 0;
+      background: #000;
+    }
+
+    .ant-modal-footer {
+      display: none;
+    }
+
+    .modalActions {
+      background: transparent;
+      text-align: center;
+      position: absolute;
+      bottom: -45px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      display: flex;
+      align-items: center;
+
+      .playbackRate {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        > div {
+          width: 75px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .player-wrapper {
+    // position: relative;
+    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+  }
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+  }
+}
