@@ -287,7 +287,57 @@ const messageListener = (request) => {
     agent.Auth.current().then(response => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const activeTab = tabs[0]
-        chrome.tabs.sendMessage(activeTab.id, {message: "auth_user_response", body: response })
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "auth_user_response",
+          body: response,
+          activity: request.activity
+        })
+      })
+    })
+  }
+
+  if (request.message === "get_activity") {
+    agent.Activity.notifications().then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "get_activity_response",
+          body: response
+        })
+      })
+    })
+  }
+
+  if (request.message === "read_activity") {
+    agent.Activity.read(request.activityData.id).then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "read_activity_response",
+          body: response
+        })
+      })
+    })
+  }
+
+  if (request.message === "unfollow_profile") {
+    agent.Profile.unfollow(request.profile.username).then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "unfollow_profile_response",
+        })
+      })
+    })
+  }
+
+  if (request.message === "follow_profile") {
+    agent.Profile.follow(request.profile.username).then(response => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const activeTab = tabs[0]
+        chrome.tabs.sendMessage(activeTab.id, {
+          message: "follow_profile_response",
+        })
       })
     })
   }
