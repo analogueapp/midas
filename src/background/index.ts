@@ -73,6 +73,8 @@ chrome.contextMenus.create({
   }
 })
 
+var unreadItemCount = 0;
+
 function setAllRead() {
   chrome.browserAction.setBadgeText({text: ''});   // <-- set text to '' to remove the badge
 }
