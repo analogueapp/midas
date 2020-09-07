@@ -28,6 +28,8 @@
     }
 
     .ant-input-affix-wrapper {
+      border: none;
+      border-radius: 5px;
       &:focus {
         background: #000;
       }
@@ -101,7 +103,7 @@
     }
 
     .primerSelectListScroll {
-      max-height: 321px;
+      max-height: 280px;
       overflow-y: auto;
       overflow-x: hidden;
     }

@@ -1,0 +1,57 @@
+.activityTimeline {
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 795px;
+  padding-top: 15px;
+
+  .ant-timeline-item-head,
+  .ant-timeline-item-head-blue {
+    // background-color: #333;
+    // border-radius: 0;
+    color: #aaa;
+    border-color: #aaa;
+    background: transparent;
+
+    &.ant-timeline-item-head-custom {
+      padding: 0;
+      z-index: 1;
+
+      .ant-avatar {
+        border: 1px solid #fff;
+        img {
+          border: 2px solid #fff;
+          border-radius: 100%;
+        }
+      }
+
+      .anticon {
+        color: #c7ac75;
+        font-size: 18px !important;
+      }
+    }
+  }
+
+  .ant-timeline-item {
+
+    margin-left: 26px;
+
+    .ant-timeline-item-content {
+      transition: all 0.21s ease;
+      margin-left: 15px;
+      padding-left: 12px;
+
+      // transition: all 0.3s ease;
+      // padding-top: 10px;
+      // margin-top: -10px;
+      // border-radius: 8px;
+      // &:hover {
+      //   background: #f2f2f2;
+      // }
+    }
+
+    &:last-child {
+      .ant-timeline-item-tail { display: none;}
+    }
+  }
+}

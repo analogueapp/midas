@@ -49,6 +49,13 @@ const Logs = {
     requests.del(`/logs/${id}`),
 }
 
+const Profile = {
+  follow: username =>
+    requests.post(`/profiles/${username}/follow`),
+  unfollow: username =>
+    requests.del(`/profiles/${username}/follow`),
+}
+
 const Knots = {
   all: log =>
     requests.get(`/knots?log_id=${log.id}`),
@@ -90,12 +97,17 @@ const Primers = {
 const Activity = {
   notify: (activities) =>
     requests.post("/activity/notify", { activities }),
+  notifications: () =>
+    requests.get("/activity/notifications"),
+  read: (activityId) =>
+    requests.post("/activity/read", { activityId: activityId })
 }
 
 export default {
   Auth,
   Logs,
   Knots,
+  Profile,
   Primers,
   Contents,
   Activity,

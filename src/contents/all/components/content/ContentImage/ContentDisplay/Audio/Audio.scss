@@ -1,0 +1,11 @@
+.audio {
+  img {
+    position: absolute;
+    object-fit: cover;
+    margin: 0 12px 12px 0;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    transition: 0.21s ease all;
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.21), 7px 7px 7px 0 rgba(0, 0, 0, 0.1);
+  }
+}

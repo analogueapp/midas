@@ -43,7 +43,7 @@
     "dependencies": {
         "@hot-loader/react-dom": "^16.11.0",
         "@sentry/browser": "^5.14.2",
-        "antd": "^4.0.2",
+        "antd": "^4.6.1",
         "babel-plugin-import": "^1.13.0",
         "getstream": "^4.4.0",
         "linkifyjs": "^2.1.9",

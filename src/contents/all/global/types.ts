@@ -9,6 +9,19 @@ export interface Creator {
   diedAt: string
 }
 
+export interface Profile {
+  id: number
+  name: string
+  username: string
+  primersCount: number
+  logsCount: number
+  bio: string
+  following?: boolean
+  influencesCount: number
+  influencesList?: Profile[]
+  topicsList?: string[]
+}
+
 export interface Response {
   id: number
   body: string
@@ -52,6 +65,7 @@ export interface Content {
   image: string
   originUrl: string
   origin: string
+  placeholderImage: string
   publishedAt: string
   title: string
   slug: string
