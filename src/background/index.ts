@@ -316,6 +316,9 @@ const messageListener = (request) => {
           message: "get_activity_response",
           body: response
         })
+        setUnread(response.activities.filter(
+          activityGroup => !activityGroup.activityData.is_read).length
+        )
       })
     })
   }
@@ -328,6 +331,8 @@ const messageListener = (request) => {
           message: "read_activity_response",
           body: response
         })
+        if (unreadItemCount == 1) setAllRead()
+        else setUnread(unreadItemCount - 1)
       })
     })
   }
