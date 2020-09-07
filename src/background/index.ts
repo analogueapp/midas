@@ -73,6 +73,16 @@ chrome.contextMenus.create({
   }
 })
 
+function setAllRead() {
+  chrome.browserAction.setBadgeText({text: ''});   // <-- set text to '' to remove the badge
+}
+
+function setUnread(count) {
+  unreadItemCount = count;
+  chrome.browserAction.setBadgeBackgroundColor({color: "#c7ac75"});
+  chrome.browserAction.setBadgeText({text: '' + count});
+}
+
 chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action", activity: true })
 })
