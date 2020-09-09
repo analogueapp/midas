@@ -290,7 +290,8 @@ const messageListener = (request) => {
         chrome.tabs.sendMessage(activeTab.id, {
           message: "auth_user_response",
           body: response,
-          activity: request.activity
+          activity: request.activity,
+          goodies: request.goodies
         })
       })
     })

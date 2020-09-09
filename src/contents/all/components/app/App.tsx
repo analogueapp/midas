@@ -93,11 +93,11 @@ const App = () => {
     }
   }
 
-  const createKnot = (bodyHtml, bodyText) => {
+  const createKnot = (bodyHtml, bodyText, requestLog=null) => {
     setLoading(true)
     chrome.runtime.sendMessage({
       message: "create_knot",
-      log: log,
+      log: requestLog ? requestLog : log,
       knot: {
         body: bodyHtml,
         bodyText: bodyText
@@ -128,7 +128,10 @@ const App = () => {
         setActivity(true)
         chrome.runtime.sendMessage({message: "get_activity"})
       }
-      else {chrome.runtime.sendMessage({ message: "parse_content" })}
+      else {chrome.runtime.sendMessage({
+        message: "parse_content",
+        goodies: request.goodies
+      })}
     }
 
     if (request.message === "clicked_browser_action") {
@@ -138,7 +141,11 @@ const App = () => {
           chrome.runtime.sendMessage({
             message: "get_current_user",
             token: token.analogueJWT,
-            activity: request.activity
+            activity: request.activity,
+            goodies: {
+              highlight: request.highlight,
+              youtube: { timestamp: request.timestamp, url: request.url }
+            }
           })
         }
       })
@@ -199,11 +206,12 @@ const App = () => {
         setLog(request.body.log)
         if (request.goodies) {
           if (request.goodies.highlight) {
-            createKnot(("<blockquote>" + request.goodies.highlight.toString("html") + "</blockquote>"), request.goodies.highlight)
+            console.log("yessir")
+            createKnot(("<blockquote>" + request.goodies.highlight.toString("html") + "</blockquote>"), request.goodies.highlight, request.body.log)
           }
 
           if (request.goodies.youtube) {
-            createKnot(("<a target='_blank' href=" + request.goodies.youtube.url + ">" + request.goodies.youtube.timestamp.toString("html") + "</a>"), request.goodies.youtube.timestamp)
+            createKnot(("<a target='_blank' href=" + request.goodies.youtube.url + ">" + request.goodies.youtube.timestamp.toString("html") + "</a>"), request.goodies.youtube.timestamp, request.body.log)
           }
         }
       }
@@ -224,7 +232,7 @@ const App = () => {
 
     if (request.message === "create_knot_response") {
       setLoading(false)
-      setKnots([request.body, ...knots])
+      chrome.runtime.sendMessage({ message: "get_knots", log: log })
     }
 
     if (request.message === "delete_knot_response") {
