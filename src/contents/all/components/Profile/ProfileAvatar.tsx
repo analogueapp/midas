@@ -20,6 +20,8 @@ interface Props {
   showFollowButton?: boolean
 }
 
+const rootUrl = process.env.NODE_ENV === 'production' ? 'https://www.analogue.app' : 'http://localhost:3000'
+
 const ProfileAvatar = ({
   user,
   noLink,
@@ -37,7 +39,13 @@ const ProfileAvatar = ({
   return(
       <span className={`profileAvatar ${list ? "listType" : ""}`}>
         {!textOnly && <ProfileImage user={user} noBlur={noBlur} />}
-        {!iconOnly && <span className="profileName">{user.name}</span>}
+        {!iconOnly &&
+          <a
+            target="_blank"
+            href={`${rootUrl}/@${user.username}`}
+            className="profileName">{user.name}
+          </a>
+        }
       </span>
     )
   }
