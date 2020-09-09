@@ -89,17 +89,19 @@ const ResponseInput = ({
   }
 
   return (
-    <div className={`responseForm ${className ? className: ""} ${showFooter ? "showFooter" : ""}`}>
-      <div className="knotEditorWrapper">
-        <div className="knotEditor" ref={knotEditor}>
-          <RichTextEditor
-            autoFocus
-            toolbarConfig={{ display: [] }}
-            value={body}
-            onChange={onChange}
-            onBlur={onSubmit}
-            placeholder={"Your response..."}
-          />
+    <>
+      <div className={`responseForm ${className ? className: ""} ${showFooter ? "showFooter" : ""}`}>
+        <div className="knotEditorWrapper">
+          <div className="knotEditor" ref={knotEditor}>
+            <RichTextEditor
+              autoFocus
+              toolbarConfig={{ display: [] }}
+              value={body}
+              onChange={onChange}
+              onBlur={onSubmit}
+              placeholder={"Your response..."}
+            />
+          </div>
         </div>
       </div>
       <div className="knotCardFooter">
@@ -109,7 +111,7 @@ const ResponseInput = ({
           keys={['CMD', 'ENTER']}
         />
       </div>
-    </div>
+    </>
   )
 }
 
