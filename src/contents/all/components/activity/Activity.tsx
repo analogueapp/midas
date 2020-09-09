@@ -29,6 +29,9 @@ const Activity = () => {
       setLoading(false)
       setActivity(request.body)
     }
+    if (request.message === "update_response_response") {
+      loadActivity()
+    }
   }
 
   // useEffect(() => {
