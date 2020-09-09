@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import Moment from 'react-moment';
 import { FaRegComment } from "react-icons/fa";
 import { Timeline, Button, Popconfirm, DatePicker, Tooltip } from 'antd';
@@ -22,6 +23,9 @@ interface Props {
 }
 
 const Knot = ({ log, knot, isLast }: Props) => {
+
+  const currentUser = useSelector(state => state.user);
+  const isOwner = (currentUser.id == knot.user.id)
 
   const [edited, setEdited] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -128,7 +132,7 @@ const Knot = ({ log, knot, isLast }: Props) => {
       >
         <div
           className={`knotCard ${knot.private ? "private" : ""}`}
-          onClick={() => setEdited(true)}
+          onClick={isOwner ? () => setEdited(true) : null}
         >
           {edited
             ? (
@@ -142,16 +146,19 @@ const Knot = ({ log, knot, isLast }: Props) => {
           }
         </div>
 
-        <div className="knotMeta">
-          <Button icon={knot.private ? <LockOutlined /> : <UnlockOutlined />}
-          onClick={() => changePrivacy()}
-          size={"small"} />
+        <div className={`knotMeta ${edited ? "edited" : ""}`}>
+          <Button
+            className="lockBtn"
+            icon={knot.private ? <LockOutlined /> : <UnlockOutlined />}
+            onClick={() => changePrivacy()}
+            size={"small"}
+          />
 
           <span className={`likeBtn ${liked ? "liked" : ""}`}>
             <Button
-            icon={liked ? <HeartFilled /> : <HeartOutlined />}
-            onClick={() => clickLike()}
-            size={"small"}
+              icon={liked ? <HeartFilled /> : <HeartOutlined />}
+              onClick={() => clickLike()}
+              size="small"
             />
 
             {likesCount > 0 &&
@@ -204,19 +211,21 @@ const Knot = ({ log, knot, isLast }: Props) => {
               </Moment>
             </span>
           }
-          <Popconfirm
-            placement="top"
-            title="Delete note?"
-            okText="Delete"
-            okType="default"
-            arrowPointAtCenter
-            overlayClassName="deleteConfirm"
-            getPopupContainer={() => knotRef.current}
-            icon={null}
-            onConfirm={deleteKnot}
-          >
-            <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
-          </Popconfirm>
+          {isOwner &&
+            <Popconfirm
+              placement="top"
+              title="Delete note?"
+              okText="Delete"
+              okType="default"
+              arrowPointAtCenter
+              overlayClassName="deleteConfirm"
+              getPopupContainer={() => knotRef.current}
+              icon={null}
+              onConfirm={deleteKnot}
+            >
+              <span className={`delete ${hover ? 'show' : ''}`}>Delete</span>
+            </Popconfirm>
+          }
         </div>
         {replyOpen &&
         <ResponseInput
