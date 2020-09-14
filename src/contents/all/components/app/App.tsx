@@ -163,8 +163,7 @@ const App = () => {
             chrome.runtime.sendMessage({
               message: "parse_content",
               goodies: {
-                highlight: request.highlight,
-                youtube: { timestamp: request.timestamp, url: request.url }
+                highlight: request.highlight
               }
             })
           } else {
