@@ -85,6 +85,17 @@ function setUnread(count) {
   chrome.browserAction.setBadgeText({text: '' + count});
 }
 
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+    if (request) {
+        if (request.message) {
+            if (request.message == "check_install") {
+                sendResponse(true);
+            }
+        }
+    }
+});
+
 chrome.browserAction.onClicked.addListener(function() {
   injectContentScript({ message: "clicked_browser_action", activity: true })
 })
