@@ -164,12 +164,12 @@ const Response = ({
           icon={null}
           onConfirm={deleteResponse}
         >
-          {deleteLoading ? <LoadingOutlined /> : 'Delete'}
+          {deleteLoading ? <LoadingOutlined /> : <span>Delete</span>}
         </Popconfirm>
       </span>
     )
-    : null
-//here
+    : null;
+
   return ( !isDeleted &&
     <Comment
       className='response'
