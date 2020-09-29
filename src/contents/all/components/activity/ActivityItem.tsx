@@ -27,7 +27,9 @@ export const objectWords = {
   Content: 'from you',
   User: 'you',
   Mention: 'you in a response',
-  Primer: 'to your collection'
+  Primer: 'to your collection',
+  Followed_Primer: 'your collection',
+  Updated_Primer: "to a collection you follow"
 }
 
 interface Props {
@@ -67,7 +69,7 @@ const ActivityItem = ({ activity, activityData }: Props) => {
             }
             {activity.activity.notify_owner
               ? " replied in your note"
-              : `  ${verbWords[activity.activity.verb]} ${activity.activity.verb === "Mention" ? objectWords["Mention"] : objectWords[activity.objectType]}`
+              : `  ${verbWords[activity.activity.verb]} ${activity.activity.verb === "Mention" ? objectWords["Mention"] : activity.activity.verb === "Follow" && activity.objectType==="Primer" ? objectWords["Followed_Primer"] : activity.activity.verb === "Add" && activity.objectType==="Primer" ? 'to '+activity.primer.title : objectWords[activity.objectType]}`
             }
             {showContentLink &&
               <a
@@ -80,6 +82,15 @@ const ActivityItem = ({ activity, activityData }: Props) => {
             }
 
             {activity.activity.verb === "Add" && activity.primer &&
+              <a
+                target='_blank'
+                href={`${rootUrl}/collection/${activity.primer.slug}`}
+              >
+                <PrimerItem primer={activity.primer} />
+              </a>
+            }
+
+            {activity.activity.verb === "Follow" && activity.primer &&
               <a
                 target='_blank'
                 href={`${rootUrl}/collection/${activity.primer.slug}`}
