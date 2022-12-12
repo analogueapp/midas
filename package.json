@@ -121,7 +121,7 @@
         "eslint-plugin-react": "^7.18.3",
         "eslint-plugin-react-hooks": "^2.4.0",
         "execa": "^4.0.0",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "fork-ts-checker-webpack-plugin": "^4.0.4",
         "friendly-errors-webpack-plugin": "^1.7.0",
         "hard-source-webpack-plugin": "^0.13.1",
